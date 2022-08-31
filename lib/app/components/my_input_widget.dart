@@ -45,7 +45,7 @@ class MyInputWidget extends StatefulWidget {
     required this.textEditingController,
     this.campoVazio,
     required this.formKey,
-    this.autovalidateMode,
+    this.autovalidateMode = AutovalidateMode.onUserInteraction,
     this.textCapitalization = TextCapitalization.sentences,
     this.onTap,
     this.onEditingComplete,

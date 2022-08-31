@@ -15,6 +15,13 @@ class AppWidget extends StatelessWidget {
         useMaterial3: true,
         scaffoldBackgroundColor: Colors.white,
         primarySwatch: AppTheme.colors.primary,
+        appBarTheme: AppBarTheme(
+          color: AppTheme.colors.primary,
+          titleTextStyle: AppTheme.textStyles.titleAppBar,
+          iconTheme: const IconThemeData(
+            color: Colors.white,
+          ),
+        ),
       ),
       debugShowCheckedModeBanner: false,
       routeInformationParser: Modular.routeInformationParser,

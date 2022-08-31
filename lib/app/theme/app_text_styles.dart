@@ -37,9 +37,9 @@ class AppTextStylesDefault implements AppTextStyles {
       fontSize: 14, fontWeight: FontWeight.w700, color: AppTheme.colors.button);
 
   @override
-  TextStyle get titleAppBar => GoogleFonts.inter(
+  TextStyle get titleAppBar => GoogleFonts.montserrat(
         fontSize: 20,
-        color: AppTheme.colors.primary,
+        color: Colors.white,
         fontWeight: FontWeight.w700,
       );
 
