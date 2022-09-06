@@ -18,7 +18,6 @@ class MyInputWidget extends StatefulWidget {
   final Function(String?)? onChanged;
   final TextEditingController textEditingController;
   final String? campoVazio;
-  final GlobalKey<FormState> formKey;
   final AutovalidateMode? autovalidateMode;
   final TextCapitalization textCapitalization;
   final Function()? onTap;
@@ -44,7 +43,6 @@ class MyInputWidget extends StatefulWidget {
     this.onChanged,
     required this.textEditingController,
     this.campoVazio,
-    required this.formKey,
     this.autovalidateMode = AutovalidateMode.onUserInteraction,
     this.textCapitalization = TextCapitalization.sentences,
     this.onTap,
@@ -62,60 +60,63 @@ class MyInputWidget extends StatefulWidget {
 class _MyInputWidgetState extends State<MyInputWidget> {
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: widget.formKey,
-      autovalidateMode: widget.autovalidateMode ?? AutovalidateMode.disabled,
-      child: TextFormField(
-        textAlignVertical: widget.textAlignVertical!,
-        expands: widget.expands,
-        maxLines: widget.maxLines,
-        minLines: widget.minLines,
-        readOnly: widget.readOnly,
-        onEditingComplete: widget.onEditingComplete,
-        textCapitalization: widget.textCapitalization,
-        textInputAction: widget.textInputAction,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return widget.campoVazio ?? '${widget.label} em branco';
-          }
-          if (widget.label == 'CNPJ' && !CNPJValidator.isValid(value)) {
-            return 'CNPJ inválido';
-          }
-          return null;
-        },
-        focusNode: widget.focusNode,
-        keyboardType: widget.keyboardType,
-        onChanged: (value) {
-          if (widget.onChanged != null) {
-            widget.onChanged!(value);
-            setState(() {});
-          }
-        },
-        onTap: widget.onTap,
-        obscureText: widget.obscureText,
-        inputFormatters: widget.inputFormaters,
-        onFieldSubmitted: widget.onFieldSubmitted,
-        maxLength: widget.maxLength,
-        controller: widget.textEditingController,
-        decoration: InputDecoration(
-          counterText: '',
-          hintText: widget.hintText,
-          label: Text(widget.label),
-          suffixIcon: widget.suffixIcon,
-          filled: true,
-          isDense: true,
-          fillColor: Colors.transparent,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(
-              color: Colors.grey.shade700,
-            ),
+    return TextFormField(
+      autovalidateMode: widget.autovalidateMode,
+      textAlignVertical: widget.textAlignVertical!,
+      expands: widget.expands,
+      maxLines: widget.maxLines,
+      minLines: widget.minLines,
+      readOnly: widget.readOnly,
+      onEditingComplete: widget.onEditingComplete,
+      textCapitalization: widget.textCapitalization,
+      textInputAction: widget.textInputAction,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return widget.campoVazio ?? '${widget.label} is empty';
+        }
+        if (widget.label == 'CPF' && !CPFValidator.isValid(value)) {
+          return 'Invalid CPF';
+        }
+        if (widget.hintText == 'E-Mail' &&
+            !RegExp(
+              r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$',
+            ).hasMatch(value)) {
+          return 'Invalid E-mail';
+        }
+        return null;
+      },
+      focusNode: widget.focusNode,
+      keyboardType: widget.keyboardType,
+      onChanged: (value) {
+        if (widget.onChanged != null) {
+          widget.onChanged!(value);
+          setState(() {});
+        }
+      },
+      onTap: widget.onTap,
+      obscureText: widget.obscureText,
+      inputFormatters: widget.inputFormaters,
+      onFieldSubmitted: widget.onFieldSubmitted,
+      maxLength: widget.maxLength,
+      controller: widget.textEditingController,
+      decoration: InputDecoration(
+        counterText: '',
+        hintText: widget.hintText,
+        label: Text(widget.label),
+        suffixIcon: widget.suffixIcon,
+        filled: true,
+        isDense: true,
+        fillColor: Colors.transparent,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: Colors.grey.shade700,
           ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(
-              color: AppTheme.colors.primary,
-            ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: AppTheme.colors.primary,
           ),
         ),
       ),

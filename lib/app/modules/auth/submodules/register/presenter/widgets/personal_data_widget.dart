@@ -1,7 +1,6 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import 'package:wizard/app/components/my_app_bar_widget.dart';
 import 'package:wizard/app/components/my_input_widget.dart';
@@ -29,10 +28,7 @@ class _PersonalDataWidgetState extends State<PersonalDataWidget> {
   final cpfController = TextEditingController();
   final birthDayController = TextEditingController();
 
-  final gkName = GlobalKey<FormState>();
-  final gkLastName = GlobalKey<FormState>();
-  final gkCPF = GlobalKey<FormState>();
-  final gkBirthDay = GlobalKey<FormState>();
+  final gkForm = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,100 +39,56 @@ class _PersonalDataWidgetState extends State<PersonalDataWidget> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            MyInputWidget(
-              focusNode: fName,
-              hintText: 'Type your name',
-              label: 'Name',
-              campoVazio: 'Name cannot be empty ',
-              textEditingController: nameController,
-              formKey: gkName,
-              inputFormaters: [UpperCaseTextFormatter()],
-            ),
-            const SizedBox(height: 10),
-            MyInputWidget(
-              focusNode: fLastName,
-              hintText: 'Type your last name',
-              label: 'Last Name',
-              campoVazio: 'Last name cannot be empty',
-              textEditingController: lastNameController,
-              formKey: gkLastName,
-              inputFormaters: [UpperCaseTextFormatter()],
-            ),
-            const SizedBox(height: 10),
-            MyInputWidget(
-              focusNode: fCPF,
-              hintText: 'Type your CPF',
-              label: 'CPF',
-              campoVazio: 'CPF cannot be empty',
-              textEditingController: cpfController,
-              formKey: gkCPF,
-              keyboardType: TextInputType.number,
-              inputFormaters: [
-                FilteringTextInputFormatter.digitsOnly,
-                CpfInputFormatter(),
-              ],
-            ),
-            const SizedBox(height: 10),
-            MyInputWidget(
-              focusNode: fBirthday,
-              hintText: 'Type your birthday',
-              label: 'Birthday',
-              campoVazio: 'Birthday cannot be empty',
-              textEditingController: birthDayController,
-              formKey: gkBirthDay,
-              keyboardType: TextInputType.number,
-              inputFormaters: [
-                FilteringTextInputFormatter.digitsOnly,
-              ],
-            ),
-            const SizedBox(height: 10),
-          ],
-        ),
-      ),
-      bottomSheet: Container(
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(color: Colors.grey.shade300),
+        child: Center(
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              MyInputWidget(
+                focusNode: fName,
+                hintText: 'Type your name',
+                label: 'Name',
+                campoVazio: 'Name cannot be empty ',
+                textEditingController: nameController,
+                inputFormaters: [UpperCaseTextFormatter()],
+              ),
+              const SizedBox(height: 10),
+              MyInputWidget(
+                focusNode: fLastName,
+                hintText: 'Type your last name',
+                label: 'Last Name',
+                campoVazio: 'Last name cannot be empty',
+                textEditingController: lastNameController,
+                inputFormaters: [UpperCaseTextFormatter()],
+              ),
+              const SizedBox(height: 10),
+              MyInputWidget(
+                focusNode: fCPF,
+                hintText: 'Type your CPF',
+                label: 'CPF',
+                campoVazio: 'CPF cannot be empty',
+                textEditingController: cpfController,
+                keyboardType: TextInputType.number,
+                inputFormaters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  CpfInputFormatter(),
+                ],
+              ),
+              const SizedBox(height: 10),
+              MyInputWidget(
+                focusNode: fBirthday,
+                hintText: 'Type your birthday',
+                label: 'Birthday',
+                campoVazio: 'Birthday cannot be empty',
+                textEditingController: birthDayController,
+                keyboardType: TextInputType.number,
+                inputFormaters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  DataInputFormatter()
+                ],
+              ),
+              const SizedBox(height: 10),
+            ],
           ),
-        ),
-        height: 50,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  minimumSize: const Size(double.infinity, double.infinity),
-                  shape: const RoundedRectangleBorder(),
-                ),
-                onPressed: () {
-                  Modular.to.navigate('/auth/');
-                },
-                child: const Text('Cancel'),
-              ),
-            ),
-            Container(
-              height: 50,
-              width: 2,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade300),
-              ),
-            ),
-            Expanded(
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  minimumSize: const Size(double.infinity, double.infinity),
-                  shape: const RoundedRectangleBorder(),
-                ),
-                onPressed: () {},
-                child: const Text('Next'),
-              ),
-            ),
-          ],
         ),
       ),
     );

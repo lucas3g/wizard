@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:wizard/app/modules/auth/submodules/register/presenter/widgets/address_widget.dart';
+import 'package:wizard/app/modules/auth/submodules/register/presenter/widgets/authentication_widget.dart';
 import 'package:wizard/app/modules/auth/submodules/register/presenter/widgets/personal_data_widget.dart';
 import 'package:wizard/app/utils/constants.dart';
 
@@ -16,6 +17,8 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final pageController = PageController();
   late int currentPage = 0;
+
+  final gkForm = GlobalKey<FormState>();
 
   Size sizeAppbar() {
     final height = AppBar().preferredSize.height;
@@ -32,6 +35,10 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> nextPage() async {
+    if (!gkForm.currentState!.validate()) {
+      return;
+    }
+
     if (currentPage < 2) {
       currentPage++;
       setState(() {});
@@ -52,14 +59,18 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: pageController,
-        children: [
-          PersonalDataWidget(sizeAppBar: sizeAppbar()),
-          AddresWidget(sizeAppBar: sizeAppbar()),
-        ],
+      body: Form(
+        key: gkForm,
+        child: PageView(
+          controller: pageController,
+          children: [
+            PersonalDataWidget(sizeAppBar: sizeAppbar()),
+            AddresWidget(sizeAppBar: sizeAppbar()),
+            AuthenticationWidget(sizeAppBar: sizeAppbar()),
+          ],
+        ),
       ),
-      bottomSheet: Container(
+      bottomNavigationBar: Container(
         decoration: BoxDecoration(
           border: Border(
             top: BorderSide(color: Colors.grey.shade300),
@@ -102,7 +113,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 onPressed: () async {
                   await nextPage();
                 },
-                child: const Text('Next'),
+                child: Text(currentPage != 2 ? 'Next' : 'Register'),
               ),
             ),
           ],

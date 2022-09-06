@@ -3,7 +3,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:wizard/app/components/my_input_widget.dart';
 import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
-import 'package:wizard/app/utils/formatters.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -19,10 +18,15 @@ class _AuthPageState extends State<AuthPage> {
   final userController = TextEditingController();
   final passwordController = TextEditingController();
 
-  final gkUser = GlobalKey<FormState>();
-  final gkPassword = GlobalKey<FormState>();
+  final gkForm = GlobalKey<FormState>();
 
   late bool visiblePassword = false;
+
+  Future initLogin() async {
+    if (!gkForm.currentState!.validate()) {
+      return;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,75 +60,83 @@ class _AuthPageState extends State<AuthPage> {
                 ),
               ],
             ),
-            Column(
-              children: [
-                MyInputWidget(
-                  focusNode: fUser,
-                  hintText: 'Type your username',
-                  label: 'Username',
-                  textEditingController: userController,
-                  formKey: gkUser,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                MyInputWidget(
-                  obscureText: visiblePassword,
-                  focusNode: fPassword,
-                  hintText: 'Type your password',
-                  label: 'Password',
-                  textEditingController: passwordController,
-                  formKey: gkPassword,
-                  maxLines: 1,
-                  suffixIcon: GestureDetector(
-                    child: Icon(
-                      visiblePassword ? Icons.visibility_off : Icons.visibility,
-                      size: 25,
-                      color: visiblePassword
-                          ? const Color(0xFF666666)
-                          : AppTheme.colors.primary,
-                    ),
-                    onTap: () {
-                      visiblePassword = !visiblePassword;
-                      setState(() {});
-                    },
+            Form(
+              key: gkForm,
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  MyInputWidget(
+                    focusNode: fUser,
+                    hintText: 'Type your username',
+                    label: 'Username',
+                    textEditingController: userController,
                   ),
-                  inputFormaters: [UpperCaseTextFormatter()],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: const Text('Sign In'),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  MyInputWidget(
+                    obscureText: !visiblePassword,
+                    focusNode: fPassword,
+                    hintText: 'Type your password',
+                    label: 'Password',
+                    textEditingController: passwordController,
+                    maxLines: 1,
+                    suffixIcon: GestureDetector(
+                      child: Icon(
+                        !visiblePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        size: 25,
+                        color: !visiblePassword
+                            ? const Color(0xFF666666)
+                            : AppTheme.colors.primary,
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don't have an account?",
-                      style: AppTheme.textStyles.textRegister,
-                    ),
-                    const SizedBox(width: 5),
-                    TextButton(
-                      child: const Text('Register here'),
-                      onPressed: () {
-                        Modular.to.navigate('./register/');
+                      onTap: () {
+                        visiblePassword = !visiblePassword;
+                        setState(() {});
                       },
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          height: 40,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await initLogin();
+                            },
+                            child: const Text('Sign In'),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Don't have an account?",
+                        style: AppTheme.textStyles.textRegister,
+                      ),
+                      const SizedBox(width: 5),
+                      TextButton(
+                        child: const Text('Register here'),
+                        onPressed: () {
+                          Modular.to.navigate('./register/');
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
             const SizedBox(),
             Text(

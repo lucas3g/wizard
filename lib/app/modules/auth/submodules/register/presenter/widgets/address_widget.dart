@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import 'package:wizard/app/components/my_app_bar_widget.dart';
 import 'package:wizard/app/components/my_input_widget.dart';
@@ -31,12 +30,7 @@ class _AddresWidgetState extends State<AddresWidget> {
   final numberController = TextEditingController();
   final districtController = TextEditingController();
 
-  final gkZipCode = GlobalKey<FormState>();
-  final gkState = GlobalKey<FormState>();
-  final gkCity = GlobalKey<FormState>();
-  final gkAddress = GlobalKey<FormState>();
-  final gkNumber = GlobalKey<FormState>();
-  final gkDistrict = GlobalKey<FormState>();
+  final gkForm = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -47,17 +41,15 @@ class _AddresWidgetState extends State<AddresWidget> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: ListView(
+          shrinkWrap: true,
           children: [
             MyInputWidget(
               focusNode: fZipCode,
               hintText: 'Type your Zip code',
               label: 'Zip code',
-              campoVazio: 'Zip code cannot be empty ',
+              campoVazio: 'Zip code cannot be empty',
               textEditingController: zipCodeController,
-              formKey: gkZipCode,
               inputFormaters: [UpperCaseTextFormatter()],
             ),
             const SizedBox(height: 10),
@@ -67,7 +59,6 @@ class _AddresWidgetState extends State<AddresWidget> {
               label: 'State',
               campoVazio: 'State cannot be empty',
               textEditingController: stateController,
-              formKey: gkState,
               inputFormaters: [UpperCaseTextFormatter()],
             ),
             const SizedBox(height: 10),
@@ -77,7 +68,6 @@ class _AddresWidgetState extends State<AddresWidget> {
               label: 'City',
               campoVazio: 'City cannot be empty',
               textEditingController: cityController,
-              formKey: gkCity,
               inputFormaters: [UpperCaseTextFormatter()],
             ),
             const SizedBox(height: 10),
@@ -87,7 +77,6 @@ class _AddresWidgetState extends State<AddresWidget> {
               label: 'Address',
               campoVazio: 'Address cannot be empty',
               textEditingController: addressController,
-              formKey: gkAddress,
               inputFormaters: [UpperCaseTextFormatter()],
             ),
             const SizedBox(height: 10),
@@ -97,7 +86,6 @@ class _AddresWidgetState extends State<AddresWidget> {
               label: 'Number',
               campoVazio: 'Number cannot be empty',
               textEditingController: numberController,
-              formKey: gkNumber,
               inputFormaters: [UpperCaseTextFormatter()],
             ),
             const SizedBox(height: 10),
@@ -107,52 +95,9 @@ class _AddresWidgetState extends State<AddresWidget> {
               label: 'District',
               campoVazio: 'District cannot be empty',
               textEditingController: districtController,
-              formKey: gkDistrict,
               inputFormaters: [UpperCaseTextFormatter()],
             ),
             const SizedBox(height: 10),
-          ],
-        ),
-      ),
-      bottomSheet: Container(
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(color: Colors.grey.shade300),
-          ),
-        ),
-        height: 50,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  minimumSize: const Size(double.infinity, double.infinity),
-                  shape: const RoundedRectangleBorder(),
-                ),
-                onPressed: () {
-                  Modular.to.navigate('/auth/');
-                },
-                child: const Text('Cancel'),
-              ),
-            ),
-            Container(
-              height: 50,
-              width: 2,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade300),
-              ),
-            ),
-            Expanded(
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  minimumSize: const Size(double.infinity, double.infinity),
-                  shape: const RoundedRectangleBorder(),
-                ),
-                onPressed: () {},
-                child: const Text('Next'),
-              ),
-            ),
           ],
         ),
       ),
