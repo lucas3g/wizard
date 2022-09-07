@@ -4,12 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:wizard/app/components/my_app_bar_widget.dart';
 import 'package:wizard/app/components/my_input_widget.dart';
 import 'package:wizard/app/theme/app_theme.dart';
+import 'package:wizard/app/utils/constants.dart';
 
 class AuthenticationWidget extends StatefulWidget {
-  final Size sizeAppBar;
   const AuthenticationWidget({
     Key? key,
-    required this.sizeAppBar,
   }) : super(key: key);
 
   @override
@@ -34,7 +33,7 @@ class _AuthenticationWidgetState extends State<AuthenticationWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: widget.sizeAppBar,
+        preferredSize: context.sizeAppbar,
         child: const MyAppBarWidget(titleAppbar: 'Authentication'),
       ),
       body: Padding(

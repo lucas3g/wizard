@@ -1,11 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:wizard/app/modules/auth/submodules/register/presenter/widgets/address_widget.dart';
 import 'package:wizard/app/modules/auth/submodules/register/presenter/widgets/authentication_widget.dart';
 import 'package:wizard/app/modules/auth/submodules/register/presenter/widgets/personal_data_widget.dart';
-import 'package:wizard/app/utils/constants.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -20,20 +17,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final gkForm = GlobalKey<FormState>();
 
-  Size sizeAppbar() {
-    final height = AppBar().preferredSize.height;
-
-    return Size(
-      context.screenWidth,
-      height +
-          (Platform.isWindows
-              ? 75
-              : Platform.isIOS
-                  ? 50
-                  : 70),
-    );
-  }
-
   Future<void> nextPage() async {
     if (!gkForm.currentState!.validate()) {
       return;
@@ -44,7 +27,10 @@ class _RegisterPageState extends State<RegisterPage> {
       setState(() {});
       await pageController.nextPage(
           duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+      return;
     }
+
+    Modular.to.navigate('/auth/');
   }
 
   Future<void> backPage() async {
@@ -63,10 +49,10 @@ class _RegisterPageState extends State<RegisterPage> {
         key: gkForm,
         child: PageView(
           controller: pageController,
-          children: [
-            PersonalDataWidget(sizeAppBar: sizeAppbar()),
-            AddresWidget(sizeAppBar: sizeAppbar()),
-            AuthenticationWidget(sizeAppBar: sizeAppbar()),
+          children: const [
+            PersonalDataWidget(),
+            AddresWidget(),
+            AuthenticationWidget(),
           ],
         ),
       ),

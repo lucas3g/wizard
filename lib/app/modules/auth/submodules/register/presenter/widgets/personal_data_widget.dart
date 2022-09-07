@@ -4,13 +4,12 @@ import 'package:flutter/services.dart';
 
 import 'package:wizard/app/components/my_app_bar_widget.dart';
 import 'package:wizard/app/components/my_input_widget.dart';
+import 'package:wizard/app/utils/constants.dart';
 import 'package:wizard/app/utils/formatters.dart';
 
 class PersonalDataWidget extends StatefulWidget {
-  final Size sizeAppBar;
   const PersonalDataWidget({
     Key? key,
-    required this.sizeAppBar,
   }) : super(key: key);
 
   @override
@@ -34,7 +33,7 @@ class _PersonalDataWidgetState extends State<PersonalDataWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: widget.sizeAppBar,
+        preferredSize: context.sizeAppbar,
         child: const MyAppBarWidget(titleAppbar: 'Personal data'),
       ),
       body: Padding(

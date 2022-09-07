@@ -77,7 +77,7 @@ class _MyInputWidgetState extends State<MyInputWidget> {
         if (widget.label == 'CPF' && !CPFValidator.isValid(value)) {
           return 'Invalid CPF';
         }
-        if (widget.hintText == 'E-Mail' &&
+        if (widget.label == 'E-mail' &&
             !RegExp(
               r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$',
             ).hasMatch(value)) {
