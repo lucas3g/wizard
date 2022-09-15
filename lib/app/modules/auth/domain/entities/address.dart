@@ -14,4 +14,7 @@ class Address {
     required this.number,
     required this.district,
   });
+
+  factory Address.empty() => Address(
+      zipCode: '', state: '', city: '', address: '', number: '', district: '');
 }

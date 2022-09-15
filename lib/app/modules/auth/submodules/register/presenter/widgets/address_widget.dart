@@ -4,13 +4,15 @@ import 'package:flutter/services.dart';
 
 import 'package:wizard/app/components/my_app_bar_widget.dart';
 import 'package:wizard/app/components/my_input_widget.dart';
+import 'package:wizard/app/modules/auth/domain/entities/user_entity.dart';
 import 'package:wizard/app/utils/constants.dart';
 import 'package:wizard/app/utils/formatters.dart';
-import 'package:wizard/app/utils/my_snackbar.dart';
 
 class AddresWidget extends StatefulWidget {
+  final User user;
   const AddresWidget({
     Key? key,
+    required this.user,
   }) : super(key: key);
 
   @override
@@ -24,13 +26,6 @@ class _AddresWidgetState extends State<AddresWidget> {
   final fAddress = FocusNode();
   final fNumber = FocusNode();
   final fDistrict = FocusNode();
-
-  final zipCodeController = TextEditingController();
-  final stateController = TextEditingController();
-  final cityController = TextEditingController();
-  final addressController = TextEditingController();
-  final numberController = TextEditingController();
-  final districtController = TextEditingController();
 
   final gkForm = GlobalKey<FormState>();
 
@@ -54,8 +49,6 @@ class _AddresWidgetState extends State<AddresWidget> {
                       focusNode: fZipCode,
                       hintText: 'Type your Zip code',
                       label: 'Zip code',
-                      campoVazio: 'Zip code cannot be empty',
-                      textEditingController: zipCodeController,
                       keyboardType: TextInputType.number,
                       inputFormaters: [
                         FilteringTextInputFormatter.digitsOnly,
@@ -67,11 +60,7 @@ class _AddresWidgetState extends State<AddresWidget> {
                   SizedBox(
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {
-                        if (zipCodeController.text.isEmpty) {
-                          MySnackBar(message: 'Zip code cannot be empty');
-                        }
-                      },
+                      onPressed: () {},
                       child: const Text('Buscar Cidade'),
                     ),
                   ),
@@ -82,8 +71,6 @@ class _AddresWidgetState extends State<AddresWidget> {
                 focusNode: fState,
                 hintText: 'Type your state',
                 label: 'State',
-                campoVazio: 'State cannot be empty',
-                textEditingController: stateController,
                 inputFormaters: [UpperCaseTextFormatter()],
               ),
               const SizedBox(height: 10),
@@ -91,8 +78,6 @@ class _AddresWidgetState extends State<AddresWidget> {
                 focusNode: fCity,
                 hintText: 'Type your city',
                 label: 'City',
-                campoVazio: 'City cannot be empty',
-                textEditingController: cityController,
                 inputFormaters: [UpperCaseTextFormatter()],
               ),
               const SizedBox(height: 10),
@@ -100,8 +85,6 @@ class _AddresWidgetState extends State<AddresWidget> {
                 focusNode: fAddress,
                 hintText: 'Type your address',
                 label: 'Address',
-                campoVazio: 'Address cannot be empty',
-                textEditingController: addressController,
                 inputFormaters: [UpperCaseTextFormatter()],
               ),
               const SizedBox(height: 10),
@@ -109,8 +92,6 @@ class _AddresWidgetState extends State<AddresWidget> {
                 focusNode: fNumber,
                 hintText: 'Type your number',
                 label: 'Number',
-                campoVazio: 'Number cannot be empty',
-                textEditingController: numberController,
                 inputFormaters: [UpperCaseTextFormatter()],
               ),
               const SizedBox(height: 10),
@@ -118,8 +99,6 @@ class _AddresWidgetState extends State<AddresWidget> {
                 focusNode: fDistrict,
                 hintText: 'Type your district',
                 label: 'District',
-                campoVazio: 'District cannot be empty',
-                textEditingController: districtController,
                 inputFormaters: [UpperCaseTextFormatter()],
               ),
               const SizedBox(height: 10),

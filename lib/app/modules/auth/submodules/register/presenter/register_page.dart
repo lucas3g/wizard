@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:wizard/app/modules/auth/domain/entities/user_entity.dart';
+import 'package:wizard/app/modules/auth/infra/adapters/user_adapter.dart';
 import 'package:wizard/app/modules/auth/submodules/register/presenter/widgets/address_widget.dart';
 import 'package:wizard/app/modules/auth/submodules/register/presenter/widgets/authentication_widget.dart';
 import 'package:wizard/app/modules/auth/submodules/register/presenter/widgets/personal_data_widget.dart';
@@ -14,8 +16,16 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final pageController = PageController();
   late int currentPage = 0;
+  late User user;
 
   final gkForm = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    user = UserAdapter.empty();
+  }
 
   Future<void> nextPage() async {
     if (!gkForm.currentState!.validate()) {
@@ -49,10 +59,10 @@ class _RegisterPageState extends State<RegisterPage> {
         key: gkForm,
         child: PageView(
           controller: pageController,
-          children: const [
-            PersonalDataWidget(),
-            AddresWidget(),
-            AuthenticationWidget(),
+          children: [
+            PersonalDataWidget(user: user),
+            AddresWidget(user: user),
+            AuthenticationWidget(user: user),
           ],
         ),
       ),

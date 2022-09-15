@@ -1,9 +1,9 @@
-import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:wizard/app/theme/app_theme.dart';
 
-class MyInputWidget extends StatefulWidget {
+class MyInputWidget extends StatelessWidget {
   final FocusNode focusNode;
   final TextInputType keyboardType;
   final String hintText;
@@ -15,10 +15,7 @@ class MyInputWidget extends StatefulWidget {
   final int? minLines;
   final List<TextInputFormatter>? inputFormaters;
   final Function(String?)? onFieldSubmitted;
-  final Function(String?)? onChanged;
-  final TextEditingController textEditingController;
-  final String? campoVazio;
-  final AutovalidateMode? autovalidateMode;
+  final Function(String)? onChanged;
   final TextCapitalization textCapitalization;
   final Function()? onTap;
   final void Function()? onEditingComplete;
@@ -26,6 +23,8 @@ class MyInputWidget extends StatefulWidget {
   final bool expands;
   final TextInputAction? textInputAction;
   final TextAlignVertical? textAlignVertical;
+  final String? Function(String?)? validator;
+  final String value;
 
   const MyInputWidget({
     Key? key,
@@ -41,9 +40,6 @@ class MyInputWidget extends StatefulWidget {
     this.inputFormaters,
     this.onFieldSubmitted,
     this.onChanged,
-    required this.textEditingController,
-    this.campoVazio,
-    this.autovalidateMode = AutovalidateMode.onUserInteraction,
     this.textCapitalization = TextCapitalization.sentences,
     this.onTap,
     this.onEditingComplete,
@@ -51,59 +47,36 @@ class MyInputWidget extends StatefulWidget {
     this.expands = false,
     this.textInputAction,
     this.textAlignVertical = TextAlignVertical.center,
+    required this.validator,
+    required this.value,
   }) : super(key: key);
 
   @override
-  State<MyInputWidget> createState() => _MyInputWidgetState();
-}
-
-class _MyInputWidgetState extends State<MyInputWidget> {
-  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      autovalidateMode: widget.autovalidateMode,
-      textAlignVertical: widget.textAlignVertical!,
-      expands: widget.expands,
-      maxLines: widget.maxLines,
-      minLines: widget.minLines,
-      readOnly: widget.readOnly,
-      onEditingComplete: widget.onEditingComplete,
-      textCapitalization: widget.textCapitalization,
-      textInputAction: widget.textInputAction,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return widget.campoVazio ?? '${widget.label} is empty';
-        }
-        if (widget.label == 'CPF' && !CPFValidator.isValid(value)) {
-          return 'Invalid CPF';
-        }
-        if (widget.label == 'E-mail' &&
-            !RegExp(
-              r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$',
-            ).hasMatch(value)) {
-          return 'Invalid E-mail';
-        }
-        return null;
-      },
-      focusNode: widget.focusNode,
-      keyboardType: widget.keyboardType,
-      onChanged: (value) {
-        if (widget.onChanged != null) {
-          widget.onChanged!(value);
-          setState(() {});
-        }
-      },
-      onTap: widget.onTap,
-      obscureText: widget.obscureText,
-      inputFormatters: widget.inputFormaters,
-      onFieldSubmitted: widget.onFieldSubmitted,
-      maxLength: widget.maxLength,
-      controller: widget.textEditingController,
+      initialValue: value,
+      textAlignVertical: textAlignVertical!,
+      expands: expands,
+      maxLines: maxLines,
+      minLines: minLines,
+      readOnly: readOnly,
+      onEditingComplete: onEditingComplete,
+      textCapitalization: textCapitalization,
+      textInputAction: textInputAction,
+      validator: validator,
+      focusNode: focusNode,
+      keyboardType: keyboardType,
+      onChanged: onChanged,
+      onTap: onTap,
+      obscureText: obscureText,
+      inputFormatters: inputFormaters,
+      onFieldSubmitted: onFieldSubmitted,
+      maxLength: maxLength,
       decoration: InputDecoration(
         counterText: '',
-        hintText: widget.hintText,
-        label: Text(widget.label),
-        suffixIcon: widget.suffixIcon,
+        hintText: hintText,
+        label: Text(label),
+        suffixIcon: suffixIcon,
         filled: true,
         isDense: true,
         fillColor: Colors.transparent,

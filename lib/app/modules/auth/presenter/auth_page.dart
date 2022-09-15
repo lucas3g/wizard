@@ -69,7 +69,6 @@ class _AuthPageState extends State<AuthPage> {
                     focusNode: fUser,
                     hintText: 'Type your username',
                     label: 'Username',
-                    textEditingController: userController,
                   ),
                   const SizedBox(
                     height: 10,
@@ -79,7 +78,6 @@ class _AuthPageState extends State<AuthPage> {
                     focusNode: fPassword,
                     hintText: 'Type your password',
                     label: 'Password',
-                    textEditingController: passwordController,
                     maxLines: 1,
                     suffixIcon: GestureDetector(
                       child: Icon(

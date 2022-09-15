@@ -1,18 +1,18 @@
 import 'package:wizard/app/modules/auth/domain/vos/value_object.dart';
 
-class Password implements ValueObject {
+class ConfirmPassword implements ValueObject {
   final String _value;
 
-  Password(this._value);
+  ConfirmPassword(this._value);
 
   @override
   String? validator() {
     if (_value.isEmpty) {
-      return 'Password cannot be empty';
+      return 'Confirm password cannot be empty';
     }
 
     if (_value.length < 6) {
-      return 'Password must contain at least 6 characters';
+      return 'Confirm password must contain at least 6 characters';
     }
 
     return null;

@@ -3,12 +3,15 @@ import 'package:flutter/services.dart';
 
 import 'package:wizard/app/components/my_app_bar_widget.dart';
 import 'package:wizard/app/components/my_input_widget.dart';
+import 'package:wizard/app/modules/auth/domain/entities/user_entity.dart';
 import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
 
 class AuthenticationWidget extends StatefulWidget {
+  final User user;
   const AuthenticationWidget({
     Key? key,
+    required this.user,
   }) : super(key: key);
 
   @override
@@ -16,18 +19,23 @@ class AuthenticationWidget extends StatefulWidget {
 }
 
 class _AuthenticationWidgetState extends State<AuthenticationWidget> {
+  late User user;
+
   final fEmail = FocusNode();
   final fPassword = FocusNode();
   final fConfirmPass = FocusNode();
-
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPassController = TextEditingController();
 
   final gkForm = GlobalKey<FormState>();
 
   late bool visiblePassword = false;
   late bool visibleConfirmPassword = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    user = widget.user;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +54,9 @@ class _AuthenticationWidgetState extends State<AuthenticationWidget> {
                 focusNode: fEmail,
                 hintText: 'Type you E-mail',
                 label: 'E-mail',
-                campoVazio: 'E-mail cannot be empty',
-                textEditingController: emailController,
+                value: user.email.toString(),
+                onChanged: user.setEmail,
+                validator: (v) => user.email.validator(),
                 inputFormaters: [
                   FilteringTextInputFormatter.deny(
                     RegExp(r"\s\b|\b\s"),
@@ -59,8 +68,9 @@ class _AuthenticationWidgetState extends State<AuthenticationWidget> {
                 focusNode: fPassword,
                 hintText: 'Type you password',
                 label: 'Password',
-                campoVazio: 'Password cannot be empty',
-                textEditingController: passwordController,
+                value: user.password.toString(),
+                onChanged: user.setPassword,
+                validator: (v) => user.password.validator(),
                 obscureText: !visiblePassword,
                 maxLines: 1,
                 suffixIcon: GestureDetector(
@@ -82,8 +92,9 @@ class _AuthenticationWidgetState extends State<AuthenticationWidget> {
                 focusNode: fConfirmPass,
                 hintText: 'Type you confirm password',
                 label: 'Confirm password',
-                campoVazio: 'Confirm password cannot be empty',
-                textEditingController: confirmPassController,
+                value: user.confirmPassword.toString(),
+                onChanged: user.setConfirmPassword,
+                validator: (v) => user.confirmPassword.validator(),
                 obscureText: !visibleConfirmPassword,
                 maxLines: 1,
                 suffixIcon: GestureDetector(

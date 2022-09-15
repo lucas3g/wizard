@@ -4,12 +4,15 @@ import 'package:flutter/services.dart';
 
 import 'package:wizard/app/components/my_app_bar_widget.dart';
 import 'package:wizard/app/components/my_input_widget.dart';
+import 'package:wizard/app/modules/auth/domain/entities/user_entity.dart';
 import 'package:wizard/app/utils/constants.dart';
 import 'package:wizard/app/utils/formatters.dart';
 
 class PersonalDataWidget extends StatefulWidget {
+  final User user;
   const PersonalDataWidget({
     Key? key,
+    required this.user,
   }) : super(key: key);
 
   @override
@@ -17,17 +20,21 @@ class PersonalDataWidget extends StatefulWidget {
 }
 
 class _PersonalDataWidgetState extends State<PersonalDataWidget> {
+  late User user;
+
   final fName = FocusNode();
   final fLastName = FocusNode();
   final fCPF = FocusNode();
   final fBirthday = FocusNode();
 
-  final nameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final cpfController = TextEditingController();
-  final birthDayController = TextEditingController();
-
   final gkForm = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    user = widget.user;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,57 +43,65 @@ class _PersonalDataWidgetState extends State<PersonalDataWidget> {
         preferredSize: context.sizeAppbar,
         child: const MyAppBarWidget(titleAppbar: 'Personal data'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Center(
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              MyInputWidget(
-                focusNode: fName,
-                hintText: 'Type your name',
-                label: 'Name',
-                campoVazio: 'Name cannot be empty ',
-                textEditingController: nameController,
-                inputFormaters: [UpperCaseTextFormatter()],
-              ),
-              const SizedBox(height: 10),
-              MyInputWidget(
-                focusNode: fLastName,
-                hintText: 'Type your last name',
-                label: 'Last Name',
-                campoVazio: 'Last name cannot be empty',
-                textEditingController: lastNameController,
-                inputFormaters: [UpperCaseTextFormatter()],
-              ),
-              const SizedBox(height: 10),
-              MyInputWidget(
-                focusNode: fCPF,
-                hintText: 'Type your CPF',
-                label: 'CPF',
-                campoVazio: 'CPF cannot be empty',
-                textEditingController: cpfController,
-                keyboardType: TextInputType.number,
-                inputFormaters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  CpfInputFormatter(),
-                ],
-              ),
-              const SizedBox(height: 10),
-              MyInputWidget(
-                focusNode: fBirthday,
-                hintText: 'Type your birthday',
-                label: 'Birthday',
-                campoVazio: 'Birthday cannot be empty',
-                textEditingController: birthDayController,
-                keyboardType: TextInputType.number,
-                inputFormaters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  DataInputFormatter()
-                ],
-              ),
-              const SizedBox(height: 10),
-            ],
+      body: Form(
+        key: gkForm,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Center(
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                MyInputWidget(
+                  focusNode: fName,
+                  hintText: 'Type your name',
+                  label: 'Name',
+                  value: user.name.toString(),
+                  onChanged: user.setName,
+                  validator: (v) => user.name.validator(),
+                  inputFormaters: [UpperCaseTextFormatter()],
+                ),
+                const SizedBox(height: 10),
+                MyInputWidget(
+                  focusNode: fLastName,
+                  hintText: 'Type your last name',
+                  label: 'Last Name',
+                  value: user.name.toString(),
+                  onChanged: user.setName,
+                  validator: (v) => user.name.validator(),
+                  inputFormaters: [UpperCaseTextFormatter()],
+                ),
+                const SizedBox(height: 10),
+                MyInputWidget(
+                  focusNode: fCPF,
+                  hintText: 'Type your CPF',
+                  label: 'CPF',
+                  value: user.cpf.toString(),
+                  onChanged: user.setCPF,
+                  validator: (v) => user.cpf.validator(),
+                  keyboardType: TextInputType.number,
+                  inputFormaters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    CpfInputFormatter(),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                MyInputWidget(
+                  focusNode: fBirthday,
+                  hintText: 'Type your birthday',
+                  label: 'Birthday',
+                  value: user.birthDay.toString(),
+                  onChanged: user.setBirthday,
+                  validator: (v) => user.birthDay.validator(),
+                  keyboardType: TextInputType.number,
+                  inputFormaters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    DataInputFormatter()
+                  ],
+                ),
+                const SizedBox(height: 10),
+              ],
+            ),
           ),
         ),
       ),
