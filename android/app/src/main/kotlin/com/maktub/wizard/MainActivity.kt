@@ -1,4 +1,4 @@
-package com.example.wizard
+package com.maktub.wizard
 
 import io.flutter.embedding.android.FlutterActivity
 

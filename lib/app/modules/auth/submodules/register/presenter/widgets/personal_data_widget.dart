@@ -50,17 +50,7 @@ class _PersonalDataWidgetState extends State<PersonalDataWidget> {
               MyInputWidget(
                 focusNode: fName,
                 hintText: 'Type your name',
-                label: 'Name',
-                onChanged: user.setName,
-                value: user.name.toString(),
-                validator: (e) => user.name.validator(),
-                inputFormaters: [UpperCaseTextFormatter()],
-              ),
-              const SizedBox(height: 10),
-              MyInputWidget(
-                focusNode: fLastName,
-                hintText: 'Type your last name',
-                label: 'Last Name',
+                label: 'Name and Last Name',
                 onChanged: user.setName,
                 value: user.name.toString(),
                 validator: (e) => user.name.validator(),

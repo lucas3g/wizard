@@ -27,9 +27,11 @@ class _AuthPageState extends State<AuthPage> {
   late User user;
 
   Future initLogin() async {
-    if (!gkForm.currentState!.validate()) {
-      return;
-    }
+    // if (!gkForm.currentState!.validate()) {
+    //   return;
+    // }
+
+    Modular.to.pushReplacementNamed('/home/');
   }
 
   @override
@@ -77,12 +79,13 @@ class _AuthPageState extends State<AuthPage> {
                 shrinkWrap: true,
                 children: [
                   MyInputWidget(
+                    keyboardType: TextInputType.emailAddress,
                     focusNode: fUser,
-                    hintText: 'Type your username',
-                    label: 'Username',
-                    onChanged: user.setName,
-                    value: user.name.toString(),
-                    validator: (e) => user.name.validator(),
+                    hintText: 'Type your e-mail',
+                    label: 'E-mail',
+                    onChanged: user.setEmail,
+                    value: user.email.toString(),
+                    validator: (e) => user.email.validator(),
                   ),
                   const SizedBox(
                     height: 10,

@@ -1,3 +1,4 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:wizard/app/modules/auth/domain/vos/value_object.dart';
 
 class BirthDay implements ValueObject {
@@ -9,6 +10,10 @@ class BirthDay implements ValueObject {
   String? validator() {
     if (_value.isEmpty) {
       return 'Birthday cannot be empty';
+    }
+
+    if (!UtilData.validarData(_value)) {
+      return 'Incorrect date of birth';
     }
 
     return null;

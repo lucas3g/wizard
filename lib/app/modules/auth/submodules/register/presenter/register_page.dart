@@ -5,6 +5,7 @@ import 'package:wizard/app/modules/auth/infra/adapters/user_adapter.dart';
 import 'package:wizard/app/modules/auth/submodules/register/presenter/widgets/address_widget.dart';
 import 'package:wizard/app/modules/auth/submodules/register/presenter/widgets/authentication_widget.dart';
 import 'package:wizard/app/modules/auth/submodules/register/presenter/widgets/personal_data_widget.dart';
+import 'package:wizard/app/utils/my_snackbar.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -40,6 +41,11 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
+    if (user.password.toString() != user.confirmPassword.toString()) {
+      MySnackBar(message: 'Passwords do not match');
+      return;
+    }
+
     Modular.to.navigate('/auth/');
   }
 
@@ -57,6 +63,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       body: Form(
         key: gkForm,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: PageView(
           controller: pageController,
           children: [

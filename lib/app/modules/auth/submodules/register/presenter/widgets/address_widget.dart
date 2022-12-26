@@ -52,6 +52,7 @@ class _AddresWidgetState extends State<AddresWidget> {
             shrinkWrap: true,
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     child: MyInputWidget(

@@ -10,7 +10,7 @@ abstract class AppTextStyles {
   TextStyle get subtitleSplash;
   TextStyle get textRegister;
   TextStyle get textRegisterBold;
-  TextStyle get titleViagem;
+  TextStyle get subTitleAppBar;
   TextStyle get titleImageNaoEncontrada;
   TextStyle get titleGraficoVendas;
   TextStyle get titleResumoVendas;
@@ -70,8 +70,11 @@ class AppTextStylesDefault implements AppTextStyles {
       );
 
   @override
-  TextStyle get titleViagem => GoogleFonts.montserrat(
-      fontSize: 14, color: Colors.black, fontWeight: FontWeight.w700);
+  TextStyle get subTitleAppBar => GoogleFonts.montserrat(
+        fontSize: 14,
+        color: Colors.white,
+        fontWeight: FontWeight.w700,
+      );
 
   @override
   TextStyle get titleImageNaoEncontrada => GoogleFonts.montserrat(

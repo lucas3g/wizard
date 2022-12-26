@@ -22,7 +22,7 @@ class _MyAppBarWidgetState extends State<MyAppBarWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       height: height + (Platform.isWindows ? 10 : 40),
       width: context.screenWidth,
       decoration: BoxDecoration(
@@ -32,12 +32,23 @@ class _MyAppBarWidgetState extends State<MyAppBarWidget> {
           bottomRight: Radius.circular(20),
         ),
       ),
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                widget.titleAppbar,
+                style: AppTheme.textStyles.titleAppBar,
+              ),
+            ],
+          ),
           Text(
-            widget.titleAppbar,
-            style: AppTheme.textStyles.titleAppBar,
+            'Teacher: Tainá Salami',
+            style: AppTheme.textStyles.subTitleAppBar,
           ),
         ],
       ),
