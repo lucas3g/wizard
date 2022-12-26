@@ -13,4 +13,7 @@ class BirthDay implements ValueObject {
 
     return null;
   }
+
+  @override
+  String toString() => _value;
 }

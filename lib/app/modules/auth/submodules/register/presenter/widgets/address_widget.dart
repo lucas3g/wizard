@@ -29,6 +29,15 @@ class _AddresWidgetState extends State<AddresWidget> {
 
   final gkForm = GlobalKey<FormState>();
 
+  late User user;
+
+  @override
+  void initState() {
+    super.initState();
+
+    user = widget.user;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,6 +63,9 @@ class _AddresWidgetState extends State<AddresWidget> {
                         FilteringTextInputFormatter.digitsOnly,
                         CepInputFormatter()
                       ],
+                      onChanged: user.address.setZipCode,
+                      value: user.address.zipCode.toString(),
+                      validator: (e) => user.address.zipCode.validator(),
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -72,6 +84,9 @@ class _AddresWidgetState extends State<AddresWidget> {
                 hintText: 'Type your state',
                 label: 'State',
                 inputFormaters: [UpperCaseTextFormatter()],
+                onChanged: user.address.setState,
+                value: user.address.state.toString(),
+                validator: (e) => user.address.state.validator(),
               ),
               const SizedBox(height: 10),
               MyInputWidget(
@@ -79,6 +94,9 @@ class _AddresWidgetState extends State<AddresWidget> {
                 hintText: 'Type your city',
                 label: 'City',
                 inputFormaters: [UpperCaseTextFormatter()],
+                onChanged: user.address.setCity,
+                value: user.address.city.toString(),
+                validator: (e) => user.address.city.validator(),
               ),
               const SizedBox(height: 10),
               MyInputWidget(
@@ -86,6 +104,9 @@ class _AddresWidgetState extends State<AddresWidget> {
                 hintText: 'Type your address',
                 label: 'Address',
                 inputFormaters: [UpperCaseTextFormatter()],
+                onChanged: user.address.setStreet,
+                value: user.address.street.toString(),
+                validator: (e) => user.address.street.validator(),
               ),
               const SizedBox(height: 10),
               MyInputWidget(
@@ -93,6 +114,9 @@ class _AddresWidgetState extends State<AddresWidget> {
                 hintText: 'Type your number',
                 label: 'Number',
                 inputFormaters: [UpperCaseTextFormatter()],
+                onChanged: user.address.setNumber,
+                value: user.address.number.toString(),
+                validator: (e) => user.address.number.validator(),
               ),
               const SizedBox(height: 10),
               MyInputWidget(
@@ -100,6 +124,9 @@ class _AddresWidgetState extends State<AddresWidget> {
                 hintText: 'Type your district',
                 label: 'District',
                 inputFormaters: [UpperCaseTextFormatter()],
+                onChanged: user.address.setDistrict,
+                value: user.address.district.toString(),
+                validator: (e) => user.address.district.validator(),
               ),
               const SizedBox(height: 10),
             ],

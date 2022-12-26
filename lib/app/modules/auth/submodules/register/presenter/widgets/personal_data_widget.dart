@@ -27,8 +27,6 @@ class _PersonalDataWidgetState extends State<PersonalDataWidget> {
   final fCPF = FocusNode();
   final fBirthday = FocusNode();
 
-  final gkForm = GlobalKey<FormState>();
-
   @override
   void initState() {
     super.initState();
@@ -43,65 +41,61 @@ class _PersonalDataWidgetState extends State<PersonalDataWidget> {
         preferredSize: context.sizeAppbar,
         child: const MyAppBarWidget(titleAppbar: 'Personal data'),
       ),
-      body: Form(
-        key: gkForm,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Center(
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                MyInputWidget(
-                  focusNode: fName,
-                  hintText: 'Type your name',
-                  label: 'Name',
-                  value: user.name.toString(),
-                  onChanged: user.setName,
-                  validator: (v) => user.name.validator(),
-                  inputFormaters: [UpperCaseTextFormatter()],
-                ),
-                const SizedBox(height: 10),
-                MyInputWidget(
-                  focusNode: fLastName,
-                  hintText: 'Type your last name',
-                  label: 'Last Name',
-                  value: user.name.toString(),
-                  onChanged: user.setName,
-                  validator: (v) => user.name.validator(),
-                  inputFormaters: [UpperCaseTextFormatter()],
-                ),
-                const SizedBox(height: 10),
-                MyInputWidget(
-                  focusNode: fCPF,
-                  hintText: 'Type your CPF',
-                  label: 'CPF',
-                  value: user.cpf.toString(),
-                  onChanged: user.setCPF,
-                  validator: (v) => user.cpf.validator(),
-                  keyboardType: TextInputType.number,
-                  inputFormaters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                    CpfInputFormatter(),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                MyInputWidget(
-                  focusNode: fBirthday,
-                  hintText: 'Type your birthday',
-                  label: 'Birthday',
-                  value: user.birthDay.toString(),
-                  onChanged: user.setBirthday,
-                  validator: (v) => user.birthDay.validator(),
-                  keyboardType: TextInputType.number,
-                  inputFormaters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                    DataInputFormatter()
-                  ],
-                ),
-                const SizedBox(height: 10),
-              ],
-            ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Center(
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              MyInputWidget(
+                focusNode: fName,
+                hintText: 'Type your name',
+                label: 'Name',
+                onChanged: user.setName,
+                value: user.name.toString(),
+                validator: (e) => user.name.validator(),
+                inputFormaters: [UpperCaseTextFormatter()],
+              ),
+              const SizedBox(height: 10),
+              MyInputWidget(
+                focusNode: fLastName,
+                hintText: 'Type your last name',
+                label: 'Last Name',
+                onChanged: user.setName,
+                value: user.name.toString(),
+                validator: (e) => user.name.validator(),
+                inputFormaters: [UpperCaseTextFormatter()],
+              ),
+              const SizedBox(height: 10),
+              MyInputWidget(
+                focusNode: fCPF,
+                hintText: 'Type your CPF',
+                label: 'CPF',
+                value: user.cpf.toString(),
+                onChanged: user.setCPF,
+                validator: (v) => user.cpf.validator(),
+                keyboardType: TextInputType.number,
+                inputFormaters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  CpfInputFormatter(),
+                ],
+              ),
+              const SizedBox(height: 10),
+              MyInputWidget(
+                focusNode: fBirthday,
+                hintText: 'Type your birthday',
+                label: 'Birthday',
+                value: user.birthDay.toString(),
+                onChanged: user.setBirthday,
+                validator: (v) => user.birthDay.validator(),
+                keyboardType: TextInputType.number,
+                inputFormaters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  DataInputFormatter()
+                ],
+              ),
+              const SizedBox(height: 10),
+            ],
           ),
         ),
       ),

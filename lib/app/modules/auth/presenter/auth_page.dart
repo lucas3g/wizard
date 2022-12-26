@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:wizard/app/components/my_input_widget.dart';
+import 'package:wizard/app/modules/auth/domain/entities/user_entity.dart';
+import 'package:wizard/app/modules/auth/infra/adapters/user_adapter.dart';
 import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
 
@@ -22,10 +24,19 @@ class _AuthPageState extends State<AuthPage> {
 
   late bool visiblePassword = false;
 
+  late User user;
+
   Future initLogin() async {
     if (!gkForm.currentState!.validate()) {
       return;
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    user = UserAdapter.empty();
   }
 
   @override
@@ -69,6 +80,9 @@ class _AuthPageState extends State<AuthPage> {
                     focusNode: fUser,
                     hintText: 'Type your username',
                     label: 'Username',
+                    onChanged: user.setName,
+                    value: user.name.toString(),
+                    validator: (e) => user.name.validator(),
                   ),
                   const SizedBox(
                     height: 10,
@@ -79,6 +93,7 @@ class _AuthPageState extends State<AuthPage> {
                     hintText: 'Type your password',
                     label: 'Password',
                     maxLines: 1,
+                    onChanged: user.setPassword,
                     suffixIcon: GestureDetector(
                       child: Icon(
                         !visiblePassword
@@ -94,6 +109,8 @@ class _AuthPageState extends State<AuthPage> {
                         setState(() {});
                       },
                     ),
+                    value: user.password.toString(),
+                    validator: (e) => user.password.validator(),
                   ),
                   const SizedBox(
                     height: 10,

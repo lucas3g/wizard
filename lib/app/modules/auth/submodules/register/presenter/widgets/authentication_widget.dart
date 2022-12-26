@@ -25,8 +25,6 @@ class _AuthenticationWidgetState extends State<AuthenticationWidget> {
   final fPassword = FocusNode();
   final fConfirmPass = FocusNode();
 
-  final gkForm = GlobalKey<FormState>();
-
   late bool visiblePassword = false;
   late bool visibleConfirmPassword = false;
 
