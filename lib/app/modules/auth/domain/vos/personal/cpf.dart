@@ -1,5 +1,5 @@
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:wizard/app/modules/auth/domain/vos/value_object.dart';
+import 'package:wizard/app/core_module/types/value_object.dart';
 
 class CPF implements ValueObject {
   final String _value;

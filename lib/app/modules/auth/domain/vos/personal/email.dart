@@ -1,4 +1,4 @@
-import 'package:wizard/app/modules/auth/domain/vos/value_object.dart';
+import 'package:wizard/app/core_module/types/value_object.dart';
 import 'package:string_validator/string_validator.dart' as string_validator;
 
 class Email implements ValueObject {

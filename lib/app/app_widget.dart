@@ -18,9 +18,6 @@ class AppWidget extends StatelessWidget {
         appBarTheme: AppBarTheme(
           color: AppTheme.colors.primary,
           titleTextStyle: AppTheme.textStyles.titleAppBar,
-          iconTheme: const IconThemeData(
-            color: Colors.white,
-          ),
         ),
       ),
       debugShowCheckedModeBanner: false,

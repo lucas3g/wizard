@@ -1,9 +1,9 @@
 import 'package:wizard/app/core_module/types/value_object.dart';
 
-class Name implements ValueObject {
+class StudentName implements ValueObject {
   final String _value;
 
-  Name(this._value);
+  StudentName(this._value);
 
   @override
   String? validator() {

@@ -25,11 +25,10 @@ class _MyElevatedButtonWidgetState extends State<MyElevatedButtonWidget> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
+        padding: EdgeInsets.zero,
       ),
       icon: Icon(widget.icon),
-      label: Text(
-        widget.label,
-      ),
+      label: Text(widget.label),
     );
   }
 }
