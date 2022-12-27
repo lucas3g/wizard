@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:wizard/app/components/my_input_widget.dart';
 import 'package:wizard/app/modules/auth/domain/entities/user_entity.dart';
 import 'package:wizard/app/modules/auth/infra/adapters/user_adapter.dart';
 import 'package:wizard/app/theme/app_theme.dart';
@@ -73,89 +72,77 @@ class _AuthPageState extends State<AuthPage> {
                 ),
               ],
             ),
-            Form(
-              key: gkForm,
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  MyInputWidget(
-                    keyboardType: TextInputType.emailAddress,
-                    focusNode: fUser,
-                    hintText: 'Type your e-mail',
-                    label: 'E-mail',
-                    onChanged: user.setEmail,
-                    value: user.email.value,
-                    validator: (e) => user.email.validate().exceptionOrNull(),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  MyInputWidget(
-                    obscureText: !visiblePassword,
-                    focusNode: fPassword,
-                    hintText: 'Type your password',
-                    label: 'Password',
-                    maxLines: 1,
-                    onChanged: user.setPassword,
-                    suffixIcon: GestureDetector(
-                      child: Icon(
-                        !visiblePassword
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                        size: 25,
-                        color: !visiblePassword
-                            ? const Color(0xFF666666)
-                            : AppTheme.colors.primary,
-                      ),
-                      onTap: () {
-                        visiblePassword = !visiblePassword;
-                        setState(() {});
-                      },
+            Text(
+              'Welcome to the Teacher Control Wizup',
+              style: AppTheme.textStyles.titleAuthPage,
+              textAlign: TextAlign.center,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Log in with a google account :)',
+                  style: AppTheme.textStyles.subTitleAuthPage,
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                          height: 45,
+                          child: InkWell(
+                            onTap: () {},
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Row(
+                                  children: [
+                                    Image.asset('assets/images/google.png'),
+                                    const VerticalDivider(
+                                      color: Colors.grey,
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        'Login with google',
+                                        style: AppTheme
+                                            .textStyles.labelButtonGoogle,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )),
                     ),
-                    value: user.password.value,
-                    validator: (e) =>
-                        user.password.validate().exceptionOrNull(),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: SizedBox(
-                          height: 40,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              await initLogin();
-                            },
-                            child: const Text('Sign In'),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Don't have an account?",
-                        style: AppTheme.textStyles.textRegister,
-                      ),
-                      const SizedBox(width: 5),
-                      TextButton(
-                        child: const Text('Register here'),
-                        onPressed: () {
-                          Modular.to.navigate('./register/');
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   crossAxisAlignment: CrossAxisAlignment.center,
+                //   children: [
+                //     Text(
+                //       "Don't have an account?",
+                //       style: AppTheme.textStyles.textRegister,
+                //     ),
+                //     const SizedBox(width: 5),
+                //     TextButton(
+                //       child: const Text('Register here'),
+                //       onPressed: () {
+                //         Modular.to.navigate('./register/');
+                //       },
+                //     ),
+                //   ],
+                // ),
+              ],
             ),
             const SizedBox(),
             Text(

@@ -11,9 +11,9 @@ abstract class AppTextStyles {
   TextStyle get textRegister;
   TextStyle get textRegisterBold;
   TextStyle get subTitleAppBar;
-  TextStyle get titleImageNaoEncontrada;
-  TextStyle get titleGraficoVendas;
-  TextStyle get titleResumoVendas;
+  TextStyle get labelButtonGoogle;
+  TextStyle get subTitleAuthPage;
+  TextStyle get titleAuthPage;
   TextStyle get textoCadastroSucesso;
   TextStyle get textoTermo;
   TextStyle get textoRadioList;
@@ -77,15 +77,14 @@ class AppTextStylesDefault implements AppTextStyles {
       );
 
   @override
-  TextStyle get titleImageNaoEncontrada => GoogleFonts.montserrat(
+  TextStyle get labelButtonGoogle => GoogleFonts.montserrat(
       fontSize: 12, color: Colors.black, fontWeight: FontWeight.w700);
 
   @override
-  TextStyle get titleGraficoVendas => GoogleFonts.montserrat(
-        fontSize: 13,
+  TextStyle get subTitleAuthPage => GoogleFonts.montserrat(
+        fontSize: 18,
         color: Colors.black,
         fontWeight: FontWeight.w500,
-        decoration: TextDecoration.underline,
       );
 
   @override
@@ -176,11 +175,10 @@ class AppTextStylesDefault implements AppTextStyles {
       );
 
   @override
-  TextStyle get titleResumoVendas => GoogleFonts.montserrat(
-        fontSize: 14,
-        color: Colors.black,
-        fontWeight: FontWeight.w500,
-        decoration: TextDecoration.none,
+  TextStyle get titleAuthPage => GoogleFonts.montserrat(
+        fontSize: 30,
+        color: AppTheme.colors.primary,
+        fontWeight: FontWeight.w700,
       );
 
   @override

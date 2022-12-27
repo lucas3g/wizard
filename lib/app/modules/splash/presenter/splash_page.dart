@@ -17,7 +17,7 @@ class _SplashPageState extends State<SplashPage> {
 
     await Modular.isModuleReady<AppModule>();
 
-    Modular.to.navigate('/home/');
+    Modular.to.navigate('/auth/');
   }
 
   @override
