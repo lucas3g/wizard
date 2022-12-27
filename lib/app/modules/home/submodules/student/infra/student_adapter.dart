@@ -6,7 +6,7 @@ class StudentAdapter {
       studentName: '',
       studentClass: '',
       studentPhoneNumber: '',
-      studentFather: '',
+      studentParents: '',
     );
   }
 }

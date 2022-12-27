@@ -52,9 +52,9 @@ class _AuthenticationWidgetState extends State<AuthenticationWidget> {
                 focusNode: fEmail,
                 hintText: 'Type you E-mail',
                 label: 'E-mail',
-                value: user.email.toString(),
+                value: user.email.value,
                 onChanged: user.setEmail,
-                validator: (v) => user.email.validator(),
+                validator: (v) => user.email.validate().exceptionOrNull(),
                 inputFormaters: [
                   FilteringTextInputFormatter.deny(
                     RegExp(r"\s\b|\b\s"),
@@ -66,9 +66,9 @@ class _AuthenticationWidgetState extends State<AuthenticationWidget> {
                 focusNode: fPassword,
                 hintText: 'Type you password',
                 label: 'Password',
-                value: user.password.toString(),
+                value: user.password.value,
                 onChanged: user.setPassword,
-                validator: (v) => user.password.validator(),
+                validator: (v) => user.password.validate().exceptionOrNull(),
                 obscureText: !visiblePassword,
                 maxLines: 1,
                 suffixIcon: GestureDetector(
@@ -90,9 +90,10 @@ class _AuthenticationWidgetState extends State<AuthenticationWidget> {
                 focusNode: fConfirmPass,
                 hintText: 'Type you confirm password',
                 label: 'Confirm password',
-                value: user.confirmPassword.toString(),
+                value: user.confirmPassword.value,
                 onChanged: user.setConfirmPassword,
-                validator: (v) => user.confirmPassword.validator(),
+                validator: (v) =>
+                    user.confirmPassword.validate().exceptionOrNull(),
                 obscureText: !visibleConfirmPassword,
                 maxLines: 1,
                 suffixIcon: GestureDetector(

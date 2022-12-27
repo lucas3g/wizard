@@ -84,8 +84,8 @@ class _AuthPageState extends State<AuthPage> {
                     hintText: 'Type your e-mail',
                     label: 'E-mail',
                     onChanged: user.setEmail,
-                    value: user.email.toString(),
-                    validator: (e) => user.email.validator(),
+                    value: user.email.value,
+                    validator: (e) => user.email.validate().exceptionOrNull(),
                   ),
                   const SizedBox(
                     height: 10,
@@ -112,8 +112,9 @@ class _AuthPageState extends State<AuthPage> {
                         setState(() {});
                       },
                     ),
-                    value: user.password.toString(),
-                    validator: (e) => user.password.validator(),
+                    value: user.password.value,
+                    validator: (e) =>
+                        user.password.validate().exceptionOrNull(),
                   ),
                   const SizedBox(
                     height: 10,

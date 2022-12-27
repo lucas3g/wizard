@@ -65,8 +65,9 @@ class _AddresWidgetState extends State<AddresWidget> {
                         CepInputFormatter()
                       ],
                       onChanged: user.address.setZipCode,
-                      value: user.address.zipCode.toString(),
-                      validator: (e) => user.address.zipCode.validator(),
+                      value: user.address.zipCode.value,
+                      validator: (e) =>
+                          user.address.zipCode.validate().exceptionOrNull(),
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -86,8 +87,9 @@ class _AddresWidgetState extends State<AddresWidget> {
                 label: 'State',
                 inputFormaters: [UpperCaseTextFormatter()],
                 onChanged: user.address.setState,
-                value: user.address.state.toString(),
-                validator: (e) => user.address.state.validator(),
+                value: user.address.state.value,
+                validator: (e) =>
+                    user.address.state.validate().exceptionOrNull(),
               ),
               const SizedBox(height: 10),
               MyInputWidget(
@@ -96,8 +98,9 @@ class _AddresWidgetState extends State<AddresWidget> {
                 label: 'City',
                 inputFormaters: [UpperCaseTextFormatter()],
                 onChanged: user.address.setCity,
-                value: user.address.city.toString(),
-                validator: (e) => user.address.city.validator(),
+                value: user.address.city.value,
+                validator: (e) =>
+                    user.address.city.validate().exceptionOrNull(),
               ),
               const SizedBox(height: 10),
               MyInputWidget(
@@ -106,8 +109,9 @@ class _AddresWidgetState extends State<AddresWidget> {
                 label: 'Address',
                 inputFormaters: [UpperCaseTextFormatter()],
                 onChanged: user.address.setStreet,
-                value: user.address.street.toString(),
-                validator: (e) => user.address.street.validator(),
+                value: user.address.street.value,
+                validator: (e) =>
+                    user.address.street.validate().exceptionOrNull(),
               ),
               const SizedBox(height: 10),
               MyInputWidget(
@@ -116,8 +120,9 @@ class _AddresWidgetState extends State<AddresWidget> {
                 label: 'Number',
                 inputFormaters: [UpperCaseTextFormatter()],
                 onChanged: user.address.setNumber,
-                value: user.address.number.toString(),
-                validator: (e) => user.address.number.validator(),
+                value: user.address.number.value,
+                validator: (e) =>
+                    user.address.number.validate().exceptionOrNull(),
               ),
               const SizedBox(height: 10),
               MyInputWidget(
@@ -126,8 +131,9 @@ class _AddresWidgetState extends State<AddresWidget> {
                 label: 'District',
                 inputFormaters: [UpperCaseTextFormatter()],
                 onChanged: user.address.setDistrict,
-                value: user.address.district.toString(),
-                validator: (e) => user.address.district.validator(),
+                value: user.address.district.value,
+                validator: (e) =>
+                    user.address.district.validate().exceptionOrNull(),
               ),
               const SizedBox(height: 10),
             ],

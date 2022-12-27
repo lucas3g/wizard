@@ -44,6 +44,7 @@ dependencies:
   shared_preferences: ^2.0.15
   brasil_fields: ^1.4.5
   string_validator: ^0.3.0
+  result_dart: ^1.0.3
 
 dev_dependencies:
   flutter_test:

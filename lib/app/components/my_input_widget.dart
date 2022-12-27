@@ -54,6 +54,7 @@ class MyInputWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       initialValue: value,
       textAlignVertical: textAlignVertical!,
       expands: expands,

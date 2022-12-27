@@ -1,3 +1,5 @@
+import 'package:result_dart/result_dart.dart';
+
 abstract class ValueObject {
-  String? validator();
+  Result<Unit, String> validate([Object? object]);
 }

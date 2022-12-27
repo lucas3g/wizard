@@ -21,6 +21,8 @@ class _StudentPageState extends State<StudentPage> {
   FocusNode fPhoneNumber = FocusNode();
   FocusNode fFather = FocusNode();
 
+  final gkForm = GlobalKey<FormState>();
+
   late Student student;
 
   @override
@@ -45,65 +47,70 @@ class _StudentPageState extends State<StudentPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            MyInputWidget(
-              focusNode: fName,
-              hintText: "Enter the student's name",
-              label: 'Name',
-              validator: (v) => student.studentName.validator(),
-              value: student.studentName.toString(),
-              onChanged: student.setStudentName,
-              inputFormaters: [UpperCaseTextFormatter()],
-            ),
-            const SizedBox(height: 10),
-            MyInputWidget(
-              focusNode: fClass,
-              hintText: "Enter the student's class",
-              label: 'Class',
-              validator: (v) => student.studentClass.validator(),
-              value: student.studentClass.toString(),
-              onChanged: student.setStudentClass,
-            ),
-            const SizedBox(height: 10),
-            MyInputWidget(
-              focusNode: fPhoneNumber,
-              hintText: "Enter phone number",
-              label: 'Phone Number',
-              validator: (v) => student.studentPhoneNumber.validator(),
-              value: student.studentPhoneNumber.toString(),
-              onChanged: student.setStudentPhoneNumber,
-              keyboardType: TextInputType.number,
-              inputFormaters: [
-                FilteringTextInputFormatter.digitsOnly,
-                TelefoneInputFormatter(),
-              ],
-            ),
-            const SizedBox(height: 10),
-            MyInputWidget(
-              focusNode: fFather,
-              hintText: "Enter father's name",
-              label: 'Father',
-              validator: (v) => student.studentFather.validator(),
-              value: student.studentFather.toString(),
-              onChanged: student.setStudentFather,
-              inputFormaters: [UpperCaseTextFormatter()],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: MyElevatedButtonWidget(
-                    label: 'Save',
-                    icon: Icons.save_rounded,
-                    onPressed: () {
-                      Modular.to.pop();
-                    },
+        child: Form(
+          key: gkForm,
+          child: Column(
+            children: [
+              MyInputWidget(
+                focusNode: fName,
+                hintText: "Enter the student's name",
+                label: 'Name',
+                validator: (v) =>
+                    student.studentName.validate().exceptionOrNull(),
+                value: student.studentName.value,
+                onChanged: student.setStudentName,
+                inputFormaters: [UpperCaseTextFormatter()],
+              ),
+              const SizedBox(height: 10),
+              MyInputWidget(
+                focusNode: fClass,
+                hintText: "Enter the student's class",
+                label: 'Class',
+                validator: (v) =>
+                    student.studentClass.validate().exceptionOrNull(),
+                value: student.studentClass.value,
+                onChanged: student.setStudentClass,
+              ),
+              const SizedBox(height: 10),
+              MyInputWidget(
+                focusNode: fPhoneNumber,
+                hintText: "Enter phone number",
+                label: 'Phone Number',
+                validator: (v) =>
+                    student.studentPhoneNumber.validate().exceptionOrNull(),
+                value: student.studentPhoneNumber.value,
+                onChanged: student.setStudentPhoneNumber,
+                keyboardType: TextInputType.number,
+                inputFormaters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  TelefoneInputFormatter(),
+                ],
+              ),
+              const SizedBox(height: 10),
+              MyInputWidget(
+                focusNode: fFather,
+                hintText: "Enter father's name",
+                label: 'Father',
+                validator: (v) =>
+                    student.studentParents.validate().exceptionOrNull(),
+                value: student.studentParents.value,
+                onChanged: student.setStudentFather,
+                inputFormaters: [UpperCaseTextFormatter()],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: MyElevatedButtonWidget(
+                      label: 'Save',
+                      icon: Icons.save_rounded,
+                      onPressed: () {},
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
