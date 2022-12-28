@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.maktub.wizard">
+    package="com.maktub.wizup">
    <application
         android:label="wizard"
         android:name="${applicationName}"

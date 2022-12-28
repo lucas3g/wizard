@@ -45,6 +45,7 @@ dependencies:
   brasil_fields: ^1.4.5
   string_validator: ^0.3.0
   result_dart: ^1.0.3
+  google_sign_in: ^5.4.2
 
 dev_dependencies:
   flutter_test:

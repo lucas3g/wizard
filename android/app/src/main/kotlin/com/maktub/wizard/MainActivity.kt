@@ -1,4 +1,4 @@
-package com.maktub.wizard
+package com.maktub.wizup
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,6 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:wizard/app/modules/auth/presenter/auth_page.dart';
-import 'package:wizard/app/modules/auth/submodules/register/register_module.dart';
 
 ModuleRoute configuraModule(
   String name, {
@@ -19,9 +18,7 @@ ModuleRoute configuraModule(
 
 class AuthModule extends Module {
   @override
-  final List<Module> imports = [
-    RegisterModule(),
-  ];
+  final List<Module> imports = [];
 
   @override
   final List<Bind<Object>> binds = [];
@@ -32,6 +29,5 @@ class AuthModule extends Module {
       '/',
       child: ((context, args) => const AuthPage()),
     ),
-    configuraModule('/register', module: RegisterModule()),
   ];
 }

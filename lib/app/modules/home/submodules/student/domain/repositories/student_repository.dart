@@ -3,5 +3,5 @@ import 'package:wizard/app/modules/home/submodules/student/domain/entity/student
 import 'package:wizard/app/modules/home/submodules/student/domain/exceptions/student_exception.dart';
 
 abstract class IStudentRepository {
-  Future<Result<bool, IStudentException>> saveStudent(Student student);
+  AsyncResult<Student, IStudentException> saveStudent(Student student);
 }

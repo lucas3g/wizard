@@ -1,18 +1,18 @@
 import 'package:result_dart/result_dart.dart';
-import 'package:wizard/app/core_module/types/value_object.dart';
+import 'package:wizard/app/core_module/vos/text_vo.dart';
 
-class StudentName implements ValueObject {
-  final String _value;
-  String get value => _value;
-
-  StudentName(this._value);
+class StudentName extends TextVO {
+  const StudentName(super.value);
 
   @override
-  Result<Unit, String> validate([Object? object]) {
-    if (_value.isEmpty) {
-      return 'Name cannot be empty'.toFailure();
-    }
+  Result<StudentName, String> validate([Object? object]) {
+    return super.validate().flatMap(_localValidate);
+  }
 
-    return Success.unit();
+  Result<StudentName, String> _localValidate(TextVO success) {
+    if (value.split(' ').length < 2) {
+      return '$runtimeType must contain first and last name'.toFailure();
+    }
+    return Success(this);
   }
 }

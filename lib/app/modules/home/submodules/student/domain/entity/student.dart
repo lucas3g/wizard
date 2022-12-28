@@ -1,10 +1,11 @@
 import 'package:result_dart/result_dart.dart';
+import 'package:wizard/app/core_module/types/entity.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/vos/student_class.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/vos/student_parents.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/vos/student_name.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/vos/student_phone_number.dart';
 
-class Student {
+class Student extends Entity {
   StudentName _studentName;
   StudentClass _studentClass;
   StudentPhoneNumber _studentPhoneNumber;
@@ -25,6 +26,7 @@ class Student {
       _studentParents = StudentParents(value);
 
   Student({
+    required super.id,
     required studentName,
     required studentClass,
     required studentPhoneNumber,
@@ -34,11 +36,14 @@ class Student {
         _studentPhoneNumber = StudentPhoneNumber(studentPhoneNumber),
         _studentParents = StudentParents(studentParents);
 
-  Result<Unit, String> validate() {
-    return studentName
+  @override
+  Result<Student, String> validate([Object? object]) {
+    return super
         .validate()
+        .flatMap(studentName.validate)
         .flatMap(studentClass.validate)
         .flatMap(studentPhoneNumber.validate)
-        .flatMap(studentParents.validate);
+        .flatMap(studentParents.validate)
+        .pure(this);
   }
 }
