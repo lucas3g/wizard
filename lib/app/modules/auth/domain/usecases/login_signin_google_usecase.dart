@@ -2,10 +2,11 @@
 import 'package:result_dart/result_dart.dart';
 
 import 'package:wizard/app/modules/auth/domain/entities/user_entity.dart';
+import 'package:wizard/app/modules/auth/domain/exceptions/auth_exception.dart';
 import 'package:wizard/app/modules/auth/domain/repositories/auth_repository.dart';
 
 abstract class ILoginSignInGoogleUseCase {
-  AsyncResult<User, Exception> call();
+  AsyncResult<User, IAuthException> call();
 }
 
 class LoginSignInGoogleUseCase implements ILoginSignInGoogleUseCase {
@@ -14,7 +15,7 @@ class LoginSignInGoogleUseCase implements ILoginSignInGoogleUseCase {
   LoginSignInGoogleUseCase({required this.repository});
 
   @override
-  AsyncResult<User, Exception> call() {
+  AsyncResult<User, IAuthException> call() {
     return repository.signInGoogle();
   }
 }

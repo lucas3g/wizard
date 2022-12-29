@@ -1,43 +1,55 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:wizard/app/modules/auth/domain/entities/user_entity.dart';
+import 'package:wizard/app/core_module/services/shared_preferences/adapters/shared_params.dart';
+import 'package:wizard/app/core_module/services/shared_preferences/local_storage_interface.dart';
 import 'package:wizard/app/modules/auth/infra/adapters/user_adapter.dart';
+
+import 'package:wizard/app/modules/auth/presenter/bloc/auth_bloc.dart';
+import 'package:wizard/app/modules/auth/presenter/bloc/events/auth_events.dart';
+import 'package:wizard/app/modules/auth/presenter/bloc/states/auth_states.dart';
 import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
 
 class AuthPage extends StatefulWidget {
-  const AuthPage({Key? key}) : super(key: key);
+  final AuthBloc authBloc;
+
+  const AuthPage({
+    Key? key,
+    required this.authBloc,
+  }) : super(key: key);
 
   @override
   State<AuthPage> createState() => _AuthPageState();
 }
 
 class _AuthPageState extends State<AuthPage> {
-  final fUser = FocusNode();
-  final fPassword = FocusNode();
-
-  final userController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  final gkForm = GlobalKey<FormState>();
-
-  late bool visiblePassword = false;
-
-  late User user;
+  late StreamSubscription sub;
 
   Future initLogin() async {
-    // if (!gkForm.currentState!.validate()) {
-    //   return;
-    // }
-
-    Modular.to.pushReplacementNamed('/home/');
+    widget.authBloc.add(SignInGoogleEvent());
   }
 
   @override
   void initState() {
     super.initState();
 
-    user = UserAdapter.empty();
+    sub = widget.authBloc.stream.listen((state) async {
+      if (state is SuccessAuth) {
+        final shared = Modular.get<ILocalStorage>();
+
+        await shared.setData(
+          params: SharedParams(
+            key: 'user',
+            value: UserAdapter.toJson(state.user),
+          ),
+        );
+
+        Modular.to.pushReplacementNamed('/home/');
+      }
+    });
   }
 
   @override
@@ -89,59 +101,42 @@ class _AuthPageState extends State<AuthPage> {
                   children: [
                     Expanded(
                       child: SizedBox(
-                          height: 45,
-                          child: InkWell(
-                            onTap: () {},
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Row(
-                                  children: [
-                                    Image.asset('assets/images/google.png'),
-                                    const VerticalDivider(
-                                      color: Colors.grey,
+                        height: 45,
+                        child: InkWell(
+                          onTap: () async {
+                            await initLogin();
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Row(
+                                children: [
+                                  Image.asset('assets/images/google.png'),
+                                  const VerticalDivider(
+                                    color: Colors.grey,
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      'Login with google',
+                                      style:
+                                          AppTheme.textStyles.labelButtonGoogle,
+                                      textAlign: TextAlign.center,
                                     ),
-                                    Expanded(
-                                      child: Text(
-                                        'Login with google',
-                                        style: AppTheme
-                                            .textStyles.labelButtonGoogle,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
-                          )),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   crossAxisAlignment: CrossAxisAlignment.center,
-                //   children: [
-                //     Text(
-                //       "Don't have an account?",
-                //       style: AppTheme.textStyles.textRegister,
-                //     ),
-                //     const SizedBox(width: 5),
-                //     TextButton(
-                //       child: const Text('Register here'),
-                //       onPressed: () {
-                //         Modular.to.navigate('./register/');
-                //       },
-                //     ),
-                //   ],
-                // ),
               ],
             ),
             const SizedBox(),
