@@ -1,11 +1,12 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:wizard/app/components/my_app_bar_widget.dart';
 import 'package:wizard/app/components/my_elevated_button_widget.dart';
 import 'package:wizard/app/components/my_input_widget.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/entity/student.dart';
 import 'package:wizard/app/modules/home/submodules/student/infra/student_adapter.dart';
+import 'package:wizard/app/utils/constants.dart';
 import 'package:wizard/app/utils/formatters.dart';
 
 class StudentPage extends StatefulWidget {
@@ -35,18 +36,12 @@ class _StudentPageState extends State<StudentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('New Student'),
-        leading: IconButton(
-          onPressed: () {
-            Modular.to.pop();
-          },
-          icon: const Icon(Icons.arrow_back),
-          color: Colors.white,
-        ),
+      appBar: PreferredSize(
+        preferredSize: Size(double.infinity, AppBar().preferredSize.height),
+        child: const MyAppBarWidget(titleAppbar: 'New Student'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(kPadding),
         child: Form(
           key: gkForm,
           child: Column(

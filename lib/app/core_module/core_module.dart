@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wizard/app/core_module/services/firestore/firestore_service.dart';
+import 'package:wizard/app/core_module/services/firestore/online_storage_interface.dart';
 
 import 'services/shared_preferences/local_storage_interface.dart';
 import 'services/shared_preferences/shared_preferences_service.dart';
@@ -30,6 +33,14 @@ class CoreModule extends Module {
     ),
     Bind<ILocalStorage>(
       ((i) => SharedPreferencesService(sharedPreferences: i())),
+      export: true,
+    ),
+    Bind<FirebaseFirestore>(
+      (i) => FirebaseFirestore.instance,
+      export: true,
+    ),
+    Bind<IOnlineStorage>(
+      ((i) => FireStoreService(firestore: i())),
       export: true,
     ),
   ];

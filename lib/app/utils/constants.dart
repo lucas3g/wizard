@@ -31,3 +31,5 @@ extension ContextExtensions on BuildContext {
     );
   }
 }
+
+const double kPadding = 10;

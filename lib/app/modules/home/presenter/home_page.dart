@@ -27,6 +27,12 @@ class _HomePageState extends State<HomePage> {
     final user = globalUser.user;
     return Scaffold(
       appBar: AppBar(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10),
+          ),
+        ),
         title: const Text('WizUp'),
         centerTitle: true,
         leading: Builder(builder: (context) {
@@ -110,7 +116,9 @@ class _HomePageState extends State<HomePage> {
               MyElevatedButtonWidget(
                 label: 'New Class',
                 icon: Icons.class_rounded,
-                onPressed: () {},
+                onPressed: () {
+                  Modular.to.pushNamed('/home/class/');
+                },
               ),
               MyElevatedButtonWidget(
                 label: 'Mark Presence',
