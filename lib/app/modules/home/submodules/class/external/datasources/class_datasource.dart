@@ -17,8 +17,7 @@ class ClassDataSource implements IClassDataSource {
   AsyncResult<bool, IClassException> saveClass(Class pClass) async {
     try {
       final params = FireStoreParams(
-        collectionPath: 'class',
-        doc: pClass.name.value,
+        collection: 'classes',
         data: ClassAdapter.toMap(pClass),
       );
 

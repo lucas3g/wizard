@@ -15,10 +15,7 @@ class FireStoreService implements IOnlineStorage {
   @override
   Future<bool> saveData({required FireStoreParams params}) async {
     try {
-      await firestore
-          .collection(params.collectionPath)
-          .doc(params.doc)
-          .set(params.data);
+      await firestore.collection(params.collection).add(params.data);
       MySnackBar(message: 'Sucesso');
       return true;
     } catch (e) {

@@ -49,6 +49,7 @@ dependencies:
   firebase_core: ^2.4.0
   cloud_firestore: ^4.3.1
   uuid: ^3.0.7
+  easy_mask: ^2.0.1
 
 dev_dependencies:
   flutter_test:

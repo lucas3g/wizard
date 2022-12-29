@@ -13,16 +13,12 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  late GlobalUser globalUser;
-
   Future init() async {
     await Future.delayed(const Duration(seconds: 2));
 
     await Modular.isModuleReady<AppModule>();
 
-    globalUser = GlobalUser();
-
-    if (globalUser.user.name.value.isNotEmpty) {
+    if (GlobalUser.instance.user.name.value.isNotEmpty) {
       Modular.to.navigate('/home/');
       return;
     }

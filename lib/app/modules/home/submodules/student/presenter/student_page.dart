@@ -97,7 +97,7 @@ class _StudentPageState extends State<StudentPage> {
                 children: [
                   Expanded(
                     child: MyElevatedButtonWidget(
-                      label: 'Save',
+                      label: const Text('Save'),
                       icon: Icons.save_rounded,
                       onPressed: () {},
                     ),

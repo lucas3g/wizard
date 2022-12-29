@@ -13,18 +13,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late GlobalUser globalUser;
+  final user = GlobalUser.instance.user;
 
   @override
   void initState() {
     super.initState();
-
-    globalUser = GlobalUser();
   }
 
   @override
   Widget build(BuildContext context) {
-    final user = globalUser.user;
     return Scaffold(
       appBar: AppBar(
         shape: const RoundedRectangleBorder(
@@ -107,46 +104,46 @@ class _HomePageState extends State<HomePage> {
             mainAxisSpacing: 20,
             children: [
               MyElevatedButtonWidget(
-                label: 'New Student',
+                label: const Text('New Student'),
                 icon: Icons.person_add_rounded,
                 onPressed: () {
                   Modular.to.pushNamed('/home/student/');
                 },
               ),
               MyElevatedButtonWidget(
-                label: 'New Class',
+                label: const Text('New Class'),
                 icon: Icons.class_rounded,
                 onPressed: () {
                   Modular.to.pushNamed('/home/class/');
                 },
               ),
               MyElevatedButtonWidget(
-                label: 'Mark Presence',
+                label: const Text('Mark Presence'),
                 icon: Icons.mark_chat_read_rounded,
                 onPressed: () {},
               ),
               MyElevatedButtonWidget(
-                label: 'Note by Theme',
+                label: const Text('Note by Theme'),
                 icon: Icons.note_alt_rounded,
                 onPressed: () {},
               ),
               MyElevatedButtonWidget(
-                label: 'Note by Review',
+                label: const Text('Note by Review'),
                 icon: Icons.reviews_rounded,
                 onPressed: () {},
               ),
               MyElevatedButtonWidget(
-                label: 'General Report',
+                label: const Text('General Report'),
                 icon: Icons.newspaper_rounded,
                 onPressed: () {},
               ),
               MyElevatedButtonWidget(
-                label: 'Student List',
+                label: const Text('Student List'),
                 icon: Icons.list_rounded,
                 onPressed: () {},
               ),
               MyElevatedButtonWidget(
-                label: 'Class List',
+                label: const Text('Class List'),
                 icon: Icons.list_rounded,
                 onPressed: () {},
               ),

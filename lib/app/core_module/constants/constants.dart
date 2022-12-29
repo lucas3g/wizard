@@ -10,9 +10,12 @@ const baseUrl = String.fromEnvironment('BASE_URL');
 const baseUrlLicense = String.fromEnvironment('BASE_URL_LICENSE');
 
 class GlobalUser {
-  final shared = Modular.get<ILocalStorage>();
+  final _shared = Modular.get<ILocalStorage>();
+
+  static GlobalUser instance = GlobalUser();
+
   late final User _user =
-      UserAdapter.fromMap(jsonDecode(shared.getData('user')));
+      UserAdapter.fromMap(jsonDecode(_shared.getData('user')));
 
   User get user => _user;
 }

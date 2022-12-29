@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 class MyElevatedButtonWidget extends StatefulWidget {
-  final String label;
+  final Widget label;
   final IconData icon;
   final Function() onPressed;
   const MyElevatedButtonWidget({
@@ -28,7 +28,7 @@ class _MyElevatedButtonWidgetState extends State<MyElevatedButtonWidget> {
         padding: EdgeInsets.zero,
       ),
       icon: Icon(widget.icon),
-      label: Text(widget.label),
+      label: widget.label,
     );
   }
 }
