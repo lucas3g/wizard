@@ -1,10 +1,11 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:result_dart/result_dart.dart';
+import 'package:wizard/app/modules/auth/domain/exceptions/auth_exception.dart';
 import 'package:wizard/app/modules/auth/infra/datasources/auth_datasource.dart';
 
 class AuthDataSource implements IAuthDataSource {
   @override
-  AsyncResult<GoogleSignInAccount, Exception> signInGoogle() async {
+  AsyncResult<GoogleSignInAccount, IAuthException> signInGoogle() async {
     try {
       GoogleSignIn googleSignIn = GoogleSignIn(
         scopes: [
@@ -17,7 +18,7 @@ class AuthDataSource implements IAuthDataSource {
 
       return Success(result!);
     } catch (e) {
-      rethrow;
+      return AuthException(message: e.toString()).toFailure();
     }
   }
 }
