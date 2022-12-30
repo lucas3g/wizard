@@ -8,3 +8,17 @@ class FireStoreParams {
     required this.data,
   });
 }
+
+class FireStoreGetDataParams {
+  final String collection;
+  final String field;
+  final String value;
+  final String? orderBy;
+
+  FireStoreGetDataParams({
+    required this.collection,
+    required this.field,
+    required this.value,
+    this.orderBy,
+  });
+}

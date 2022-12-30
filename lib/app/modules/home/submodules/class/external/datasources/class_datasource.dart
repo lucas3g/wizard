@@ -34,12 +34,13 @@ class ClassDataSource implements IClassDataSource {
   AsyncResult<List<Class>, IClassException> getClassesByTeacher(
       ClassIDTeacher idTeacher) async {
     try {
-      final params = FireStoreParams(
+      final params = FireStoreGetDataParams(
         collection: 'classes',
-        data: {'idTeacher': idTeacher.value},
+        field: 'idTeacher',
+        value: idTeacher.value,
       );
 
-      final result = await onlineStorage.getDataByIdTeacher(params: params);
+      final result = await onlineStorage.getDataById(params: params);
 
       late List<Class> list = [];
 

@@ -58,12 +58,12 @@ class _HomePageState extends State<HomePage> {
                     height: 70,
                     width: 70,
                     child: CircleAvatar(
-                      backgroundImage: NetworkImage(user.photoURL.value),
+                      backgroundImage: NetworkImage(user!.photoURL.value),
                     ),
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Teacher: ${user.name.value}',
+                    'Teacher: ${user!.name.value}',
                     style: AppTheme.textStyles.subTitleAppBar,
                   )
                 ],
@@ -120,7 +120,9 @@ class _HomePageState extends State<HomePage> {
               MyElevatedButtonWidget(
                 label: const Text('Mark Presence'),
                 icon: Icons.mark_chat_read_rounded,
-                onPressed: () {},
+                onPressed: () {
+                  Modular.to.pushNamed('/home/presence/');
+                },
               ),
               MyElevatedButtonWidget(
                 label: const Text('Note by Theme'),

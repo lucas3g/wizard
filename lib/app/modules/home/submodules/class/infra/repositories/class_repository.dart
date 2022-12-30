@@ -17,7 +17,7 @@ class ClassRepository implements IClassRepository {
     return dataSource
         .saveClass(pClass)
         .mapError<IClassException>(
-            (error) => ClassException(message: error.toString()))
+            (error) => ClassException(message: error.message))
         .flatMap((success) => Success(success));
   }
 
@@ -27,7 +27,7 @@ class ClassRepository implements IClassRepository {
     return dataSource
         .getClassesByTeacher(idTeacher)
         .mapError<IClassException>(
-            (error) => ClassException(message: error.toString()))
+            (error) => ClassException(message: error.message))
         .flatMap((success) => Success(success));
   }
 }

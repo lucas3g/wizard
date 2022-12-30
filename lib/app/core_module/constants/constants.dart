@@ -12,10 +12,14 @@ const baseUrlLicense = String.fromEnvironment('BASE_URL_LICENSE');
 class GlobalUser {
   final _shared = Modular.get<ILocalStorage>();
 
-  static GlobalUser instance = GlobalUser();
+  static GlobalUser instance = GlobalUser()._carregaDados();
 
-  late final User _user =
-      UserAdapter.fromMap(jsonDecode(_shared.getData('user')));
+  late User? user;
 
-  User get user => _user;
+  _carregaDados() {
+    final result = _shared.getData('user');
+    if (result != null) {
+      user = UserAdapter.fromMap(jsonDecode(result));
+    }
+  }
 }

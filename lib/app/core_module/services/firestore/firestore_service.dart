@@ -24,12 +24,26 @@ class FireStoreService implements IOnlineStorage {
   }
 
   @override
-  Future<QuerySnapshot<Map<String, dynamic>>> getDataByIdTeacher(
-      {required FireStoreParams params}) async {
+  Future<QuerySnapshot<Map<String, dynamic>>> getDataById(
+      {required FireStoreGetDataParams params}) async {
     try {
-      final result = await firestore
+      late QuerySnapshot<Map<String, dynamic>> result;
+
+      final orderBy = params.orderBy;
+
+      if (orderBy != null) {
+        result = await firestore
+            .collection(params.collection)
+            .where(params.field, isEqualTo: params.value)
+            .orderBy(orderBy)
+            .get();
+
+        return result;
+      }
+
+      result = await firestore
           .collection(params.collection)
-          .where('idTeacher', isEqualTo: params.data['idTeacher'])
+          .where(params.field, isEqualTo: params.value)
           .get();
 
       return result;

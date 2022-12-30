@@ -5,6 +5,7 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import 'package:wizard/app/components/my_app_bar_widget.dart';
 import 'package:wizard/app/components/my_drop_down_button_widget.dart';
@@ -16,14 +17,23 @@ import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bl
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/events/class_events.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/states/class_states.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/entity/student.dart';
-import 'package:wizard/app/modules/home/submodules/student/infra/student_adapter.dart';
+import 'package:wizard/app/modules/home/submodules/student/infra/adapters/student_adapter.dart';
+import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/events/student_events.dart';
+import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/states/student_states.dart';
+import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/student_bloc.dart';
+import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
 import 'package:wizard/app/utils/formatters.dart';
 
 class StudentPage extends StatefulWidget {
   final ClassBloc classBloc;
+  final StudentBloc studentBloc;
 
-  const StudentPage({Key? key, required this.classBloc}) : super(key: key);
+  const StudentPage({
+    Key? key,
+    required this.classBloc,
+    required this.studentBloc,
+  }) : super(key: key);
 
   @override
   State<StudentPage> createState() => _StudentPageState();
@@ -50,10 +60,16 @@ class _StudentPageState extends State<StudentPage> {
     widget.classBloc.add(
       GetClassesByIdTeacher(
         idTeacher: ClassIDTeacher(
-          GlobalUser.instance.user.id.value,
+          GlobalUser.instance.user!.id.value,
         ),
       ),
     );
+
+    sub = widget.studentBloc.stream.listen((state) {
+      if (state is SuccessSaveStudent) {
+        Modular.to.pop();
+      }
+    });
   }
 
   @override
@@ -84,7 +100,20 @@ class _StudentPageState extends State<StudentPage> {
                 bloc: widget.classBloc,
                 builder: (context, state) {
                   if (state is! SuccessGetListClass) {
-                    return Container();
+                    return Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppTheme.colors.primary),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Center(
+                        child: SizedBox(
+                          height: 30,
+                          width: 30,
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    );
                   }
 
                   final classes = state.classes;
@@ -95,6 +124,7 @@ class _StudentPageState extends State<StudentPage> {
                     validator: (v) =>
                         student.studentClass.validate().exceptionOrNull(),
                     onChanged: (String? e) => student.setStudentClass(e!),
+                    value: student.studentClass.value,
                     items: classes
                         .map(
                           (e) => DropdownMenuItem(
@@ -124,8 +154,8 @@ class _StudentPageState extends State<StudentPage> {
               const SizedBox(height: 10),
               MyInputWidget(
                 focusNode: fFather,
-                hintText: "Enter father's name",
-                label: 'Father',
+                hintText: "Enter the name of the father or mother",
+                label: 'Parents',
                 validator: (v) =>
                     student.studentParents.validate().exceptionOrNull(),
                 value: student.studentParents.value,
@@ -136,11 +166,25 @@ class _StudentPageState extends State<StudentPage> {
               Row(
                 children: [
                   Expanded(
-                    child: MyElevatedButtonWidget(
-                      label: const Text('Save'),
-                      icon: Icons.save_rounded,
-                      onPressed: () {},
-                    ),
+                    child: BlocBuilder<StudentBloc, StudentStates>(
+                        bloc: widget.studentBloc,
+                        builder: (context, state) {
+                          return MyElevatedButtonWidget(
+                            label: state is LoadingStudent
+                                ? const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : const Text('Save'),
+                            icon: Icons.save_rounded,
+                            onPressed: () {
+                              widget.studentBloc.add(
+                                SaveStudentEvent(student: student),
+                              );
+                            },
+                          );
+                        }),
                   ),
                 ],
               ),

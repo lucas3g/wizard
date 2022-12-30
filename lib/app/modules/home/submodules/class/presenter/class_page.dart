@@ -1,7 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:async';
+
 import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import 'package:wizard/app/components/my_app_bar_widget.dart';
 import 'package:wizard/app/components/my_elevated_button_widget.dart';
@@ -13,6 +16,7 @@ import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/events/c
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/states/class_states.dart';
 import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
+import 'package:wizard/app/utils/my_snackbar.dart';
 
 class ClassPage extends StatefulWidget {
   final ClassBloc classBloc;
@@ -44,11 +48,23 @@ class _ClassPageState extends State<ClassPage> {
   final fDayWeek = FocusNode();
   final fSchedule = FocusNode();
 
+  late StreamSubscription sub;
+
   @override
   void initState() {
     super.initState();
 
     pClass = ClassAdapter.empty();
+
+    sub = widget.classBloc.stream.listen((state) {
+      if (state is SuccessClass) {
+        Modular.to.pop();
+      }
+
+      if (state is ErrorClass) {
+        MySnackBar(message: state.message);
+      }
+    });
   }
 
   @override
