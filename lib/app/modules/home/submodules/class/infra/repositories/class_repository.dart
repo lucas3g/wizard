@@ -4,6 +4,7 @@ import 'package:result_dart/result_dart.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/entities/class.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/exceptions/class_exception.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/repositories/class_repository.dart';
+import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_teacher.dart';
 import 'package:wizard/app/modules/home/submodules/class/infra/datasources/class_datasource.dart';
 
 class ClassRepository implements IClassRepository {
@@ -16,8 +17,17 @@ class ClassRepository implements IClassRepository {
     return dataSource
         .saveClass(pClass)
         .mapError<IClassException>(
-          (error) => ClassException(message: error.toString()),
-        )
+            (error) => ClassException(message: error.toString()))
+        .flatMap((success) => Success(success));
+  }
+
+  @override
+  AsyncResult<List<Class>, IClassException> getClassesByTeacher(
+      ClassIDTeacher idTeacher) {
+    return dataSource
+        .getClassesByTeacher(idTeacher)
+        .mapError<IClassException>(
+            (error) => ClassException(message: error.toString()))
         .flatMap((success) => Success(success));
   }
 }

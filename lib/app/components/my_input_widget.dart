@@ -6,7 +6,7 @@ import 'package:wizard/app/theme/app_theme.dart';
 class MyInputWidget extends StatelessWidget {
   final FocusNode focusNode;
   final TextInputType keyboardType;
-  final String hintText;
+  final String? hintText;
   final String label;
   final bool obscureText;
   final Widget? suffixIcon;
@@ -30,7 +30,7 @@ class MyInputWidget extends StatelessWidget {
     Key? key,
     required this.focusNode,
     this.keyboardType = TextInputType.text,
-    required this.hintText,
+    this.hintText,
     required this.label,
     this.obscureText = false,
     this.suffixIcon,

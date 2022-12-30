@@ -16,11 +16,26 @@ class FireStoreService implements IOnlineStorage {
   Future<bool> saveData({required FireStoreParams params}) async {
     try {
       await firestore.collection(params.collection).add(params.data);
-      MySnackBar(message: 'Sucesso');
       return true;
     } catch (e) {
       MySnackBar(message: e.toString());
       return false;
+    }
+  }
+
+  @override
+  Future<QuerySnapshot<Map<String, dynamic>>> getDataByIdTeacher(
+      {required FireStoreParams params}) async {
+    try {
+      final result = await firestore
+          .collection(params.collection)
+          .where('idTeacher', isEqualTo: params.data['idTeacher'])
+          .get();
+
+      return result;
+    } catch (e) {
+      MySnackBar(message: e.toString());
+      rethrow;
     }
   }
 }

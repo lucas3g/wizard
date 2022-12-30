@@ -1,16 +1,29 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:async';
+
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:wizard/app/components/my_app_bar_widget.dart';
+import 'package:wizard/app/components/my_drop_down_button_widget.dart';
 import 'package:wizard/app/components/my_elevated_button_widget.dart';
 import 'package:wizard/app/components/my_input_widget.dart';
+import 'package:wizard/app/core_module/constants/constants.dart';
+import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_teacher.dart';
+import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
+import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/events/class_events.dart';
+import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/states/class_states.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/entity/student.dart';
 import 'package:wizard/app/modules/home/submodules/student/infra/student_adapter.dart';
 import 'package:wizard/app/utils/constants.dart';
 import 'package:wizard/app/utils/formatters.dart';
 
 class StudentPage extends StatefulWidget {
-  const StudentPage({super.key});
+  final ClassBloc classBloc;
+
+  const StudentPage({Key? key, required this.classBloc}) : super(key: key);
 
   @override
   State<StudentPage> createState() => _StudentPageState();
@@ -26,11 +39,21 @@ class _StudentPageState extends State<StudentPage> {
 
   late Student student;
 
+  late StreamSubscription sub;
+
   @override
   void initState() {
     super.initState();
 
     student = StudentAdapter.empty();
+
+    widget.classBloc.add(
+      GetClassesByIdTeacher(
+        idTeacher: ClassIDTeacher(
+          GlobalUser.instance.user.id.value,
+        ),
+      ),
+    );
   }
 
   @override
@@ -57,14 +80,31 @@ class _StudentPageState extends State<StudentPage> {
                 inputFormaters: [UpperCaseTextFormatter()],
               ),
               const SizedBox(height: 10),
-              MyInputWidget(
-                focusNode: fClass,
-                hintText: "Enter the student's class",
-                label: 'Class',
-                validator: (v) =>
-                    student.studentClass.validate().exceptionOrNull(),
-                value: student.studentClass.value,
-                onChanged: student.setStudentClass,
+              BlocBuilder<ClassBloc, ClassStates>(
+                bloc: widget.classBloc,
+                builder: (context, state) {
+                  if (state is! SuccessGetListClass) {
+                    return Container();
+                  }
+
+                  final classes = state.classes;
+
+                  return MyDropDownButtonWidget(
+                    focusNode: fClass,
+                    hint: 'Select a class',
+                    validator: (v) =>
+                        student.studentClass.validate().exceptionOrNull(),
+                    onChanged: (String? e) => student.setStudentClass(e!),
+                    items: classes
+                        .map(
+                          (e) => DropdownMenuItem(
+                            value: e.id.value,
+                            child: Text(e.name.value),
+                          ),
+                        )
+                        .toList(),
+                  );
+                },
               ),
               const SizedBox(height: 10),
               MyInputWidget(

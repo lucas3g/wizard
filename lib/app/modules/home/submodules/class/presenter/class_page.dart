@@ -105,12 +105,16 @@ class _ClassPageState extends State<ClassPage> {
             const SizedBox(height: 10),
             MyInputWidget(
               focusNode: fSchedule,
-              hintText: 'Enter the schedule',
               label: 'Schedule',
+              hintText: '00:00 às 00:00',
               onChanged: pClass.setSchedule,
               validator: (v) => pClass.schedule.validate().exceptionOrNull(),
               value: pClass.schedule.value,
-              inputFormaters: [TextInputMask(mask: '99:99 às 99:99')],
+              inputFormaters: [
+                TextInputMask(
+                  mask: '99:99 às 99:99',
+                ),
+              ],
             ),
             const SizedBox(height: 10),
             Row(

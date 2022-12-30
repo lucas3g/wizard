@@ -14,6 +14,16 @@ class ClassAdapter {
     };
   }
 
+  static Class fromMap(dynamic map) {
+    return Class(
+      id: IdVO(map['id']),
+      name: map['name'],
+      dayWeek: map['dayWeek'],
+      schedule: map['schedule'],
+      idTeacher: map['idTeacher'],
+    );
+  }
+
   static Class empty() {
     return Class(
       id: IdVO(const Uuid().v1()),
