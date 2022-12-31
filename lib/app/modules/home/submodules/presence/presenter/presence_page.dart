@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import 'package:wizard/app/components/my_app_bar_widget.dart';
 import 'package:wizard/app/components/my_drop_down_button_widget.dart';
@@ -70,6 +71,8 @@ class _PresencePageState extends State<PresencePage> {
 
     sub = widget.studentBloc.stream.listen((state) {
       if (state is SuccessGetStudentByClass) {
+        presence.presenceCheck!.clear();
+
         for (var student in state.students) {
           presence.presenceCheck!.add(
             PresenceCheck(
@@ -84,6 +87,10 @@ class _PresencePageState extends State<PresencePage> {
     subPresence = widget.presenceBloc.stream.listen((state) {
       if (state is ErrorPresence) {
         MySnackBar(message: state.message);
+      }
+
+      if (state is SuccessSavePresence) {
+        Modular.to.pop();
       }
     });
   }
