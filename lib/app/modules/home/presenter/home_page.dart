@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:wizard/app/components/my_elevated_button_widget.dart';
@@ -57,8 +58,11 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     height: 70,
                     width: 70,
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(user!.photoURL.value),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: CachedNetworkImage(
+                        imageUrl: user!.photoURL.value,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
