@@ -1,4 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,21 +17,27 @@ import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/states/c
 import 'package:wizard/app/modules/home/submodules/presence/domain/entites/presence.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/vos/presence_check.dart';
 import 'package:wizard/app/modules/home/submodules/presence/infra/adapters/presence_adapter.dart';
+import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/events/presence_events.dart';
+import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/presence_bloc.dart';
+import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/states/presence_states.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/entity/student.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/events/student_events.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/states/student_states.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/student_bloc.dart';
 import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
+import 'package:wizard/app/utils/my_snackbar.dart';
 
 class PresencePage extends StatefulWidget {
   final ClassBloc classBloc;
   final StudentBloc studentBloc;
+  final PresenceBloc presenceBloc;
 
   const PresencePage({
     Key? key,
     required this.classBloc,
     required this.studentBloc,
+    required this.presenceBloc,
   }) : super(key: key);
 
   @override
@@ -41,6 +50,9 @@ class _PresencePageState extends State<PresencePage> {
   late bool visibleList = false;
 
   late Presence presence;
+
+  late StreamSubscription sub;
+  late StreamSubscription subPresence;
 
   @override
   void initState() {
@@ -55,6 +67,25 @@ class _PresencePageState extends State<PresencePage> {
     );
 
     presence = PresenceAdapter.empty();
+
+    sub = widget.studentBloc.stream.listen((state) {
+      if (state is SuccessGetStudentByClass) {
+        for (var student in state.students) {
+          presence.presenceCheck!.add(
+            PresenceCheck(
+              studentID: student.id.value,
+              presencePresent: 'Absent',
+            ),
+          );
+        }
+      }
+    });
+
+    subPresence = widget.presenceBloc.stream.listen((state) {
+      if (state is ErrorPresence) {
+        MySnackBar(message: state.message);
+      }
+    });
   }
 
   void setPresence(Student student) {
@@ -171,13 +202,6 @@ class _PresencePageState extends State<PresencePage> {
                           itemBuilder: (context, index) {
                             final student = students[index];
 
-                            presence.presenceCheck!.add(
-                              PresenceCheck(
-                                studentID: student.id.value,
-                                presencePresent: 'Absent',
-                              ),
-                            );
-
                             return Container(
                               decoration: BoxDecoration(
                                   color: presence.presenceCheck!
@@ -214,10 +238,25 @@ class _PresencePageState extends State<PresencePage> {
                         Row(
                           children: [
                             Expanded(
-                              child: MyElevatedButtonWidget(
-                                label: const Text('Save'),
-                                icon: Icons.save,
-                                onPressed: () {},
+                              child: BlocBuilder<PresenceBloc, PresenceStates>(
+                                bloc: widget.presenceBloc,
+                                builder: (context, state) {
+                                  return MyElevatedButtonWidget(
+                                    label: state is LoadingPresence
+                                        ? const SizedBox(
+                                            width: 20,
+                                            height: 20,
+                                            child: CircularProgressIndicator(),
+                                          )
+                                        : const Text('Save'),
+                                    icon: Icons.save_rounded,
+                                    onPressed: () {
+                                      widget.presenceBloc.add(
+                                        SavePresenceEvent(presence: presence),
+                                      );
+                                    },
+                                  );
+                                },
                               ),
                             ),
                           ],

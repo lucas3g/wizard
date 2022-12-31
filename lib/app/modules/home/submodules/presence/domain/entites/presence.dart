@@ -20,4 +20,9 @@ class Presence extends Entity {
   Result<Presence, String> validate([Object? object]) {
     return super.validate().flatMap(presenceClass.validate).pure(this);
   }
+
+  @override
+  String toString() {
+    return '${presenceCheck!.map((e) => e)}';
+  }
 }

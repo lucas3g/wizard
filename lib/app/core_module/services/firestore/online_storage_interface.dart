@@ -3,6 +3,7 @@ import 'package:wizard/app/core_module/services/firestore/adapters/firestore_par
 
 abstract class IOnlineStorage {
   Future<bool> saveData({required FireStoreParams params});
+  Future<bool> saveOrUpdateData({required FireStoreSaveOrUpdateParams params});
   Future<QuerySnapshot<Map<String, dynamic>>> getDataById(
       {required FireStoreGetDataParams params});
 }

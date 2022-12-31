@@ -9,6 +9,18 @@ class FireStoreParams {
   });
 }
 
+class FireStoreSaveOrUpdateParams {
+  final String collection;
+  final String doc;
+  final Map<String, dynamic> data;
+
+  FireStoreSaveOrUpdateParams({
+    required this.collection,
+    required this.doc,
+    required this.data,
+  });
+}
+
 class FireStoreGetDataParams {
   final String collection;
   final String field;

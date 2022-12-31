@@ -52,4 +52,19 @@ class FireStoreService implements IOnlineStorage {
       rethrow;
     }
   }
+
+  @override
+  Future<bool> saveOrUpdateData(
+      {required FireStoreSaveOrUpdateParams params}) async {
+    try {
+      await firestore
+          .collection(params.collection)
+          .doc(params.doc)
+          .set(params.data);
+      return true;
+    } catch (e) {
+      MySnackBar(message: e.toString());
+      return false;
+    }
+  }
 }
