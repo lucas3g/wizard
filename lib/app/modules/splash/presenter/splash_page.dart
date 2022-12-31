@@ -18,7 +18,7 @@ class _SplashPageState extends State<SplashPage> {
 
     await Modular.isModuleReady<AppModule>();
 
-    if (GlobalUser.instance.user != null) {
+    if (GlobalUser.instance.user!.name.value.isNotEmpty) {
       Modular.to.navigate('/home/');
       return;
     }
