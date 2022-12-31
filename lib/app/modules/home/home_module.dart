@@ -9,6 +9,7 @@ import 'package:wizard/app/modules/home/submodules/class/external/datasources/cl
 import 'package:wizard/app/modules/home/submodules/class/infra/datasources/class_datasource.dart';
 import 'package:wizard/app/modules/home/submodules/class/infra/repositories/class_repository.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
+import 'package:wizard/app/modules/home/submodules/homework/home_work_module.dart';
 import 'package:wizard/app/modules/home/submodules/presence/presence_module.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/repositories/student_repository.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/usecases/get_student_by_class_usecase.dart';
@@ -25,6 +26,7 @@ class HomeModule extends Module {
     StudentModule(),
     ClassModule(),
     PresenceModule(),
+    HomeWorkModule(),
   ];
 
   @override
@@ -91,5 +93,6 @@ class HomeModule extends Module {
     ModuleRoute('/student', module: StudentModule()),
     ModuleRoute('/class', module: ClassModule()),
     ModuleRoute('/presence', module: PresenceModule()),
+    ModuleRoute('/homeWork', module: HomeWorkModule()),
   ];
 }

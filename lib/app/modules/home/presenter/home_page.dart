@@ -129,9 +129,11 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               MyElevatedButtonWidget(
-                label: const Text('Note by Theme'),
+                label: const Text('Note by Homework '),
                 icon: Icons.note_alt_rounded,
-                onPressed: () {},
+                onPressed: () {
+                  Modular.to.pushNamed('/home/homeWork/');
+                },
               ),
               MyElevatedButtonWidget(
                 label: const Text('Note by Review'),
