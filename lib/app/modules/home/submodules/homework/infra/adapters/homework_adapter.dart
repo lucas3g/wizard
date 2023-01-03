@@ -10,4 +10,19 @@ class HomeworkAdapter {
       homeworkClass: '',
     );
   }
+
+  static Map<String, dynamic> toMap(Homework homework) {
+    return {
+      'class': homework.homeworkClass.value,
+      'name': homework.homeworkName.value,
+      'notes': homework.homeworkNote
+          .map(
+            (e) => {
+              'student': e.student.id.value,
+              'score': e.score.value,
+            },
+          )
+          .toList(),
+    };
+  }
 }

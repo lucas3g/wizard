@@ -7,7 +7,7 @@ class HomeworkNote {
   Score _score;
 
   Score get score => _score;
-  void setNote(String value) => _score = Score(value);
+  void setScore(String value) => _score = Score(value);
 
   HomeworkNote({
     required this.student,

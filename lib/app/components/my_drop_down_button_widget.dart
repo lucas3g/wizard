@@ -42,6 +42,7 @@ class _MyDropDownButtonWidgetState extends State<MyDropDownButtonWidget> {
             : null,
       ),
       child: DropdownButtonFormField<String>(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         focusNode: widget.focusNode,
         decoration: const InputDecoration(
           border: InputBorder.none,

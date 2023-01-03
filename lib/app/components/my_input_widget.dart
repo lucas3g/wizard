@@ -74,7 +74,6 @@ class MyInputWidget extends StatelessWidget {
       onFieldSubmitted: onFieldSubmitted,
       maxLength: maxLength,
       decoration: InputDecoration(
-        contentPadding: const EdgeInsets.all(10),
         counterText: '',
         hintText: hintText,
         label: Text(label),
