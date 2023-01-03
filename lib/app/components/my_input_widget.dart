@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:wizard/app/theme/app_theme.dart';
 
 class MyInputWidget extends StatelessWidget {
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final TextInputType keyboardType;
   final String? hintText;
   final String label;
@@ -28,7 +28,7 @@ class MyInputWidget extends StatelessWidget {
 
   const MyInputWidget({
     Key? key,
-    required this.focusNode,
+    this.focusNode,
     this.keyboardType = TextInputType.text,
     this.hintText,
     required this.label,
@@ -74,6 +74,7 @@ class MyInputWidget extends StatelessWidget {
       onFieldSubmitted: onFieldSubmitted,
       maxLength: maxLength,
       decoration: InputDecoration(
+        contentPadding: const EdgeInsets.all(10),
         counterText: '',
         hintText: hintText,
         label: Text(label),

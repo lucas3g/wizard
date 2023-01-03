@@ -4,21 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:wizard/app/theme/app_theme.dart';
 
 class MyDropDownButtonWidget extends StatefulWidget {
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final String? Function(String?)? validator;
   final List<DropdownMenuItem<String>>? items;
   final void Function(String?)? onChanged;
   final String hint;
   final String value;
+  final bool? border;
 
   const MyDropDownButtonWidget({
     Key? key,
-    required this.focusNode,
+    this.focusNode,
     this.validator,
     this.items,
     this.onChanged,
     required this.value,
     required this.hint,
+    this.border = true,
   }) : super(key: key);
 
   @override
@@ -29,12 +31,15 @@ class _MyDropDownButtonWidgetState extends State<MyDropDownButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: AppTheme.colors.primary,
-        ),
+        border: widget.border!
+            ? Border.all(
+                color: AppTheme.colors.primary,
+              )
+            : null,
       ),
       child: DropdownButtonFormField<String>(
         focusNode: widget.focusNode,
