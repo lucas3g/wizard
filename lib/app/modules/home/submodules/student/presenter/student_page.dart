@@ -24,6 +24,7 @@ import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/studen
 import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
 import 'package:wizard/app/utils/formatters.dart';
+import 'package:wizard/app/utils/my_snackbar.dart';
 
 class StudentPage extends StatefulWidget {
   final ClassBloc classBloc;
@@ -65,11 +66,22 @@ class _StudentPageState extends State<StudentPage> {
       ),
     );
 
-    sub = widget.studentBloc.stream.listen((state) {
+    sub = widget.studentBloc.stream.listen((state) async {
       if (state is SuccessSaveStudent) {
+        MySnackBar(
+          message: 'Student save with success',
+          type: TypeSnackBar.success,
+        );
+        await Future.delayed(const Duration(milliseconds: 300));
         Modular.to.pop();
       }
     });
+  }
+
+  @override
+  void dispose() {
+    sub.cancel();
+    super.dispose();
   }
 
   @override

@@ -18,7 +18,7 @@ class PresenceDatasource implements IPresenceDatasource {
   AsyncResult<bool, IPresenceException> savePresence(Presence presence) async {
     try {
       final params = FireStoreSaveOrUpdateParams(
-        collection: 'presences/${presence.presenceClass.value}/presence',
+        collection: 'presences/${presence.presenceClass.value}/presences',
         doc: DateTime.now().DiaMesAnoDB(),
         data: PresenceAdapter.toMap(presence),
       );

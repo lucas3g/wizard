@@ -15,12 +15,12 @@ import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_tea
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/events/class_events.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/states/class_states.dart';
-import 'package:wizard/app/modules/home/submodules/homework/domain/entities/homework.dart';
-import 'package:wizard/app/modules/home/submodules/homework/domain/vos/homework_note.dart';
-import 'package:wizard/app/modules/home/submodules/homework/infra/adapters/homework_adapter.dart';
-import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/events/homework_events.dart';
-import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/homework_bloc.dart';
-import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/states/homework_states.dart';
+import 'package:wizard/app/modules/home/submodules/review/presenter/bloc/events/review_events.dart';
+import 'package:wizard/app/modules/home/submodules/review/presenter/bloc/review_bloc.dart';
+import 'package:wizard/app/modules/home/submodules/review/presenter/bloc/states/review_states.dart';
+import 'package:wizard/app/modules/home/submodules/review/domain/entities/review.dart';
+import 'package:wizard/app/modules/home/submodules/review/domain/vos/review_note.dart';
+import 'package:wizard/app/modules/home/submodules/review/infra/adapters/review_adapter.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/events/student_events.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/states/student_states.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/student_bloc.dart';
@@ -28,32 +28,39 @@ import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
 import 'package:wizard/app/utils/my_snackbar.dart';
 
-class HomeWorkPage extends StatefulWidget {
+class ReviewPage extends StatefulWidget {
   final ClassBloc classBloc;
   final StudentBloc studentBloc;
-  final HomeworkBloc homeworkBloc;
+  final ReviewBloc reviewBloc;
 
-  const HomeWorkPage({
+  const ReviewPage({
     Key? key,
     required this.classBloc,
     required this.studentBloc,
-    required this.homeworkBloc,
+    required this.reviewBloc,
   }) : super(key: key);
 
   @override
-  State<HomeWorkPage> createState() => _HomeWorkPageState();
+  State<ReviewPage> createState() => _ReviewPageState();
 }
 
-class _HomeWorkPageState extends State<HomeWorkPage> {
+class _ReviewPageState extends State<ReviewPage> {
   final fClass = FocusNode();
   final fName = FocusNode();
 
+  final notes = [
+    {'type': 'O', 'name': 'Ótimo'},
+    {'type': 'MB', 'name': 'Muito bom'},
+    {'type': 'B', 'name': 'Bom'},
+    {'type': 'R', 'name': 'Regular'},
+  ];
+
   late bool visibleList = false;
 
-  late Homework homework;
+  late Review review;
 
   late StreamSubscription sub;
-  late StreamSubscription subHome;
+  late StreamSubscription subReview;
 
   final gkForm = GlobalKey<FormState>();
   final gkFormNotes = GlobalKey<FormState>();
@@ -72,39 +79,54 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
 
     sub = widget.studentBloc.stream.listen((state) {
       if (state is SuccessGetStudentByClass) {
-        homework.homeworkNote.clear();
+        review.reviewNote.clear();
 
         for (var student in state.students) {
-          homework.homeworkNote.add(
-            HomeworkNote(student: student, score: ''),
+          review.reviewNote.add(
+            ReviewNote(student: student, score: ''),
           );
         }
       }
     });
 
-    subHome = widget.homeworkBloc.stream.listen((state) async {
-      if (state is SuccessSaveHomework) {
+    subReview = widget.reviewBloc.stream.listen((state) async {
+      if (state is SuccessSaveReview) {
         MySnackBar(
-          message: 'Homework save with success',
+          message: 'Review save with success',
           type: TypeSnackBar.success,
         );
         await Future.delayed(const Duration(milliseconds: 300));
         Modular.to.pop();
       }
 
-      if (state is ErrorSaveHomework) {
+      if (state is ErrorSaveReview) {
         MySnackBar(message: state.message, type: TypeSnackBar.error);
       }
     });
 
-    homework = HomeworkAdapter.empty();
+    review = ReviewAdapter.empty();
   }
 
   @override
   void dispose() {
     sub.cancel();
-    subHome.cancel();
+    subReview.cancel();
     super.dispose();
+  }
+
+  Color makeBackGroundColorListTile(String score) {
+    switch (score) {
+      case 'O':
+        return Colors.green.shade400;
+      case 'MB':
+        return Colors.blue.shade400;
+      case 'B':
+        return Colors.orange.shade400;
+      case 'R':
+        return Colors.red.shade400;
+      default:
+        return Colors.white;
+    }
   }
 
   @override
@@ -112,7 +134,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(double.infinity, AppBar().preferredSize.height),
-        child: const MyAppBarWidget(titleAppbar: 'Note by Homework'),
+        child: const MyAppBarWidget(titleAppbar: 'Note by Review'),
       ),
       body: Form(
         key: gkForm,
@@ -147,13 +169,13 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                     focusNode: fClass,
                     hint: 'Select a class',
                     validator: (v) =>
-                        homework.homeworkClass.validate().exceptionOrNull(),
+                        review.reviewClass.validate().exceptionOrNull(),
                     onChanged: (String? e) {
-                      homework.setHomeworkClass(e!);
+                      review.setReviewClass(e!);
 
                       widget.studentBloc.add(
                         GetStudentByClassEvent(
-                          classID: IdVO(homework.homeworkClass.value),
+                          classID: IdVO(review.reviewClass.value),
                         ),
                       );
 
@@ -161,7 +183,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                         visibleList = true;
                       });
                     },
-                    value: homework.homeworkClass.value,
+                    value: review.reviewClass.value,
                     items: classes
                         .map(
                           (e) => DropdownMenuItem(
@@ -199,13 +221,12 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                       children: [
                         MyInputWidget(
                           focusNode: fName,
-                          hintText: 'Enter the number of the homework',
+                          hintText: 'Enter the number of the review',
                           label: 'Number',
-                          onChanged: homework.setHomeworkName,
-                          validator: (v) => homework.homeworkName
-                              .validate()
-                              .exceptionOrNull(),
-                          value: homework.homeworkName.value,
+                          onChanged: review.setReviewName,
+                          validator: (v) =>
+                              review.reviewName.validate().exceptionOrNull(),
+                          value: review.reviewName.value,
                           keyboardType: TextInputType.number,
                         ),
                         const SizedBox(height: 15),
@@ -217,7 +238,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                             return Container(
                               decoration: BoxDecoration(
                                   color: makeBackGroundColorListTile(
-                                      homework.homeworkNote[index].score.value),
+                                      review.reviewNote[index].score.value),
                                   borderRadius: BorderRadius.circular(10),
                                   boxShadow: const [
                                     BoxShadow(
@@ -232,15 +253,14 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                                   width: 160,
                                   child: MyDropDownButtonWidget(
                                     border: false,
-                                    validator: (v) => homework
-                                        .homeworkNote[index].score
+                                    validator: (v) => review
+                                        .reviewNote[index].score
                                         .validate()
                                         .exceptionOrNull(),
-                                    value: homework
-                                        .homeworkNote[index].score.value,
+                                    value: review.reviewNote[index].score.value,
                                     hint: 'Select the note',
                                     onChanged: (String? e) {
-                                      homework.homeworkNote[index].setScore(e!);
+                                      review.reviewNote[index].setScore(e!);
                                       setState(() {});
                                     },
                                     items: notes
@@ -264,11 +284,11 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                         Row(
                           children: [
                             Expanded(
-                              child: BlocBuilder<HomeworkBloc, HomeworkStates>(
-                                bloc: widget.homeworkBloc,
+                              child: BlocBuilder<ReviewBloc, ReviewStates>(
+                                bloc: widget.reviewBloc,
                                 builder: (context, state) {
                                   return MyElevatedButtonWidget(
-                                    label: state is LoadingHomework
+                                    label: state is LoadingReview
                                         ? const SizedBox(
                                             width: 20,
                                             height: 20,
@@ -281,8 +301,8 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                                         return;
                                       }
 
-                                      widget.homeworkBloc.add(
-                                        SaveHomeworkEvent(homework: homework),
+                                      widget.reviewBloc.add(
+                                        SaveReviewEvent(review: review),
                                       );
                                     },
                                   );

@@ -84,12 +84,17 @@ class _PresencePageState extends State<PresencePage> {
       }
     });
 
-    subPresence = widget.presenceBloc.stream.listen((state) {
+    subPresence = widget.presenceBloc.stream.listen((state) async {
       if (state is ErrorPresence) {
-        MySnackBar(message: state.message);
+        MySnackBar(message: state.message, type: TypeSnackBar.error);
       }
 
       if (state is SuccessSavePresence) {
+        MySnackBar(
+          message: 'Presence save with success',
+          type: TypeSnackBar.success,
+        );
+        await Future.delayed(const Duration(milliseconds: 300));
         Modular.to.pop();
       }
     });
@@ -204,42 +209,43 @@ class _PresencePageState extends State<PresencePage> {
                   return Expanded(
                     child: Column(
                       children: [
-                        ListView.separated(
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            final student = students[index];
+                        Expanded(
+                          child: ListView.separated(
+                            itemBuilder: (context, index) {
+                              final student = students[index];
 
-                            return Container(
-                              decoration: BoxDecoration(
-                                  color: presence.presenceCheck!
-                                              .where((e) =>
-                                                  e.studentID.value ==
-                                                  student.id.value)
-                                              .first
-                                              .presencePresent
-                                              .value ==
-                                          'Absent'
-                                      ? Colors.red.shade400
-                                      : Colors.green.shade400,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.black26,
-                                      blurRadius: 10,
-                                      offset: Offset(0, 8),
-                                    )
-                                  ]),
-                              child: ListTile(
-                                title: Text(student.studentName.value),
-                                onTap: () {
-                                  setPresence(student);
-                                },
-                              ),
-                            );
-                          },
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(height: 15),
-                          itemCount: students.length,
+                              return Container(
+                                decoration: BoxDecoration(
+                                    color: presence.presenceCheck!
+                                                .where((e) =>
+                                                    e.studentID.value ==
+                                                    student.id.value)
+                                                .first
+                                                .presencePresent
+                                                .value ==
+                                            'Absent'
+                                        ? Colors.red.shade400
+                                        : Colors.green.shade400,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Colors.black26,
+                                        blurRadius: 10,
+                                        offset: Offset(0, 8),
+                                      )
+                                    ]),
+                                child: ListTile(
+                                  title: Text(student.studentName.value),
+                                  onTap: () {
+                                    setPresence(student);
+                                  },
+                                ),
+                              );
+                            },
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(height: 15),
+                            itemCount: students.length,
+                          ),
                         ),
                         const SizedBox(height: 20),
                         Row(

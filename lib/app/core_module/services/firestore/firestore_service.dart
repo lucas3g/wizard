@@ -18,7 +18,7 @@ class FireStoreService implements IOnlineStorage {
       await firestore.collection(params.collection).add(params.data);
       return true;
     } catch (e) {
-      MySnackBar(message: e.toString());
+      MySnackBar(message: e.toString(), type: TypeSnackBar.error);
       return false;
     }
   }
@@ -48,7 +48,7 @@ class FireStoreService implements IOnlineStorage {
 
       return result;
     } catch (e) {
-      MySnackBar(message: e.toString());
+      MySnackBar(message: e.toString(), type: TypeSnackBar.error);
       rethrow;
     }
   }
@@ -63,7 +63,7 @@ class FireStoreService implements IOnlineStorage {
           .set(params.data);
       return true;
     } catch (e) {
-      MySnackBar(message: e.toString());
+      MySnackBar(message: e.toString(), type: TypeSnackBar.error);
       return false;
     }
   }

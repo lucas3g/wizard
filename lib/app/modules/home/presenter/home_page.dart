@@ -138,7 +138,9 @@ class _HomePageState extends State<HomePage> {
               MyElevatedButtonWidget(
                 label: const Text('Note by Review'),
                 icon: Icons.reviews_rounded,
-                onPressed: () {},
+                onPressed: () {
+                  Modular.to.pushNamed('/home/review/');
+                },
               ),
               MyElevatedButtonWidget(
                 label: const Text('General Report'),

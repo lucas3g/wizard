@@ -56,15 +56,26 @@ class _ClassPageState extends State<ClassPage> {
 
     pClass = ClassAdapter.empty();
 
-    sub = widget.classBloc.stream.listen((state) {
+    sub = widget.classBloc.stream.listen((state) async {
       if (state is SuccessClass) {
+        MySnackBar(
+          message: 'Class save with success',
+          type: TypeSnackBar.success,
+        );
+        await Future.delayed(const Duration(milliseconds: 300));
         Modular.to.pop();
       }
 
       if (state is ErrorClass) {
-        MySnackBar(message: state.message);
+        MySnackBar(message: state.message, type: TypeSnackBar.error);
       }
     });
+  }
+
+  @override
+  void dispose() {
+    sub.cancel();
+    super.dispose();
   }
 
   @override

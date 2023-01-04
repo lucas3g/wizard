@@ -11,6 +11,7 @@ import 'package:wizard/app/modules/home/submodules/class/infra/repositories/clas
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/homework/home_work_module.dart';
 import 'package:wizard/app/modules/home/submodules/presence/presence_module.dart';
+import 'package:wizard/app/modules/home/submodules/review/review_module.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/repositories/student_repository.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/usecases/get_student_by_class_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/usecases/save_student_usecase.dart';
@@ -27,6 +28,7 @@ class HomeModule extends Module {
     ClassModule(),
     PresenceModule(),
     HomeWorkModule(),
+    ReviewModule(),
   ];
 
   @override
@@ -94,5 +96,6 @@ class HomeModule extends Module {
     ModuleRoute('/class', module: ClassModule()),
     ModuleRoute('/presence', module: PresenceModule()),
     ModuleRoute('/homeWork', module: HomeWorkModule()),
+    ModuleRoute('/review', module: ReviewModule()),
   ];
 }
