@@ -51,6 +51,7 @@ dependencies:
   uuid: ^3.0.7
   easy_mask: ^2.0.1
   cached_network_image: ^3.2.3
+  flutter_swipe_action_cell: ^3.0.7
 
 dev_dependencies:
   flutter_test:

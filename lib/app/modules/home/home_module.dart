@@ -14,6 +14,7 @@ import 'package:wizard/app/modules/home/submodules/presence/presence_module.dart
 import 'package:wizard/app/modules/home/submodules/review/review_module.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/repositories/student_repository.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/usecases/get_student_by_class_usecase.dart';
+import 'package:wizard/app/modules/home/submodules/student/domain/usecases/get_students_by_teacher.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/usecases/save_student_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/student/external/datasources/student_datasource.dart';
 import 'package:wizard/app/modules/home/submodules/student/infra/datasources/student_datasource.dart';
@@ -75,12 +76,17 @@ class HomeModule extends Module {
       (i) => GetStudentByClassUseCase(repository: i()),
       export: true,
     ),
+    Bind.factory<IGetStudentsByTeacherUseCase>(
+      (i) => GetStudentsByTeacherUseCase(repository: i()),
+      export: true,
+    ),
 
     //BLOCS
     BlocBind.factory<StudentBloc>(
       (i) => StudentBloc(
         saveStudentUseCase: i(),
         getStudentByClassUseCase: i(),
+        getStudentsByTeacherUseCase: i(),
       ),
       export: true,
     ),

@@ -6,4 +6,6 @@ import 'package:wizard/app/modules/home/submodules/student/domain/exceptions/stu
 abstract class IStudentRepository {
   AsyncResult<bool, IStudentException> saveStudent(Student student);
   AsyncResult<List<Student>, IStudentException> getStudentByClass(IdVO classID);
+  AsyncResult<List<Student>, IStudentException> getStudentByTeacher(
+      IdVO teacherID);
 }

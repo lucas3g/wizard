@@ -19,3 +19,11 @@ class GetStudentByClassEvent extends StudentEvents {
     required this.classID,
   });
 }
+
+class GetStudentByTeacherEvent extends StudentEvents {
+  final IdVO teacherID;
+
+  GetStudentByTeacherEvent({
+    required this.teacherID,
+  });
+}

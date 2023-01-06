@@ -30,4 +30,14 @@ class StudentRepository implements IStudentRepository {
             (error) => StudentException(message: error.message))
         .flatMap((success) => Success(success));
   }
+
+  @override
+  AsyncResult<List<Student>, IStudentException> getStudentByTeacher(
+      IdVO teacherID) {
+    return dataSource
+        .getStudentByTeacher(teacherID)
+        .mapError<IStudentException>(
+            (error) => StudentException(message: error.message))
+        .flatMap((success) => Success(success));
+  }
 }

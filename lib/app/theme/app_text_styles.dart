@@ -14,8 +14,8 @@ abstract class AppTextStyles {
   TextStyle get labelButtonGoogle;
   TextStyle get subTitleAuthPage;
   TextStyle get titleAuthPage;
-  TextStyle get textoCadastroSucesso;
-  TextStyle get textoTermo;
+  TextStyle get titleSwipeAction;
+  TextStyle get labelRemoveSwipeAction;
   TextStyle get textoRadioList;
   TextStyle get textoConfirmarData;
   TextStyle get titleHeaderDashBoard;
@@ -88,13 +88,17 @@ class AppTextStylesDefault implements AppTextStyles {
       );
 
   @override
-  TextStyle get textoCadastroSucesso => GoogleFonts.montserrat(
-      fontSize: 14, color: Colors.white, fontWeight: FontWeight.w700);
-
-  @override
-  TextStyle get textoTermo => GoogleFonts.montserrat(
+  TextStyle get titleSwipeAction => GoogleFonts.montserrat(
         fontSize: 14,
         color: Colors.black,
+        fontWeight: FontWeight.w700,
+      );
+
+  @override
+  TextStyle get labelRemoveSwipeAction => GoogleFonts.montserrat(
+        fontSize: 14,
+        color: Colors.white,
+        fontWeight: FontWeight.w700,
       );
 
   @override

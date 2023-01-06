@@ -1,4 +1,5 @@
 import 'package:uuid/uuid.dart';
+import 'package:wizard/app/core_module/constants/constants.dart';
 import 'package:wizard/app/core_module/vos/id_vo.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/entity/student.dart';
 
@@ -30,6 +31,7 @@ class StudentAdapter {
       'class': student.studentClass.value,
       'phoneNumber': student.studentPhoneNumber.value,
       'parents': student.studentParents.value,
+      'teacherID': GlobalUser.instance.user!.id.value,
     };
   }
 }

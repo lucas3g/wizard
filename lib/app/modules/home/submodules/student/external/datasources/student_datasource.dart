@@ -54,4 +54,29 @@ class StudentDataSource implements IStudentDataSource {
       return StudentException(message: e.toString()).toFailure();
     }
   }
+
+  @override
+  AsyncResult<List<Student>, IStudentException> getStudentByTeacher(
+      IdVO teacherID) async {
+    try {
+      final params = FireStoreGetDataParams(
+        collection: 'students',
+        field: 'teacherID',
+        value: teacherID.value,
+        orderBy: 'name',
+      );
+
+      final result = await onlineStorage.getDataById(params: params);
+
+      late List<Student> students = [];
+
+      for (var doc in result.docs) {
+        students.add(StudentAdapter.fromMap(doc.data()));
+      }
+
+      return students.toSuccess();
+    } catch (e) {
+      return StudentException(message: e.toString()).toFailure();
+    }
+  }
 }

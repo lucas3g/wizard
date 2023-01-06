@@ -17,6 +17,14 @@ class SuccessGetStudentByClass extends StudentStates {
   });
 }
 
+class SuccessGetStudentByTeacher extends StudentStates {
+  final List<Student> students;
+
+  SuccessGetStudentByTeacher({
+    required this.students,
+  });
+}
+
 class ErrorStudent extends StudentStates {
   final String message;
 
