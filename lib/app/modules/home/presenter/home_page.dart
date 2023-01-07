@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:wizard/app/components/my_elevated_button_widget.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
+import 'package:wizard/app/modules/auth/domain/entities/user_entity.dart';
 import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
 
@@ -14,11 +15,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final user = GlobalUser.instance.user;
+  late User user;
 
   @override
   void initState() {
     super.initState();
+
+    user = GlobalUser.instance.user;
   }
 
   @override
@@ -61,13 +64,13 @@ class _HomePageState extends State<HomePage> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(50),
                       child: CachedNetworkImage(
-                        imageUrl: user!.photoURL.value,
+                        imageUrl: user.photoURL.value,
                       ),
                     ),
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Teacher: ${user!.name.value}',
+                    'Teacher: ${user.name.value}',
                     style: AppTheme.textStyles.subTitleAppBar,
                   )
                 ],
@@ -118,7 +121,7 @@ class _HomePageState extends State<HomePage> {
                 label: const Text('New Class'),
                 icon: Icons.class_rounded,
                 onPressed: () {
-                  Modular.to.pushNamed('/home/class/');
+                  Modular.to.pushNamed('/home/class/edit');
                 },
               ),
               MyElevatedButtonWidget(
@@ -157,7 +160,9 @@ class _HomePageState extends State<HomePage> {
               MyElevatedButtonWidget(
                 label: const Text('Class List'),
                 icon: Icons.list_rounded,
-                onPressed: () {},
+                onPressed: () {
+                  Modular.to.pushNamed('/home/class');
+                },
               ),
             ],
           ),

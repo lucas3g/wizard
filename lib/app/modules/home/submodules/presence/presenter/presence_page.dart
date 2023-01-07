@@ -62,7 +62,7 @@ class _PresencePageState extends State<PresencePage> {
     widget.classBloc.add(
       GetClassesByIdTeacher(
         idTeacher: ClassIDTeacher(
-          GlobalUser.instance.user!.id.value,
+          GlobalUser.instance.user.id.value,
         ),
       ),
     );

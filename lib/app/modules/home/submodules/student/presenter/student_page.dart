@@ -32,7 +32,7 @@ class _StudentPageState extends State<StudentPage> {
 
     widget.studentBloc.add(
       GetStudentByTeacherEvent(
-        teacherID: GlobalUser.instance.user!.id,
+        teacherID: GlobalUser.instance.user.id,
       ),
     );
   }

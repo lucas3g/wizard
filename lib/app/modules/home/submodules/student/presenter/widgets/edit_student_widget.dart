@@ -67,7 +67,7 @@ class _EditStudentWidgetState extends State<EditStudentWidget> {
     widget.classBloc.add(
       GetClassesByIdTeacher(
         idTeacher: ClassIDTeacher(
-          GlobalUser.instance.user!.id.value,
+          GlobalUser.instance.user.id.value,
         ),
       ),
     );

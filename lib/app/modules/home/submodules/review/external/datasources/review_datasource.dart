@@ -21,7 +21,7 @@ class ReviewDatasource implements IReviewDatasource {
     try {
       final params = FireStoreSaveOrUpdateParams(
         collection:
-            'reviews/${GlobalUser.instance.user!.id.value}/${review.reviewClass.value}',
+            'reviews/${GlobalUser.instance.user.id.value}/${review.reviewClass.value}',
         doc: review.reviewName.value,
         data: ReviewAdapter.toMap(review),
       );

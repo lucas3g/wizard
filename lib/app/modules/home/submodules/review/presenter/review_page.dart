@@ -72,7 +72,7 @@ class _ReviewPageState extends State<ReviewPage> {
     widget.classBloc.add(
       GetClassesByIdTeacher(
         idTeacher: ClassIDTeacher(
-          GlobalUser.instance.user!.id.value,
+          GlobalUser.instance.user.id.value,
         ),
       ),
     );

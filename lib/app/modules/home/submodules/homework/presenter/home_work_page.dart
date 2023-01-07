@@ -65,7 +65,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
     widget.classBloc.add(
       GetClassesByIdTeacher(
         idTeacher: ClassIDTeacher(
-          GlobalUser.instance.user!.id.value,
+          GlobalUser.instance.user.id.value,
         ),
       ),
     );
@@ -192,7 +192,9 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                     final students = state.students;
 
                     if (students.isEmpty) {
-                      return const Text('Students list empty');
+                      return const Center(
+                        child: Text('Students list empty'),
+                      );
                     }
 
                     return Column(

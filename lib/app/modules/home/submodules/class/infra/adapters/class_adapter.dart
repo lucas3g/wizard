@@ -30,7 +30,7 @@ class ClassAdapter {
       name: '',
       dayWeek: '',
       schedule: '',
-      idTeacher: GlobalUser.instance.user!.id.value,
+      idTeacher: GlobalUser.instance.user.id.value,
     );
   }
 }

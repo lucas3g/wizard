@@ -16,7 +16,7 @@ class PresenceAdapter {
   static Map<String, dynamic> toMap(Presence presence) {
     return {
       'class': presence.presenceClass.value,
-      'teacher': GlobalUser.instance.user!.id.value,
+      'teacher': GlobalUser.instance.user.id.value,
       'date': DateTime.now().DiaMesAnoDB(),
       'presence': presence.presenceCheck!
           .map(

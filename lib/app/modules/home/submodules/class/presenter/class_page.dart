@@ -1,22 +1,18 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:async';
 
-import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_swipe_action_cell/core/cell.dart';
 
 import 'package:wizard/app/components/my_app_bar_widget.dart';
-import 'package:wizard/app/components/my_elevated_button_widget.dart';
-import 'package:wizard/app/components/my_input_widget.dart';
-import 'package:wizard/app/modules/home/submodules/class/domain/entities/class.dart';
-import 'package:wizard/app/modules/home/submodules/class/infra/adapters/class_adapter.dart';
+import 'package:wizard/app/core_module/constants/constants.dart';
+import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_teacher.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/events/class_events.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/states/class_states.dart';
 import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
-import 'package:wizard/app/utils/my_snackbar.dart';
 
 class ClassPage extends StatefulWidget {
   final ClassBloc classBloc;
@@ -31,51 +27,15 @@ class ClassPage extends StatefulWidget {
 }
 
 class _ClassPageState extends State<ClassPage> {
-  late Class pClass;
-
-  final daysWeek = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday'
-  ];
-
-  final fName = FocusNode();
-  final fTeacher = FocusNode();
-  final fDayWeek = FocusNode();
-  final fSchedule = FocusNode();
-
-  late StreamSubscription sub;
-
   @override
   void initState() {
     super.initState();
 
-    pClass = ClassAdapter.empty();
-
-    sub = widget.classBloc.stream.listen((state) async {
-      if (state is SuccessClass) {
-        MySnackBar(
-          message: 'Class save with success',
-          type: TypeSnackBar.success,
-        );
-        await Future.delayed(const Duration(milliseconds: 300));
-        Modular.to.pop();
-      }
-
-      if (state is ErrorClass) {
-        MySnackBar(message: state.message, type: TypeSnackBar.error);
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    sub.cancel();
-    super.dispose();
+    widget.classBloc.add(
+      GetClassesByIdTeacher(
+        idTeacher: ClassIDTeacher(GlobalUser.instance.user.id.value),
+      ),
+    );
   }
 
   @override
@@ -83,94 +43,86 @@ class _ClassPageState extends State<ClassPage> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(double.infinity, AppBar().preferredSize.height),
-        child: const MyAppBarWidget(titleAppbar: 'New Class'),
+        child: const MyAppBarWidget(titleAppbar: 'Class List'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(kPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            MyInputWidget(
-              focusNode: fName,
-              hintText: 'Enter the class name',
-              label: 'Name',
-              onChanged: pClass.setClassName,
-              validator: (v) => pClass.name.validate().exceptionOrNull(),
-              value: pClass.name.value,
-            ),
-            const SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  color: AppTheme.colors.primary,
-                ),
-              ),
-              child: DropdownButtonFormField<String>(
-                focusNode: fDayWeek,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                ),
-                iconEnabledColor: AppTheme.colors.primary,
-                borderRadius: BorderRadius.circular(10),
-                isDense: true,
-                validator: (v) => pClass.dayWeek.validate().exceptionOrNull(),
-                value: null,
-                hint: const Text('Select the day of the week'),
-                items: daysWeek
-                    .map(
-                      (String e) => DropdownMenuItem(
-                        value: e,
-                        child: Text(e),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (String? value) => pClass.setDayWeek(value!),
-              ),
-            ),
-            const SizedBox(height: 10),
-            MyInputWidget(
-              focusNode: fSchedule,
-              label: 'Schedule',
-              hintText: '00:00 às 00:00',
-              onChanged: pClass.setSchedule,
-              validator: (v) => pClass.schedule.validate().exceptionOrNull(),
-              value: pClass.schedule.value,
-              inputFormaters: [
-                TextInputMask(
-                  mask: '99:99 às 99:99',
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: BlocBuilder<ClassBloc, ClassStates>(
-                      bloc: widget.classBloc,
-                      builder: (context, state) {
-                        return MyElevatedButtonWidget(
-                          label: state is LoadingClass
-                              ? const SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(),
-                                )
-                              : const Text('Save'),
-                          icon: Icons.save,
-                          onPressed: () {
-                            widget.classBloc.add(
-                              SaveClassEvent(pClass: pClass),
+        child: BlocBuilder<ClassBloc, ClassStates>(
+            bloc: widget.classBloc,
+            builder: (context, state) {
+              if (state is! SuccessGetListClass) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              final classes = state.classes;
+
+              if (classes.isEmpty) {
+                return const Center(
+                  child: Text('Class list is empty :('),
+                );
+              }
+
+              return ListView.separated(
+                itemCount: classes.length,
+                itemBuilder: (context, index) {
+                  final pClass = classes[index];
+
+                  return Container(
+                    padding: const EdgeInsets.only(left: 10),
+                    height: 50,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 10,
+                          offset: Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: SwipeActionCell(
+                      key: ObjectKey(pClass),
+                      trailingActions: <SwipeAction>[
+                        SwipeAction(
+                          widthSpace: 90,
+                          backgroundRadius: 10,
+                          style: AppTheme.textStyles.labelRemoveSwipeAction,
+                          title: "Remove",
+                          onTap: (CompletionHandler handler) async {
+                            classes.removeAt(index);
+                            setState(() {});
+                          },
+                          color: Colors.red,
+                        ),
+                        SwipeAction(
+                          widthSpace: 90,
+                          backgroundRadius: 10,
+                          style: AppTheme.textStyles.labelRemoveSwipeAction,
+                          title: "Edit",
+                          onTap: (CompletionHandler handler) async {
+                            Modular.to.pushNamed(
+                              '/home/class/edit',
+                              arguments: pClass,
                             );
                           },
-                        );
-                      }),
-                ),
-              ],
-            )
-          ],
-        ),
+                          color: Colors.orange,
+                        ),
+                      ],
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          pClass.name.value,
+                          style: AppTheme.textStyles.titleSwipeAction,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                separatorBuilder: (context, index) => const Divider(),
+              );
+            }),
       ),
     );
   }

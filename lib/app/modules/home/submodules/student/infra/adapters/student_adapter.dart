@@ -31,7 +31,7 @@ class StudentAdapter {
       'class': student.studentClass.value,
       'phoneNumber': student.studentPhoneNumber.value,
       'parents': student.studentParents.value,
-      'teacherID': GlobalUser.instance.user!.id.value,
+      'teacherID': GlobalUser.instance.user.id.value,
     };
   }
 }

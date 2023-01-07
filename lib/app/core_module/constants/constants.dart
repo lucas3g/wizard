@@ -33,18 +33,27 @@ Color makeBackGroundColorListTile(String score) {
   }
 }
 
-class GlobalUser {
-  final _shared = Modular.get<ILocalStorage>();
+class GetDadosUser {
+  User _carregaDados() {
+    final shared = Modular.get<ILocalStorage>();
 
-  static GlobalUser instance = GlobalUser().._carregaDados();
+    final result = shared.getData('user');
 
-  late User? user =
-      User(id: const IdVO('1'), name: '', email: '', photoURL: '');
-
-  _carregaDados() {
-    final result = _shared.getData('user');
     if (result != null) {
-      user = UserAdapter.fromMap(jsonDecode(result));
+      final user = UserAdapter.fromMap(jsonDecode(result));
+      return user;
     }
+
+    return User(id: const IdVO('1'), name: '', email: '', photoURL: '');
   }
+
+  GetDadosUser() {
+    _carregaDados();
+  }
+}
+
+class GlobalUser {
+  late User user = GetDadosUser()._carregaDados();
+
+  static GlobalUser instance = GlobalUser();
 }
