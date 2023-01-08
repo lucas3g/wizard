@@ -101,9 +101,15 @@ class _StudentPageState extends State<StudentPage> {
                           style: AppTheme.textStyles.labelRemoveSwipeAction,
                           title: "Edit",
                           onTap: (CompletionHandler handler) async {
-                            Modular.to.pushNamed(
+                            await Modular.to.pushNamed(
                               '/home/student/edit',
                               arguments: student,
+                            );
+
+                            widget.studentBloc.add(
+                              GetStudentByTeacherEvent(
+                                teacherID: GlobalUser.instance.user.id,
+                              ),
                             );
                           },
                           color: Colors.orange,

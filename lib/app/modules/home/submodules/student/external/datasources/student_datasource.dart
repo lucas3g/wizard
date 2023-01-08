@@ -17,12 +17,13 @@ class StudentDataSource implements IStudentDataSource {
   @override
   AsyncResult<bool, IStudentException> saveStudent(Student student) async {
     try {
-      final params = FireStoreParams(
+      final params = FireStoreSaveOrUpdateParams(
         collection: 'students',
+        doc: student.id.value,
         data: StudentAdapter.toMap(student),
       );
 
-      final result = await onlineStorage.saveData(params: params);
+      final result = await onlineStorage.saveOrUpdateData(params: params);
 
       return result.toSuccess();
     } catch (e) {

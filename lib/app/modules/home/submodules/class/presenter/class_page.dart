@@ -102,9 +102,16 @@ class _ClassPageState extends State<ClassPage> {
                           style: AppTheme.textStyles.labelRemoveSwipeAction,
                           title: "Edit",
                           onTap: (CompletionHandler handler) async {
-                            Modular.to.pushNamed(
+                            await Modular.to.pushNamed(
                               '/home/class/edit',
                               arguments: pClass,
+                            );
+
+                            widget.classBloc.add(
+                              GetClassesByIdTeacher(
+                                idTeacher: ClassIDTeacher(
+                                    GlobalUser.instance.user.id.value),
+                              ),
                             );
                           },
                           color: Colors.orange,
