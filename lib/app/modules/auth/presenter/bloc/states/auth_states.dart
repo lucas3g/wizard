@@ -15,6 +15,8 @@ class SuccessAuth extends AuthStates {
   });
 }
 
+class SuccessLogoutAuth extends AuthStates {}
+
 class ErrorAuth extends AuthStates {
   final String message;
 

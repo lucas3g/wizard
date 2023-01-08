@@ -1,5 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:modular_bloc_bind/modular_bloc_bind.dart';
+import 'package:wizard/app/modules/auth/presenter/bloc/auth_bloc.dart';
 import 'package:wizard/app/modules/home/presenter/home_page.dart';
 import 'package:wizard/app/modules/home/submodules/class/class_module.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/repositories/class_repository.dart';
@@ -96,7 +97,9 @@ class HomeModule extends Module {
   final List<ModularRoute> routes = [
     ChildRoute(
       '/',
-      child: ((context, args) => const HomePage()),
+      child: ((context, args) => HomePage(
+            authBloc: Modular.get<AuthBloc>(),
+          )),
     ),
     ModuleRoute('/student', module: StudentModule()),
     ModuleRoute('/class', module: ClassModule()),

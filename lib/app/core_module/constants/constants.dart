@@ -33,8 +33,12 @@ Color makeBackGroundColorListTile(String score) {
   }
 }
 
-class GetDadosUser {
-  User _carregaDados() {
+class GlobalUser {
+  GlobalUser._();
+
+  static GlobalUser instance = GlobalUser._();
+
+  User get user {
     final shared = Modular.get<ILocalStorage>();
 
     final result = shared.getData('user');
@@ -46,14 +50,4 @@ class GetDadosUser {
 
     return User(id: const IdVO('1'), name: '', email: '', photoURL: '');
   }
-
-  GetDadosUser() {
-    _carregaDados();
-  }
-}
-
-class GlobalUser {
-  late User user = GetDadosUser()._carregaDados();
-
-  static GlobalUser instance = GlobalUser();
 }

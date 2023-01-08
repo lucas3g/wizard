@@ -20,4 +20,14 @@ class AuthRepository implements IAuthRepository {
         .flatMap(
             (success) => UserAdapter.fromGoogleAccount(success).toSuccess());
   }
+
+  @override
+  AsyncResult<bool, IAuthException> logoutGoogle() {
+    return dataSource
+        .logoutGoogle()
+        .mapError<IAuthException>(
+          (error) => AuthException(message: error.toString()),
+        )
+        .flatMap((success) => success.toSuccess());
+  }
 }

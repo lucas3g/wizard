@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:wizard/app/core_module/constants/constants.dart';
 
 class MyAppBarWidget extends StatefulWidget {
   final String titleAppbar;
@@ -15,15 +14,6 @@ class MyAppBarWidget extends StatefulWidget {
 
 class _MyAppBarWidgetState extends State<MyAppBarWidget> {
   final height = AppBar().preferredSize.height;
-
-  late GlobalUser globalUser;
-
-  @override
-  void initState() {
-    super.initState();
-
-    globalUser = GlobalUser();
-  }
 
   @override
   Widget build(BuildContext context) {

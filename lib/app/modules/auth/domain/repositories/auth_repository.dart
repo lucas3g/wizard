@@ -4,4 +4,5 @@ import 'package:wizard/app/modules/auth/domain/exceptions/auth_exception.dart';
 
 abstract class IAuthRepository {
   AsyncResult<User, IAuthException> signInGoogle();
+  AsyncResult<bool, IAuthException> logoutGoogle();
 }

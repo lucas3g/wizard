@@ -1,14 +1,27 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
 import 'package:wizard/app/components/my_elevated_button_widget.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
 import 'package:wizard/app/modules/auth/domain/entities/user_entity.dart';
+import 'package:wizard/app/modules/auth/presenter/bloc/auth_bloc.dart';
+import 'package:wizard/app/modules/auth/presenter/bloc/events/auth_events.dart';
+import 'package:wizard/app/modules/auth/presenter/bloc/states/auth_states.dart';
 import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final AuthBloc authBloc;
+
+  const HomePage({
+    Key? key,
+    required this.authBloc,
+  }) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -17,11 +30,19 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late User user;
 
+  late StreamSubscription sub;
+
   @override
   void initState() {
     super.initState();
 
     user = GlobalUser.instance.user;
+
+    sub = widget.authBloc.stream.listen((state) {
+      if (state is SuccessLogoutAuth) {
+        Modular.to.navigate('/auth');
+      }
+    });
   }
 
   @override
@@ -81,10 +102,26 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ListTile(
-                    title: const Text('Sair'),
-                    onTap: () {},
-                  ),
+                  BlocBuilder<AuthBloc, AuthStates>(
+                      bloc: widget.authBloc,
+                      builder: (context, state) {
+                        if (state is LoadignAuth) {
+                          return const Center(
+                            child: SizedBox(
+                              width: 30,
+                              height: 30,
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }
+
+                        return ListTile(
+                          title: const Text('Sair'),
+                          onTap: () {
+                            widget.authBloc.add(LogOutGoogleEvent());
+                          },
+                        );
+                      }),
                   const ListTile(
                     title: Text(
                       'Versão 1.0.0',
