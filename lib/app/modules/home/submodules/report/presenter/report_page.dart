@@ -204,15 +204,25 @@ class _ReportPageState extends State<ReportPage> {
               child: Row(
                 children: [
                   Expanded(
-                    child: MyElevatedButtonWidget(
-                      label: const Text('Generate Report'),
-                      icon: Icons.newspaper_rounded,
-                      onPressed: () async {
-                        widget.reportBloc.add(
-                          GenerateReportPDFEvent(report: report),
-                        );
-                      },
-                    ),
+                    child: BlocBuilder<ReportBloc, ReportStates>(
+                        bloc: widget.reportBloc,
+                        builder: (context, state) {
+                          return MyElevatedButtonWidget(
+                            label: state is LoadingReport
+                                ? const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : const Text('Generate Report'),
+                            icon: Icons.newspaper_rounded,
+                            onPressed: () async {
+                              widget.reportBloc.add(
+                                GenerateReportPDFEvent(report: report),
+                              );
+                            },
+                          );
+                        }),
                   )
                 ],
               ),

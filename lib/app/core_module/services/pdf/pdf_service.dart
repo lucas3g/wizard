@@ -11,6 +11,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:wizard/app/modules/home/submodules/report/domain/vos/report_student.dart';
 import 'package:wizard/app/utils/my_snackbar.dart';
+import 'package:printing/printing.dart';
 
 final labelReporth1 = pw.TextStyle(
   fontSize: 14,
@@ -98,6 +99,9 @@ class PDFService implements IPDF {
     try {
       final pdf = pw.Document();
 
+      final image = await networkImage(
+          'https://i0.wp.com/wizardrecreio.com.br/wp-content/uploads/2017/01/LOGO-NOVA-TRANSPARENTE.png?fit=671%2C223');
+
       pdf.addPage(
         pw.Page(
           pageFormat: PdfPageFormat.a4,
@@ -105,40 +109,89 @@ class PDFService implements IPDF {
             return pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
-                  pw.Text('Wizard', style: logoWizardH1),
-                  pw.Text('by Pearson', style: logoWizardH2),
+                  pw.Image(image, width: 150),
+                  // pw.Text('Wizard', style: logoWizardH1),
+                  // pw.Text('by Pearson', style: logoWizardH2),
                   pw.SizedBox(height: 15),
                   pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
-                      pw.Text(
-                        'Turma: ${report.reportClass.name.value}',
-                        style: labelReporth2,
+                      pw.RichText(
+                        text: pw.TextSpan(
+                          children: [
+                            pw.TextSpan(
+                              text: 'Turma: ',
+                              style: labelReporth2,
+                            ),
+                            pw.TextSpan(text: report.reportClass.name.value)
+                          ],
+                        ),
                       ),
-                      pw.Text(
-                        'Modalidade: _____________',
-                        style: labelReporth2,
+                      pw.RichText(
+                        text: pw.TextSpan(
+                          children: [
+                            pw.TextSpan(
+                              text: 'Modalidade: ',
+                              style: labelReporth2,
+                            ),
+                            const pw.TextSpan(text: '_____________')
+                          ],
+                        ),
                       ),
-                      pw.Text(
-                        'Ano: ${DateTime.now().year}',
-                        style: labelReporth2,
+                      pw.RichText(
+                        text: pw.TextSpan(
+                          children: [
+                            pw.TextSpan(
+                              text: 'Ano: ',
+                              style: labelReporth2,
+                            ),
+                            pw.TextSpan(text: '${DateTime.now().year}')
+                          ],
+                        ),
                       ),
-                      pw.Text(
-                        'Professor: ${GlobalUser.instance.user.name.value}',
-                        style: labelReporth2,
+                      pw.RichText(
+                        text: pw.TextSpan(
+                          children: [
+                            pw.TextSpan(
+                              text: 'Professor: ',
+                              style: labelReporth2,
+                            ),
+                            pw.TextSpan(
+                                text: GlobalUser.instance.user.name.value)
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                  pw.SizedBox(height: 10),
+                  pw.SizedBox(height: 5),
                   pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
-                      pw.Text(
-                          'Dia da Semana: ${translateDay(report.reportClass.dayWeek.value)}',
-                          style: labelReporth1),
-                      pw.Text(
-                        'Horário: ${report.reportClass.schedule.value}',
-                        style: labelReporth1,
+                      pw.RichText(
+                        text: pw.TextSpan(
+                          children: [
+                            pw.TextSpan(
+                              text: 'Dia da Semana: ',
+                              style: labelReporth2,
+                            ),
+                            pw.TextSpan(
+                              text: translateDay(
+                                report.reportClass.dayWeek.value,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      pw.RichText(
+                        text: pw.TextSpan(
+                          children: [
+                            pw.TextSpan(
+                              text: 'Horário: ',
+                              style: labelReporth2,
+                            ),
+                            pw.TextSpan(text: report.reportClass.schedule.value)
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -165,7 +218,7 @@ class PDFService implements IPDF {
                               border: pw.Border.all(),
                             ),
                             child: pw.Text(
-                              '${student.codStudent}- ${student.studentName.value}',
+                              '${student.codStudent} - ${student.studentName.value}',
                             ),
                           ),
                         )
