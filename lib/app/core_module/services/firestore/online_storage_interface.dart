@@ -6,4 +6,6 @@ abstract class IOnlineStorage {
   Future<bool> saveOrUpdateData({required FireStoreSaveOrUpdateParams params});
   Future<QuerySnapshot<Map<String, dynamic>>> getDataById(
       {required FireStoreGetDataParams params});
+  Future<QuerySnapshot<Map<String, dynamic>>> getDataByCollection(
+      {required FireStoreGetDataByCollectionParams params});
 }

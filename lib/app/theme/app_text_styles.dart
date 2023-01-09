@@ -16,7 +16,7 @@ abstract class AppTextStyles {
   TextStyle get titleAuthPage;
   TextStyle get titleSwipeAction;
   TextStyle get labelRemoveSwipeAction;
-  TextStyle get textoRadioList;
+  TextStyle get labelReport;
   TextStyle get textoConfirmarData;
   TextStyle get titleHeaderDashBoard;
   TextStyle get subTitleHeaderDashBoard;
@@ -102,10 +102,10 @@ class AppTextStylesDefault implements AppTextStyles {
       );
 
   @override
-  TextStyle get textoRadioList => GoogleFonts.montserrat(
+  TextStyle get labelReport => GoogleFonts.montserrat(
         fontSize: 14,
         color: Colors.black,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.bold,
       );
 
   @override

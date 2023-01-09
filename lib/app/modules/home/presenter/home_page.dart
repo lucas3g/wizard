@@ -185,7 +185,9 @@ class _HomePageState extends State<HomePage> {
               MyElevatedButtonWidget(
                 label: const Text('General Report'),
                 icon: Icons.newspaper_rounded,
-                onPressed: () {},
+                onPressed: () {
+                  Modular.to.pushNamed('/home/report');
+                },
               ),
               MyElevatedButtonWidget(
                 label: const Text('Student List'),

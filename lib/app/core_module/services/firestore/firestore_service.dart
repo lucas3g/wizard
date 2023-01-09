@@ -67,4 +67,36 @@ class FireStoreService implements IOnlineStorage {
       return false;
     }
   }
+
+  @override
+  Future<QuerySnapshot<Map<String, dynamic>>> getDataByCollection(
+      {required FireStoreGetDataByCollectionParams params}) async {
+    try {
+      late QuerySnapshot<Map<String, dynamic>> result;
+
+      final orderBy = params.orderBy;
+
+      if (orderBy != null) {
+        result = await firestore
+            .collection(params.collection)
+            .doc(params.doc)
+            .collection(params.field)
+            .orderBy(orderBy)
+            .get();
+
+        return result;
+      }
+
+      result = await firestore
+          .collection(params.collection)
+          .doc(params.doc)
+          .collection(params.field)
+          .get();
+
+      return result;
+    } catch (e) {
+      MySnackBar(message: e.toString(), type: TypeSnackBar.error);
+      rethrow;
+    }
+  }
 }

@@ -11,7 +11,15 @@ import 'package:wizard/app/modules/home/submodules/class/infra/datasources/class
 import 'package:wizard/app/modules/home/submodules/class/infra/repositories/class_repository.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/homework/home_work_module.dart';
+import 'package:wizard/app/modules/home/submodules/presence/domain/repositories/presence_repository.dart';
+import 'package:wizard/app/modules/home/submodules/presence/domain/usecases/get_presences_by_class_usecase.dart';
+import 'package:wizard/app/modules/home/submodules/presence/domain/usecases/save_presence_usecase.dart';
+import 'package:wizard/app/modules/home/submodules/presence/external/datasources/presence_datasource.dart';
+import 'package:wizard/app/modules/home/submodules/presence/infra/datasources/presence_datasource.dart';
+import 'package:wizard/app/modules/home/submodules/presence/infra/repositories/presence_repository.dart';
 import 'package:wizard/app/modules/home/submodules/presence/presence_module.dart';
+import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/presence_bloc.dart';
+import 'package:wizard/app/modules/home/submodules/report/report_module.dart';
 import 'package:wizard/app/modules/home/submodules/review/review_module.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/repositories/student_repository.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/usecases/get_student_by_class_usecase.dart';
@@ -31,6 +39,7 @@ class HomeModule extends Module {
     PresenceModule(),
     HomeWorkModule(),
     ReviewModule(),
+    ReportModule(),
   ];
 
   @override
@@ -91,6 +100,37 @@ class HomeModule extends Module {
       ),
       export: true,
     ),
+
+    //DATASOURCES
+    Bind.factory<IPresenceDatasource>(
+      (i) => PresenceDatasource(onlineStorage: i()),
+      export: true,
+    ),
+
+    //REPOSITORIES
+    Bind.factory<IPresenceRepository>(
+      (i) => PresenceRepository(datasource: i()),
+      export: true,
+    ),
+
+    //USECASES
+    Bind.factory<ISavePresenceUseCase>(
+      (i) => SavePresenceUseCase(repository: i()),
+      export: true,
+    ),
+    Bind.factory<IGetPresencesByClassUseCase>(
+      (i) => GetPresencesByClassUseCase(repository: i()),
+      export: true,
+    ),
+
+    //BLOCS
+    BlocBind.factory<PresenceBloc>(
+      (i) => PresenceBloc(
+        savePresenceUseCase: i(),
+        getPresencesByClassUseCase: i(),
+      ),
+      export: true,
+    ),
   ];
 
   @override
@@ -106,5 +146,6 @@ class HomeModule extends Module {
     ModuleRoute('/presence', module: PresenceModule()),
     ModuleRoute('/homeWork', module: HomeWorkModule()),
     ModuleRoute('/review', module: ReviewModule()),
+    ModuleRoute('/report', module: ReportModule()),
   ];
 }

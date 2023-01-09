@@ -4,4 +4,6 @@ import 'package:wizard/app/modules/home/submodules/presence/domain/exceptions/pr
 
 abstract class IPresenceRepository {
   AsyncResult<bool, IPresenceException> savePresence(Presence presence);
+  AsyncResult<List<Presence>, IPresenceException> getPresenceByClass(
+      String pClass);
 }

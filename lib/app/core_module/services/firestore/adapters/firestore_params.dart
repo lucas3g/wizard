@@ -21,6 +21,20 @@ class FireStoreSaveOrUpdateParams {
   });
 }
 
+class FireStoreGetDataByCollectionParams {
+  final String collection;
+  final String doc;
+  final String field;
+  final String? orderBy;
+
+  FireStoreGetDataByCollectionParams({
+    required this.collection,
+    required this.doc,
+    required this.field,
+    this.orderBy,
+  });
+}
+
 class FireStoreGetDataParams {
   final String collection;
   final String field;

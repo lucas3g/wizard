@@ -19,4 +19,14 @@ class PresenceRepository implements IPresenceRepository {
             (error) => PresenceException(message: error.message))
         .flatMap((success) => Success(success));
   }
+
+  @override
+  AsyncResult<List<Presence>, IPresenceException> getPresenceByClass(
+      String pClass) {
+    return datasource
+        .getPresenceByClass(pClass)
+        .mapError<IPresenceException>(
+            (error) => PresenceException(message: error.message))
+        .flatMap((success) => Success(success));
+  }
 }

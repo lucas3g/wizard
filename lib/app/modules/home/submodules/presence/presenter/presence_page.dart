@@ -3,12 +3,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'package:wizard/app/components/my_app_bar_widget.dart';
 import 'package:wizard/app/components/my_drop_down_button_widget.dart';
 import 'package:wizard/app/components/my_elevated_button_widget.dart';
+import 'package:wizard/app/components/my_input_widget.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
 import 'package:wizard/app/core_module/vos/id_vo.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_teacher.dart';
@@ -27,6 +29,7 @@ import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/states
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/student_bloc.dart';
 import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
+import 'package:wizard/app/utils/formatters.dart';
 import 'package:wizard/app/utils/my_snackbar.dart';
 
 class PresencePage extends StatefulWidget {
@@ -47,6 +50,8 @@ class PresencePage extends StatefulWidget {
 
 class _PresencePageState extends State<PresencePage> {
   final fClass = FocusNode();
+  final fObs = FocusNode();
+  final fHomework = FocusNode();
 
   late bool visibleList = false;
 
@@ -183,6 +188,35 @@ class _PresencePageState extends State<PresencePage> {
                       .toList(),
                 );
               },
+            ),
+            Visibility(visible: visibleList, child: const SizedBox(height: 15)),
+            Visibility(
+              visible: visibleList,
+              child: MyInputWidget(
+                keyboardType: TextInputType.number,
+                focusNode: fHomework,
+                label: 'Homework Number',
+                validator: (v) =>
+                    presence.presenceHomeWork.validate().exceptionOrNull(),
+                value: presence.presenceHomeWork.value,
+                onChanged: (e) => presence.setPresenceHomeWork(e),
+                inputFormaters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+              ),
+            ),
+            Visibility(visible: visibleList, child: const SizedBox(height: 15)),
+            Visibility(
+              visible: visibleList,
+              child: MyInputWidget(
+                focusNode: fObs,
+                label: 'Observation',
+                validator: (v) =>
+                    presence.presenceObs.validate().exceptionOrNull(),
+                value: presence.presenceObs.value,
+                onChanged: (e) => presence.setPresenceObs(e),
+                inputFormaters: [UpperCaseTextFormatter()],
+              ),
             ),
             const Divider(),
             Visibility(

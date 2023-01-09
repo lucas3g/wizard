@@ -30,4 +30,28 @@ class PresenceDatasource implements IPresenceDatasource {
       return PresenceException(message: e.toString()).toFailure();
     }
   }
+
+  @override
+  AsyncResult<List<Presence>, IPresenceException> getPresenceByClass(
+      String pClass) async {
+    try {
+      final params = FireStoreGetDataByCollectionParams(
+        collection: 'presences',
+        doc: pClass,
+        field: 'presences',
+      );
+
+      final result = await onlineStorage.getDataByCollection(params: params);
+
+      final List<Presence> list = [];
+
+      for (var doc in result.docs) {
+        list.add(PresenceAdapter.fromMap(doc.data()));
+      }
+
+      return list.toSuccess();
+    } catch (e) {
+      return PresenceException(message: e.toString()).toFailure();
+    }
+  }
 }
