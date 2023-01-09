@@ -232,7 +232,7 @@ class PDFService implements IPDF {
       final file = File("${output!.path}/resumoWizUp.pdf");
       await file.writeAsBytes(await pdf.save());
 
-      //await sharePDF(file);
+      await sharePDF(file);
 
       return true;
     } catch (e) {
