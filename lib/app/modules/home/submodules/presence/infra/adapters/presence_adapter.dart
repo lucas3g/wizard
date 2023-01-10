@@ -35,17 +35,6 @@ class PresenceAdapter {
     );
   }
 
-  static Presence fromPresence(Presence presence) {
-    return Presence(
-      id: presence.id,
-      presenceClass: presence.presenceClass.value,
-      presenceObs: presence.presenceObs.value,
-      presenceHomeWork: presence.presenceHomeWork.value,
-      presenceCheck: presence.presenceCheck,
-      presenceDate: presence.presenceDate.value,
-    );
-  }
-
   static Map<String, dynamic> toMap(Presence presence) {
     return {
       'id': presence.id.value,

@@ -76,7 +76,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
 
         for (var student in state.students) {
           homework.homeworkNote.add(
-            HomeworkNote(student: student, score: ''),
+            HomeworkNote(studentID: student.id.value, score: ''),
           );
         }
       }

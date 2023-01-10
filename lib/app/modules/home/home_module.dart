@@ -10,7 +10,14 @@ import 'package:wizard/app/modules/home/submodules/class/external/datasources/cl
 import 'package:wizard/app/modules/home/submodules/class/infra/datasources/class_datasource.dart';
 import 'package:wizard/app/modules/home/submodules/class/infra/repositories/class_repository.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
+import 'package:wizard/app/modules/home/submodules/homework/domain/repositories/homework_repository.dart';
+import 'package:wizard/app/modules/home/submodules/homework/domain/usecases/get_homeworks_by_class_usecase.dart';
+import 'package:wizard/app/modules/home/submodules/homework/domain/usecases/save_homework_usecase.dart';
+import 'package:wizard/app/modules/home/submodules/homework/external/datasources/homework_datasource.dart';
 import 'package:wizard/app/modules/home/submodules/homework/home_work_module.dart';
+import 'package:wizard/app/modules/home/submodules/homework/infra/datasources/homework_datasource.dart';
+import 'package:wizard/app/modules/home/submodules/homework/infra/repositories/homework_repository.dart';
+import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/homework_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/repositories/presence_repository.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/usecases/get_presences_by_class_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/usecases/save_presence_usecase.dart';
@@ -45,24 +52,37 @@ class HomeModule extends Module {
   @override
   final List<Bind<Object>> binds = [
     //DATASOURCES
-    Bind.factory<IClassDataSource>((i) => ClassDataSource(onlineStorage: i()),
+    Bind.factory<IClassDataSource>(
+        (i) => ClassDataSource(
+              onlineStorage: i(),
+            ),
         export: true),
 
     //REPOSITORIES
-    Bind.factory<IClassRepository>((i) => ClassRepository(dataSource: i()),
+    Bind.factory<IClassRepository>(
+        (i) => ClassRepository(
+              dataSource: i(),
+            ),
         export: true),
 
     //USECASES
-    Bind.factory<ISaveClassUseCase>((i) => SaveClassUseCase(repository: i()),
+    Bind.factory<ISaveClassUseCase>(
+        (i) => SaveClassUseCase(
+              repository: i(),
+            ),
         export: true),
     Bind.factory<IGetClassesByTeacherUseCase>(
-        (i) => GetClassesByTeacherUseCase(repository: i()),
+        (i) => GetClassesByTeacherUseCase(
+              repository: i(),
+            ),
         export: true),
 
     //BLOCS
     BlocBind.factory<ClassBloc>(
-        (i) =>
-            ClassBloc(saveClassUseCase: i(), getClassesByTeacherUseCase: i()),
+        (i) => ClassBloc(
+              saveClassUseCase: i(),
+              getClassesByTeacherUseCase: i(),
+            ),
         export: true),
 
     //DATASOURCES
@@ -128,6 +148,37 @@ class HomeModule extends Module {
       (i) => PresenceBloc(
         savePresenceUseCase: i(),
         getPresencesByClassUseCase: i(),
+      ),
+      export: true,
+    ),
+
+    //DATASOURCES
+    Bind.factory<IHomeworkDatasource>(
+      (i) => HomeworkDatasource(onlineStorage: i()),
+      export: true,
+    ),
+
+    //REPOSITORIES
+    Bind.factory<IHomeworkRepository>(
+      (i) => HomeworkRepository(datasource: i()),
+      export: true,
+    ),
+
+    //USECASES
+    Bind.factory<ISaveHomeworkUsecase>(
+      (i) => SaveHomeworkUsecase(repository: i()),
+      export: true,
+    ),
+    Bind.factory<IGetHomeworksByClassUsecase>(
+      (i) => GetHomeworksByClassUsecase(repository: i()),
+      export: true,
+    ),
+
+    //BLOCS
+    BlocBind.factory<HomeworkBloc>(
+      (i) => HomeworkBloc(
+        saveHomeworkUsecase: i(),
+        getHomeworksByClassUsecase: i(),
       ),
       export: true,
     ),

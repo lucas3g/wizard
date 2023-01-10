@@ -10,3 +10,11 @@ class SaveHomeworkEvent extends HomeworkEvents {
     required this.homework,
   });
 }
+
+class GetHomeworksByClassEvent extends HomeworkEvents {
+  final String classID;
+
+  GetHomeworksByClassEvent({
+    required this.classID,
+  });
+}

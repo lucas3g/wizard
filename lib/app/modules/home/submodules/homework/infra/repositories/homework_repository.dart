@@ -21,4 +21,14 @@ class HomeworkRepository implements IHomeworkRepository {
             (error) => HomeWorkException(message: error.message))
         .flatMap((success) => Success(success));
   }
+
+  @override
+  AsyncResult<List<Homework>, IHomeWorkException> getHomeworksByClass(
+      String classID) {
+    return datasource
+        .getHomeworksByClass(classID)
+        .mapError<IHomeWorkException>(
+            (error) => HomeWorkException(message: error.message))
+        .flatMap((success) => Success(success));
+  }
 }

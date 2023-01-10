@@ -7,7 +7,7 @@ import 'package:wizard/app/modules/home/submodules/homework/domain/vos/homework_
 class Homework extends Entity {
   HomeworkClass _homeworkClass;
   HomeworkName _homeworkName;
-  late List<HomeworkNote> homeworkNote = [];
+  late List<HomeworkNote> homeworkNote;
 
   HomeworkClass get homeworkClass => _homeworkClass;
   void setHomeworkClass(String value) => _homeworkClass = HomeworkClass(value);
@@ -19,6 +19,7 @@ class Homework extends Entity {
     required super.id,
     required homeworkClass,
     required homeworkName,
+    required this.homeworkNote,
   })  : _homeworkClass = HomeworkClass(homeworkClass),
         _homeworkName = HomeworkName(homeworkName);
 

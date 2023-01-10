@@ -4,4 +4,6 @@ import 'package:wizard/app/modules/home/submodules/homework/domain/exceptions/ho
 
 abstract class IHomeworkDatasource {
   AsyncResult<bool, IHomeWorkException> saveHomework(Homework homework);
+  AsyncResult<List<Homework>, IHomeWorkException> getHomeworksByClass(
+      String classID);
 }

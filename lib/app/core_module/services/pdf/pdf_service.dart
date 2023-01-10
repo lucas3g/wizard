@@ -198,6 +198,93 @@ class PDFService implements IPDF {
         ),
       );
 
+      pdf.addPage(pw.Page(
+          pageFormat: PdfPageFormat.a4,
+          margin: const pw.EdgeInsets.all(40),
+          build: (pw.Context context) {
+            return pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Text('Notas', style: labelReporth1),
+                pw.SizedBox(height: 10),
+                pw.Text('Alunos',
+                    style: labelReporth1, textAlign: pw.TextAlign.center),
+                pw.SizedBox(height: 10),
+                pw.Row(children: [
+                  pw.Container(
+                    width: 50,
+                    decoration: pw.BoxDecoration(border: pw.Border.all()),
+                    child: pw.Text(
+                      'Lição',
+                      textAlign: pw.TextAlign.center,
+                    ),
+                  ),
+                  pw.ListView.builder(
+                    direction: pw.Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return pw.Row(children: [
+                        pw.ListView.builder(
+                          direction: pw.Axis.horizontal,
+                          itemBuilder: (context, index2) {
+                            return pw.Container(
+                              width: 30,
+                              decoration:
+                                  pw.BoxDecoration(border: pw.Border.all()),
+                              child: pw.Text(
+                                (index2 + 1).toString(),
+                                textAlign: pw.TextAlign.center,
+                              ),
+                            );
+                          },
+                          itemCount: report.homeworks.first.homeworkNote.length,
+                        ),
+                      ]);
+                    },
+                    itemCount: 1,
+                  ),
+                ]),
+                pw.Container(
+                  child: pw.Wrap(children: [
+                    pw.ListView.builder(
+                      direction: pw.Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return pw.Row(children: [
+                          pw.Container(
+                            width: 50,
+                            decoration:
+                                pw.BoxDecoration(border: pw.Border.all()),
+                            child: pw.Text(
+                              report.homeworks[index].homeworkName.value,
+                              textAlign: pw.TextAlign.center,
+                            ),
+                          ),
+                          pw.ListView.builder(
+                            direction: pw.Axis.horizontal,
+                            itemBuilder: (context, index2) {
+                              return pw.Container(
+                                width: 30,
+                                decoration:
+                                    pw.BoxDecoration(border: pw.Border.all()),
+                                child: pw.Text(
+                                  report.homeworks[index].homeworkNote[index2]
+                                      .score.value,
+                                  textAlign: pw.TextAlign.center,
+                                ),
+                              );
+                            },
+                            itemCount:
+                                report.homeworks[index].homeworkNote.length,
+                          ),
+                        ]);
+                      },
+                      itemCount: report.homeworks.length,
+                    ),
+                  ]),
+                ),
+              ],
+            );
+          }));
+
       final output = await getExternalStorageDirectory();
       final file = File("${output!.path}/resumoWizUp.pdf");
       await file.writeAsBytes(await pdf.save());

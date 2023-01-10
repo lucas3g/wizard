@@ -33,4 +33,28 @@ class HomeworkDatasource implements IHomeworkDatasource {
       return HomeWorkException(message: e.toString()).toFailure();
     }
   }
+
+  @override
+  AsyncResult<List<Homework>, IHomeWorkException> getHomeworksByClass(
+      String classID) async {
+    try {
+      final params = FireStoreGetDataByCollectionParams(
+        collection: 'homeworks',
+        doc: GlobalUser.instance.user.id.value,
+        field: classID,
+      );
+
+      final result = await onlineStorage.getDataByCollection(params: params);
+
+      final List<Homework> list = [];
+
+      for (var doc in result.docs) {
+        list.add(HomeworkAdapter.fromMap(doc.data()));
+      }
+
+      return list.toSuccess();
+    } catch (e) {
+      return HomeWorkException(message: e.toString()).toFailure();
+    }
+  }
 }

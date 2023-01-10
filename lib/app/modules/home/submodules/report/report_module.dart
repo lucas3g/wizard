@@ -1,6 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:modular_bloc_bind/modular_bloc_bind.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
+import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/homework_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/presence_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/report/domain/repositories/report_repository.dart';
 import 'package:wizard/app/modules/home/submodules/report/domain/usecases/generate_file_pdf.dart';
@@ -54,6 +55,7 @@ class ReportModule extends Module {
             studentBloc: Modular.get<StudentBloc>(),
             reportBloc: Modular.get<ReportBloc>(),
             presenceBloc: Modular.get<PresenceBloc>(),
+            homeworkBloc: Modular.get<HomeworkBloc>(),
           )),
     )
   ];

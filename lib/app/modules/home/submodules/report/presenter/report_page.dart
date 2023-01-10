@@ -15,7 +15,9 @@ import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_tea
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/events/class_events.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/states/class_states.dart';
-import 'package:wizard/app/modules/home/submodules/presence/infra/adapters/presence_adapter.dart';
+import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/events/homework_events.dart';
+import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/homework_bloc.dart';
+import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/states/homework_states.dart';
 import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/events/presence_events.dart';
 import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/presence_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/states/presence_states.dart';
@@ -37,6 +39,7 @@ class ReportPage extends StatefulWidget {
   final StudentBloc studentBloc;
   final ReportBloc reportBloc;
   final PresenceBloc presenceBloc;
+  final HomeworkBloc homeworkBloc;
 
   const ReportPage({
     Key? key,
@@ -44,6 +47,7 @@ class ReportPage extends StatefulWidget {
     required this.studentBloc,
     required this.reportBloc,
     required this.presenceBloc,
+    required this.homeworkBloc,
   }) : super(key: key);
 
   @override
@@ -60,6 +64,7 @@ class _ReportPageState extends State<ReportPage> {
   late StreamSubscription sub;
   late StreamSubscription subPresence;
   late StreamSubscription subReport;
+  late StreamSubscription subHomework;
 
   @override
   void initState() {
@@ -96,7 +101,17 @@ class _ReportPageState extends State<ReportPage> {
         report.presences.clear();
 
         for (var presence in state.presences) {
-          report.presences.add(PresenceAdapter.fromPresence(presence));
+          report.presences.add(presence);
+        }
+      }
+    });
+
+    subHomework = widget.homeworkBloc.stream.listen((state) {
+      if (state is SuccessGetHomeworksByClass) {
+        report.homeworks.clear();
+
+        for (var homework in state.homeworks) {
+          report.homeworks.add(homework);
         }
       }
     });
@@ -116,6 +131,7 @@ class _ReportPageState extends State<ReportPage> {
     sub.cancel();
     subPresence.cancel();
     subReport.cancel();
+    subHomework.cancel();
 
     super.dispose();
   }
@@ -183,6 +199,12 @@ class _ReportPageState extends State<ReportPage> {
                     widget.presenceBloc.add(
                       GetPresenceByClassEvent(
                         pClass: e,
+                      ),
+                    );
+
+                    widget.homeworkBloc.add(
+                      GetHomeworksByClassEvent(
+                        classID: e,
                       ),
                     );
                   },
