@@ -1,10 +1,7 @@
-import 'package:result_dart/result_dart.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/entities/class.dart';
-import 'package:wizard/app/modules/home/submodules/class/domain/exceptions/class_exception.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_teacher.dart';
 
 abstract class IClassDataSource {
-  AsyncResult<bool, IClassException> saveClass(Class pClass);
-  AsyncResult<List<Class>, IClassException> getClassesByTeacher(
-      ClassIDTeacher idTeacher);
+  Future<bool> saveClass(Class pClass);
+  Future<List<Class>> getClassesByTeacher(ClassIDTeacher idTeacher);
 }

@@ -13,21 +13,29 @@ class ClassRepository implements IClassRepository {
   ClassRepository({required this.dataSource});
 
   @override
-  AsyncResult<bool, IClassException> saveClass(Class pClass) {
-    return dataSource
-        .saveClass(pClass)
-        .mapError<IClassException>(
-            (error) => ClassException(message: error.message))
-        .flatMap((success) => Success(success));
+  Future<Result<bool, IClassException>> saveClass(Class pClass) async {
+    try {
+      final result = await dataSource.saveClass(pClass);
+
+      return result.toSuccess();
+    } on IClassException catch (e) {
+      return ClassException(message: e.message).toFailure();
+    } catch (e) {
+      return ClassException(message: e.toString()).toFailure();
+    }
   }
 
   @override
-  AsyncResult<List<Class>, IClassException> getClassesByTeacher(
-      ClassIDTeacher idTeacher) {
-    return dataSource
-        .getClassesByTeacher(idTeacher)
-        .mapError<IClassException>(
-            (error) => ClassException(message: error.message))
-        .flatMap((success) => Success(success));
+  Future<Result<List<Class>, IClassException>> getClassesByTeacher(
+      ClassIDTeacher idTeacher) async {
+    try {
+      final result = await dataSource.getClassesByTeacher(idTeacher);
+
+      return result.toSuccess();
+    } on IClassException catch (e) {
+      return ClassException(message: e.message).toFailure();
+    } catch (e) {
+      return ClassException(message: e.toString()).toFailure();
+    }
   }
 }

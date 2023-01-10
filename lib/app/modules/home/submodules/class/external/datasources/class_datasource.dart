@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:result_dart/result_dart.dart';
 import 'package:wizard/app/core_module/services/firestore/adapters/firestore_params.dart';
 
 import 'package:wizard/app/core_module/services/firestore/online_storage_interface.dart';
@@ -15,43 +14,38 @@ class ClassDataSource implements IClassDataSource {
   ClassDataSource({required this.onlineStorage});
 
   @override
-  AsyncResult<bool, IClassException> saveClass(Class pClass) async {
-    try {
-      final params = FireStoreSaveOrUpdateParams(
-        collection: 'classes',
-        doc: pClass.id.value,
-        data: ClassAdapter.toMap(pClass),
-      );
+  Future<bool> saveClass(Class pClass) async {
+    final params = FireStoreSaveOrUpdateParams(
+      collection: 'classes',
+      doc: pClass.id.value,
+      data: ClassAdapter.toMap(pClass),
+    );
 
-      final result = await onlineStorage.saveOrUpdateData(params: params);
+    final result = await onlineStorage.saveOrUpdateData(params: params);
 
-      return result.toSuccess();
-    } catch (e) {
-      return ClassException(message: e.toString()).toFailure();
-    }
+    return result;
   }
 
   @override
-  AsyncResult<List<Class>, IClassException> getClassesByTeacher(
-      ClassIDTeacher idTeacher) async {
-    try {
-      final params = FireStoreGetDataParams(
-        collection: 'classes',
-        field: 'idTeacher',
-        value: idTeacher.value,
-      );
+  Future<List<Class>> getClassesByTeacher(ClassIDTeacher idTeacher) async {
+    final params = FireStoreGetDataParams(
+      collection: 'classes',
+      field: 'idTeacher',
+      value: idTeacher.value,
+    );
 
-      final result = await onlineStorage.getDataById(params: params);
+    final result = await onlineStorage.getDataById(params: params);
 
-      late List<Class> list = [];
-
-      for (var doc in result.docs) {
-        list.add(ClassAdapter.fromMap(doc.data()));
-      }
-
-      return list.toSuccess();
-    } catch (e) {
-      return ClassException(message: e.toString()).toFailure();
+    if (result.docs.isEmpty) {
+      throw const ClassException(message: 'Class is empty!');
     }
+
+    late List<Class> list = [];
+
+    for (var doc in result.docs) {
+      list.add(ClassAdapter.fromMap(doc.data()));
+    }
+
+    return list;
   }
 }
