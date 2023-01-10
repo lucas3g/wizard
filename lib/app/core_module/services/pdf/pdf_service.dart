@@ -1,97 +1,15 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:path_provider/path_provider.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
+import 'package:wizard/app/core_module/services/pdf/controller/pdf_controller.dart';
 import 'package:wizard/app/core_module/services/pdf/pdf_interface.dart';
-import 'package:wizard/app/modules/home/submodules/presence/domain/vos/presence_check.dart';
+import 'package:wizard/app/core_module/services/pdf/styles/pdf_styles.dart';
 import 'package:wizard/app/modules/home/submodules/report/domain/entities/report.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:wizard/app/modules/home/submodules/report/domain/vos/report_student.dart';
 import 'package:wizard/app/utils/my_snackbar.dart';
 import 'package:printing/printing.dart';
-
-final labelReporth1 = pw.TextStyle(
-  fontSize: 14,
-  color: PdfColors.black,
-  fontWeight: pw.FontWeight.bold,
-);
-
-final labelReporth2 = pw.TextStyle(
-  fontSize: 12,
-  color: PdfColors.black,
-  fontWeight: pw.FontWeight.bold,
-);
-
-final logoWizardH1 = pw.TextStyle(
-  fontSize: 28,
-  color: PdfColor.fromHex('002C4D'),
-  fontWeight: pw.FontWeight.bold,
-);
-
-final logoWizardH2 = pw.TextStyle(
-  fontSize: 14,
-  color: PdfColor.fromHex('002C4D'),
-);
-
-String returnsMissing(
-    List<PresenceCheck> checks, List<ReportStudent> students) {
-  late String missing = '';
-  for (var check in checks) {
-    if (check.presencePresent.value == 'Absent') {
-      for (var student in students) {
-        if (student.idStudent == check.studentID.value) {
-          missing += '${student.codStudent}, ';
-        }
-      }
-    }
-  }
-
-  if (missing.isNotEmpty) {
-    return missing.substring(0, missing.length - 2);
-  }
-
-  return missing;
-}
-
-Future sharePDF(File pdf) async {
-  try {
-    await Future.delayed(const Duration(milliseconds: 500));
-
-    TypedData audioByte;
-    late String path;
-
-    audioByte = await File(pdf.path).readAsBytes();
-    path = pdf.path;
-
-    File(path).writeAsBytesSync(audioByte.buffer.asUint8List());
-
-    await Share.shareFiles([path]);
-  } catch (e) {
-    MySnackBar(message: e.toString(), type: TypeSnackBar.error);
-  }
-}
-
-String translateDay(String day) {
-  switch (day) {
-    case 'Monday':
-      return 'Segunda-Feira';
-    case 'Tuesday':
-      return 'Terça-Feira';
-    case 'Wednesday':
-      return 'Quarta-Feira';
-    case 'Thurday':
-      return 'Quinta-Feira';
-    case 'Friday':
-      return 'Sexta-Feira';
-    case 'Sartuday':
-      return 'Sábado';
-    default:
-      return 'Domingo';
-  }
-}
 
 class PDFService implements IPDF {
   @override
@@ -105,13 +23,12 @@ class PDFService implements IPDF {
       pdf.addPage(
         pw.Page(
           pageFormat: PdfPageFormat.a4,
+          margin: const pw.EdgeInsets.all(40),
           build: (pw.Context context) {
             return pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
                   pw.Image(image, width: 150),
-                  // pw.Text('Wizard', style: logoWizardH1),
-                  // pw.Text('by Pearson', style: logoWizardH2),
                   pw.SizedBox(height: 15),
                   pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
@@ -175,7 +92,7 @@ class PDFService implements IPDF {
                               style: labelReporth2,
                             ),
                             pw.TextSpan(
-                              text: translateDay(
+                              text: PDFController.translateDay(
                                 report.reportClass.dayWeek.value,
                               ),
                             )
@@ -262,7 +179,7 @@ class PDFService implements IPDF {
                             textAlign: pw.TextAlign.center,
                           ),
                           pw.Text(
-                            returnsMissing(
+                            PDFController.returnsMissing(
                               report.presences[i].presenceCheck!,
                               report.students,
                             ),
@@ -285,7 +202,7 @@ class PDFService implements IPDF {
       final file = File("${output!.path}/resumoWizUp.pdf");
       await file.writeAsBytes(await pdf.save());
 
-      await sharePDF(file);
+      await PDFController.sharePDF(file);
 
       return true;
     } catch (e) {
