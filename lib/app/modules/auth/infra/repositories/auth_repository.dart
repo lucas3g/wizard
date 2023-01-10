@@ -11,23 +11,30 @@ class AuthRepository implements IAuthRepository {
   AuthRepository({required this.dataSource});
 
   @override
-  AsyncResult<User, IAuthException> signInGoogle() {
-    return dataSource
-        .signInGoogle()
-        .mapError<IAuthException>(
-          (error) => AuthException(message: error.toString()),
-        )
-        .flatMap(
-            (success) => UserAdapter.fromGoogleAccount(success).toSuccess());
+  Future<Result<User, IAuthException>> signInGoogle() async {
+    try {
+      final result = await dataSource.signInGoogle();
+
+      final user = UserAdapter.fromGoogleAccount(result);
+
+      return user.toSuccess();
+    } on IAuthException catch (e) {
+      return AuthException(message: e.message).toFailure();
+    } catch (e) {
+      return AuthException(message: e.toString()).toFailure();
+    }
   }
 
   @override
-  AsyncResult<bool, IAuthException> logoutGoogle() {
-    return dataSource
-        .logoutGoogle()
-        .mapError<IAuthException>(
-          (error) => AuthException(message: error.toString()),
-        )
-        .flatMap((success) => success.toSuccess());
+  AsyncResult<bool, IAuthException> logoutGoogle() async {
+    try {
+      final result = await dataSource.logoutGoogle();
+
+      return result.toSuccess();
+    } on IAuthException catch (e) {
+      return AuthException(message: e.message).toFailure();
+    } catch (e) {
+      return AuthException(message: e.toString()).toFailure();
+    }
   }
 }
