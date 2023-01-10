@@ -243,50 +243,43 @@ class PDFService implements IPDF {
                     itemCount: 1,
                   ),
                 ]),
-                pw.Container(
-                  child: pw.Wrap(children: [
-                    pw.ListView.builder(
-                      direction: pw.Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return pw.Row(children: [
-                          pw.Container(
-                            width: 50,
+                pw.ListView.builder(
+                  itemBuilder: (context, index) {
+                    return pw.Row(children: [
+                      pw.Container(
+                        width: 50,
+                        decoration: pw.BoxDecoration(border: pw.Border.all()),
+                        child: pw.Text(
+                          report.homeworks[index].homeworkName.value,
+                          textAlign: pw.TextAlign.center,
+                        ),
+                      ),
+                      pw.ListView.builder(
+                        direction: pw.Axis.horizontal,
+                        itemBuilder: (context, index2) {
+                          return pw.Container(
+                            width: 30,
                             decoration:
                                 pw.BoxDecoration(border: pw.Border.all()),
                             child: pw.Text(
-                              report.homeworks[index].homeworkName.value,
+                              report.homeworks[index].homeworkNote[index2].score
+                                  .value,
                               textAlign: pw.TextAlign.center,
                             ),
-                          ),
-                          pw.ListView.builder(
-                            direction: pw.Axis.horizontal,
-                            itemBuilder: (context, index2) {
-                              return pw.Container(
-                                width: 30,
-                                decoration:
-                                    pw.BoxDecoration(border: pw.Border.all()),
-                                child: pw.Text(
-                                  report.homeworks[index].homeworkNote[index2]
-                                      .score.value,
-                                  textAlign: pw.TextAlign.center,
-                                ),
-                              );
-                            },
-                            itemCount:
-                                report.homeworks[index].homeworkNote.length,
-                          ),
-                        ]);
-                      },
-                      itemCount: report.homeworks.length,
-                    ),
-                  ]),
+                          );
+                        },
+                        itemCount: report.homeworks[index].homeworkNote.length,
+                      ),
+                    ]);
+                  },
+                  itemCount: report.homeworks.length,
                 ),
               ],
             );
           }));
 
       final output = await getExternalStorageDirectory();
-      final file = File("${output!.path}/resumoWizUp.pdf");
+      final file = File("${output!.path}/ResumoWizUp.pdf");
       await file.writeAsBytes(await pdf.save());
 
       await PDFController.sharePDF(file);
