@@ -14,11 +14,13 @@ class ReportRepository implements IReportRepository {
   });
 
   @override
-  AsyncResult<Report, IReportException> generatePDF(Report report) {
-    return datasource
-        .generatePDF(report)
-        .mapError<IReportException>(
-            (error) => ReportException(message: error.message))
-        .flatMap((success) => Success(success));
+  Future<Result<bool, IReportException>> generatePDF(Report report) async {
+    try {
+      final result = await datasource.generatePDF(report);
+
+      return result.toSuccess();
+    } catch (e) {
+      return ReportException(message: e.toString()).toFailure();
+    }
   }
 }

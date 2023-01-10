@@ -3,5 +3,5 @@ import 'package:wizard/app/modules/home/submodules/report/domain/entities/report
 import 'package:wizard/app/modules/home/submodules/report/domain/exceptions/report_exception.dart';
 
 abstract class IReportRepository {
-  AsyncResult<Report, IReportException> generatePDF(Report report);
+  Future<Result<bool, IReportException>> generatePDF(Report report);
 }
