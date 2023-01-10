@@ -3,7 +3,7 @@ import 'package:wizard/app/modules/home/submodules/presence/domain/entites/prese
 import 'package:wizard/app/modules/home/submodules/presence/domain/exceptions/presence_exception.dart';
 
 abstract class IPresenceRepository {
-  AsyncResult<bool, IPresenceException> savePresence(Presence presence);
-  AsyncResult<List<Presence>, IPresenceException> getPresenceByClass(
+  Future<Result<bool, IPresenceException>> savePresence(Presence presence);
+  Future<Result<List<Presence>, IPresenceException>> getPresenceByClass(
       String pClass);
 }

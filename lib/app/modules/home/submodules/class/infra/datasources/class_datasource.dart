@@ -3,5 +3,5 @@ import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_tea
 
 abstract class IClassDataSource {
   Future<bool> saveClass(Class pClass);
-  Future<List<Class>> getClassesByTeacher(ClassIDTeacher idTeacher);
+  Future<List> getClassesByTeacher(ClassIDTeacher idTeacher);
 }

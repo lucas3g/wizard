@@ -4,6 +4,7 @@ import 'package:result_dart/result_dart.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/entites/presence.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/exceptions/presence_exception.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/repositories/presence_repository.dart';
+import 'package:wizard/app/modules/home/submodules/presence/infra/adapters/presence_adapter.dart';
 import 'package:wizard/app/modules/home/submodules/presence/infra/datasources/presence_datasource.dart';
 
 class PresenceRepository implements IPresenceRepository {
@@ -12,21 +13,36 @@ class PresenceRepository implements IPresenceRepository {
   PresenceRepository({required this.datasource});
 
   @override
-  AsyncResult<bool, IPresenceException> savePresence(Presence presence) {
-    return datasource
-        .savePresence(presence)
-        .mapError<IPresenceException>(
-            (error) => PresenceException(message: error.message))
-        .flatMap((success) => Success(success));
+  Future<Result<bool, IPresenceException>> savePresence(
+      Presence presence) async {
+    try {
+      final result = await datasource.savePresence(presence);
+
+      return result.toSuccess();
+    } on IPresenceException catch (e) {
+      return PresenceException(message: e.message).toFailure();
+    } catch (e) {
+      return PresenceException(message: e.toString()).toFailure();
+    }
   }
 
   @override
-  AsyncResult<List<Presence>, IPresenceException> getPresenceByClass(
-      String pClass) {
-    return datasource
-        .getPresenceByClass(pClass)
-        .mapError<IPresenceException>(
-            (error) => PresenceException(message: error.message))
-        .flatMap((success) => Success(success));
+  Future<Result<List<Presence>, IPresenceException>> getPresenceByClass(
+      String pClass) async {
+    try {
+      final result = await datasource.getPresenceByClass(pClass);
+
+      final List<Presence> list = [];
+
+      for (var doc in result) {
+        list.add(PresenceAdapter.fromMap(doc.data()));
+      }
+
+      return list.toSuccess();
+    } on IPresenceException catch (e) {
+      return PresenceException(message: e.message).toFailure();
+    } catch (e) {
+      return PresenceException(message: e.toString()).toFailure();
+    }
   }
 }

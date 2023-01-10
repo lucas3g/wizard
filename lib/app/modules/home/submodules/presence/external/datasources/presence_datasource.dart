@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:result_dart/result_dart.dart';
 import 'package:wizard/app/core_module/services/firestore/adapters/firestore_params.dart';
 
 import 'package:wizard/app/core_module/services/firestore/online_storage_interface.dart';
@@ -15,43 +14,36 @@ class PresenceDatasource implements IPresenceDatasource {
   PresenceDatasource({required this.onlineStorage});
 
   @override
-  AsyncResult<bool, IPresenceException> savePresence(Presence presence) async {
-    try {
-      final params = FireStoreSaveOrUpdateParams(
-        collection: 'presences/${presence.presenceClass.value}/presences',
-        doc: DateTime.now().DiaMesAnoDB(),
-        data: PresenceAdapter.toMap(presence),
-      );
+  Future<bool> savePresence(Presence presence) async {
+    final params = FireStoreSaveOrUpdateParams(
+      collection: 'presences/${presence.presenceClass.value}/presences',
+      doc: DateTime.now().DiaMesAnoDB(),
+      data: PresenceAdapter.toMap(presence),
+    );
 
-      final result = await onlineStorage.saveOrUpdateData(params: params);
+    final result = await onlineStorage.saveOrUpdateData(params: params);
 
-      return result.toSuccess();
-    } catch (e) {
-      return PresenceException(message: e.toString()).toFailure();
+    if (!result) {
+      throw const PresenceException(message: 'Error saving presence');
     }
+
+    return result;
   }
 
   @override
-  AsyncResult<List<Presence>, IPresenceException> getPresenceByClass(
-      String pClass) async {
-    try {
-      final params = FireStoreGetDataByCollectionParams(
-        collection: 'presences',
-        doc: pClass,
-        field: 'presences',
-      );
+  Future<List> getPresenceByClass(String pClass) async {
+    final params = FireStoreGetDataByCollectionParams(
+      collection: 'presences',
+      doc: pClass,
+      field: 'presences',
+    );
 
-      final result = await onlineStorage.getDataByCollection(params: params);
+    final result = await onlineStorage.getDataByCollection(params: params);
 
-      final List<Presence> list = [];
-
-      for (var doc in result.docs) {
-        list.add(PresenceAdapter.fromMap(doc.data()));
-      }
-
-      return list.toSuccess();
-    } catch (e) {
-      return PresenceException(message: e.toString()).toFailure();
+    if (result.docs.isEmpty) {
+      throw const PresenceException(message: 'Presences is empty!');
     }
+
+    return result.docs;
   }
 }

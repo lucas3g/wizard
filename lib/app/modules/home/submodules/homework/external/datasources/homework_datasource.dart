@@ -34,7 +34,7 @@ class HomeworkDatasource implements IHomeworkDatasource {
   }
 
   @override
-  Future<List<Homework>> getHomeworksByClass(String classID) async {
+  Future<List> getHomeworksByClass(String classID) async {
     final params = FireStoreGetDataByCollectionParams(
       collection: 'homeworks',
       doc: GlobalUser.instance.user.id.value,
@@ -47,12 +47,6 @@ class HomeworkDatasource implements IHomeworkDatasource {
       throw const HomeWorkException(message: 'Homeworks is empty!');
     }
 
-    final List<Homework> list = [];
-
-    for (var doc in result.docs) {
-      list.add(HomeworkAdapter.fromMap(doc.data()));
-    }
-
-    return list;
+    return result.docs;
   }
 }

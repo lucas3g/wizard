@@ -23,11 +23,15 @@ class ClassDataSource implements IClassDataSource {
 
     final result = await onlineStorage.saveOrUpdateData(params: params);
 
+    if (!result) {
+      throw const ClassException(message: 'Error saving class');
+    }
+
     return result;
   }
 
   @override
-  Future<List<Class>> getClassesByTeacher(ClassIDTeacher idTeacher) async {
+  Future<List> getClassesByTeacher(ClassIDTeacher idTeacher) async {
     final params = FireStoreGetDataParams(
       collection: 'classes',
       field: 'idTeacher',
@@ -40,12 +44,6 @@ class ClassDataSource implements IClassDataSource {
       throw const ClassException(message: 'Class is empty!');
     }
 
-    late List<Class> list = [];
-
-    for (var doc in result.docs) {
-      list.add(ClassAdapter.fromMap(doc.data()));
-    }
-
-    return list;
+    return result.docs;
   }
 }

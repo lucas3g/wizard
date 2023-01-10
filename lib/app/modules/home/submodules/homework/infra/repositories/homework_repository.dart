@@ -4,6 +4,7 @@ import 'package:result_dart/result_dart.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/entities/homework.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/exceptions/homework_exception.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/repositories/homework_repository.dart';
+import 'package:wizard/app/modules/home/submodules/homework/infra/adapters/homework_adapter.dart';
 import 'package:wizard/app/modules/home/submodules/homework/infra/datasources/homework_datasource.dart';
 
 class HomeworkRepository implements IHomeworkRepository {
@@ -33,7 +34,13 @@ class HomeworkRepository implements IHomeworkRepository {
     try {
       final result = await datasource.getHomeworksByClass(classID);
 
-      return result.toSuccess();
+      final List<Homework> list = [];
+
+      for (var doc in result) {
+        list.add(HomeworkAdapter.fromMap(doc.data()));
+      }
+
+      return list.toSuccess();
     } on IHomeWorkException catch (e) {
       return HomeWorkException(message: e.message).toFailure();
     } catch (e) {

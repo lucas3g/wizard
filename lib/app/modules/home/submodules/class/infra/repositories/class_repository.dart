@@ -5,6 +5,7 @@ import 'package:wizard/app/modules/home/submodules/class/domain/entities/class.d
 import 'package:wizard/app/modules/home/submodules/class/domain/exceptions/class_exception.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/repositories/class_repository.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_teacher.dart';
+import 'package:wizard/app/modules/home/submodules/class/infra/adapters/class_adapter.dart';
 import 'package:wizard/app/modules/home/submodules/class/infra/datasources/class_datasource.dart';
 
 class ClassRepository implements IClassRepository {
@@ -30,8 +31,13 @@ class ClassRepository implements IClassRepository {
       ClassIDTeacher idTeacher) async {
     try {
       final result = await dataSource.getClassesByTeacher(idTeacher);
+      late List<Class> list = [];
 
-      return result.toSuccess();
+      for (var doc in result) {
+        list.add(ClassAdapter.fromMap(doc.data()));
+      }
+
+      return list.toSuccess();
     } on IClassException catch (e) {
       return ClassException(message: e.message).toFailure();
     } catch (e) {
