@@ -4,8 +4,9 @@ import 'package:wizard/app/modules/home/submodules/student/domain/entity/student
 import 'package:wizard/app/modules/home/submodules/student/domain/exceptions/student_exception.dart';
 
 abstract class IStudentRepository {
-  AsyncResult<bool, IStudentException> saveStudent(Student student);
-  AsyncResult<List<Student>, IStudentException> getStudentByClass(IdVO classID);
-  AsyncResult<List<Student>, IStudentException> getStudentByTeacher(
+  Future<Result<bool, IStudentException>> saveStudent(Student student);
+  Future<Result<List<Student>, IStudentException>> getStudentByClass(
+      IdVO classID);
+  Future<Result<List<Student>, IStudentException>> getStudentByTeacher(
       IdVO teacherID);
 }

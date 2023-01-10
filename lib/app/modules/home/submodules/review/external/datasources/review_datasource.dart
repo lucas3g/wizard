@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:result_dart/result_dart.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
 import 'package:wizard/app/core_module/services/firestore/adapters/firestore_params.dart';
 
@@ -17,20 +16,20 @@ class ReviewDatasource implements IReviewDatasource {
   });
 
   @override
-  AsyncResult<bool, IReviewException> saveReview(Review review) async {
-    try {
-      final params = FireStoreSaveOrUpdateParams(
-        collection:
-            'reviews/${GlobalUser.instance.user.id.value}/${review.reviewClass.value}',
-        doc: review.reviewName.value,
-        data: ReviewAdapter.toMap(review),
-      );
+  Future<bool> saveReview(Review review) async {
+    final params = FireStoreSaveOrUpdateParams(
+      collection:
+          'reviews/${GlobalUser.instance.user.id.value}/${review.reviewClass.value}',
+      doc: review.reviewName.value,
+      data: ReviewAdapter.toMap(review),
+    );
 
-      final result = await onlineStorage.saveOrUpdateData(params: params);
+    final result = await onlineStorage.saveOrUpdateData(params: params);
 
-      return result.toSuccess();
-    } catch (e) {
-      return ReviewException(message: e.toString()).toFailure();
+    if (!result) {
+      throw const ReviewException(message: 'Error saving review');
     }
+
+    return result;
   }
 }

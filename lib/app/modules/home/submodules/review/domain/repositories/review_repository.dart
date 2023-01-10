@@ -3,5 +3,5 @@ import 'package:wizard/app/modules/home/submodules/review/domain/entities/review
 import 'package:wizard/app/modules/home/submodules/review/domain/exceptions/review_exception.dart';
 
 abstract class IReviewRepository {
-  AsyncResult<bool, IReviewException> saveReview(Review review);
+  Future<Result<bool, IReviewException>> saveReview(Review review);
 }

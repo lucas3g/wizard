@@ -1,11 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:result_dart/result_dart.dart';
 import 'package:wizard/app/core_module/services/firestore/adapters/firestore_params.dart';
 
 import 'package:wizard/app/core_module/services/firestore/online_storage_interface.dart';
 import 'package:wizard/app/core_module/vos/id_vo.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/entity/student.dart';
-import 'package:wizard/app/modules/home/submodules/student/domain/exceptions/student_exception.dart';
 import 'package:wizard/app/modules/home/submodules/student/infra/adapters/student_adapter.dart';
 import 'package:wizard/app/modules/home/submodules/student/infra/datasources/student_datasource.dart';
 
@@ -15,69 +13,43 @@ class StudentDataSource implements IStudentDataSource {
   StudentDataSource({required this.onlineStorage});
 
   @override
-  AsyncResult<bool, IStudentException> saveStudent(Student student) async {
-    try {
-      final params = FireStoreSaveOrUpdateParams(
-        collection: 'students',
-        doc: student.id.value,
-        data: StudentAdapter.toMap(student),
-      );
+  Future<bool> saveStudent(Student student) async {
+    final params = FireStoreSaveOrUpdateParams(
+      collection: 'students',
+      doc: student.id.value,
+      data: StudentAdapter.toMap(student),
+    );
 
-      final result = await onlineStorage.saveOrUpdateData(params: params);
+    final result = await onlineStorage.saveOrUpdateData(params: params);
 
-      return result.toSuccess();
-    } catch (e) {
-      return StudentException(message: e.toString()).toFailure();
-    }
+    return result;
   }
 
   @override
-  AsyncResult<List<Student>, IStudentException> getStudentByClass(
-      IdVO classID) async {
-    try {
-      final params = FireStoreGetDataParams(
-        collection: 'students',
-        field: 'class',
-        value: classID.value,
-        orderBy: 'name',
-      );
+  Future<List> getStudentByClass(IdVO classID) async {
+    final params = FireStoreGetDataParams(
+      collection: 'students',
+      field: 'class',
+      value: classID.value,
+      orderBy: 'name',
+    );
 
-      final result = await onlineStorage.getDataById(params: params);
+    final result = await onlineStorage.getDataById(params: params);
 
-      late List<Student> students = [];
-
-      for (var doc in result.docs) {
-        students.add(StudentAdapter.fromMap(doc.data()));
-      }
-
-      return students.toSuccess();
-    } catch (e) {
-      return StudentException(message: e.toString()).toFailure();
-    }
+    return result.docs;
   }
 
   @override
-  AsyncResult<List<Student>, IStudentException> getStudentByTeacher(
-      IdVO teacherID) async {
-    try {
-      final params = FireStoreGetDataParams(
-        collection: 'students',
-        field: 'teacherID',
-        value: teacherID.value,
-        orderBy: 'name',
-      );
+  Future<List> getStudentByTeacher(IdVO teacherID) async {
+    final params = FireStoreGetDataParams(
+      collection: 'students',
+      field: 'teacherID',
+      value: teacherID.value,
+      orderBy: 'name',
+    );
 
-      final result = await onlineStorage.getDataById(params: params);
+    final result = await onlineStorage.getDataById(params: params);
 
-      late List<Student> students = [];
-
-      for (var doc in result.docs) {
-        students.add(StudentAdapter.fromMap(doc.data()));
-      }
-
-      return students.toSuccess();
-    } catch (e) {
-      return StudentException(message: e.toString()).toFailure();
-    }
+    return result.docs;
   }
 }

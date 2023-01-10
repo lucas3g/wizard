@@ -74,31 +74,34 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
-              decoration: BoxDecoration(color: AppTheme.colors.primary),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 70,
-                    width: 70,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child: CachedNetworkImage(
-                        imageUrl: user.photoURL.value,
+            SizedBox(
+              height: context.screenHeight * .30,
+              child: DrawerHeader(
+                decoration: BoxDecoration(color: AppTheme.colors.primary),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 70,
+                      width: 70,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: CachedNetworkImage(
+                          imageUrl: user.photoURL.value,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'Teacher: ${user.name.value}',
-                    style: AppTheme.textStyles.subTitleAppBar,
-                  )
-                ],
+                    const SizedBox(height: 10),
+                    Text(
+                      'Teacher: ${user.name.value}',
+                      style: AppTheme.textStyles.subTitleAppBar,
+                    )
+                  ],
+                ),
               ),
             ),
             SizedBox(
-              height: context.screenHeight * .75,
+              height: context.screenHeight * .70,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

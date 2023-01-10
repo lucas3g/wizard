@@ -14,11 +14,15 @@ class ReviewRepository implements IReviewRepository {
   });
 
   @override
-  AsyncResult<bool, IReviewException> saveReview(Review review) {
-    return datasource
-        .saveReview(review)
-        .mapError<IReviewException>(
-            (error) => ReviewException(message: error.message))
-        .flatMap((success) => Success(success));
+  Future<Result<bool, IReviewException>> saveReview(Review review) async {
+    try {
+      final result = await datasource.saveReview(review);
+
+      return result.toSuccess();
+    } on IReviewException catch (e) {
+      return ReviewException(message: e.message).toFailure();
+    } catch (e) {
+      return ReviewException(message: e.toString()).toFailure();
+    }
   }
 }
