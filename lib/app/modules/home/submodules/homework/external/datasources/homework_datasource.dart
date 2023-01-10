@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:result_dart/result_dart.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
 import 'package:wizard/app/core_module/services/firestore/adapters/firestore_params.dart';
 
@@ -17,44 +16,43 @@ class HomeworkDatasource implements IHomeworkDatasource {
   });
 
   @override
-  AsyncResult<bool, IHomeWorkException> saveHomework(Homework homework) async {
-    try {
-      final params = FireStoreSaveOrUpdateParams(
-        collection:
-            'homeworks/${GlobalUser.instance.user.id.value}/${homework.homeworkClass.value}',
-        doc: homework.homeworkName.value,
-        data: HomeworkAdapter.toMap(homework),
-      );
+  Future<bool> saveHomework(Homework homework) async {
+    final params = FireStoreSaveOrUpdateParams(
+      collection:
+          'homeworks/${GlobalUser.instance.user.id.value}/${homework.homeworkClass.value}',
+      doc: homework.homeworkName.value,
+      data: HomeworkAdapter.toMap(homework),
+    );
 
-      final result = await onlineStorage.saveOrUpdateData(params: params);
+    final result = await onlineStorage.saveOrUpdateData(params: params);
 
-      return result.toSuccess();
-    } catch (e) {
-      return HomeWorkException(message: e.toString()).toFailure();
+    if (!result) {
+      throw const HomeWorkException(message: 'Error saving homework');
     }
+
+    return result;
   }
 
   @override
-  AsyncResult<List<Homework>, IHomeWorkException> getHomeworksByClass(
-      String classID) async {
-    try {
-      final params = FireStoreGetDataByCollectionParams(
-        collection: 'homeworks',
-        doc: GlobalUser.instance.user.id.value,
-        field: classID,
-      );
+  Future<List<Homework>> getHomeworksByClass(String classID) async {
+    final params = FireStoreGetDataByCollectionParams(
+      collection: 'homeworks',
+      doc: GlobalUser.instance.user.id.value,
+      field: classID,
+    );
 
-      final result = await onlineStorage.getDataByCollection(params: params);
+    final result = await onlineStorage.getDataByCollection(params: params);
 
-      final List<Homework> list = [];
-
-      for (var doc in result.docs) {
-        list.add(HomeworkAdapter.fromMap(doc.data()));
-      }
-
-      return list.toSuccess();
-    } catch (e) {
-      return HomeWorkException(message: e.toString()).toFailure();
+    if (result.docs.isEmpty) {
+      throw const HomeWorkException(message: 'Homeworks is empty!');
     }
+
+    final List<Homework> list = [];
+
+    for (var doc in result.docs) {
+      list.add(HomeworkAdapter.fromMap(doc.data()));
+    }
+
+    return list;
   }
 }

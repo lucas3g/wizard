@@ -14,21 +14,30 @@ class HomeworkRepository implements IHomeworkRepository {
   });
 
   @override
-  AsyncResult<bool, IHomeWorkException> saveHomework(Homework homework) {
-    return datasource
-        .saveHomework(homework)
-        .mapError<IHomeWorkException>(
-            (error) => HomeWorkException(message: error.message))
-        .flatMap((success) => Success(success));
+  Future<Result<bool, IHomeWorkException>> saveHomework(
+      Homework homework) async {
+    try {
+      final result = await datasource.saveHomework(homework);
+
+      return result.toSuccess();
+    } on IHomeWorkException catch (e) {
+      return HomeWorkException(message: e.message).toFailure();
+    } catch (e) {
+      return HomeWorkException(message: e.toString()).toFailure();
+    }
   }
 
   @override
-  AsyncResult<List<Homework>, IHomeWorkException> getHomeworksByClass(
-      String classID) {
-    return datasource
-        .getHomeworksByClass(classID)
-        .mapError<IHomeWorkException>(
-            (error) => HomeWorkException(message: error.message))
-        .flatMap((success) => Success(success));
+  Future<Result<List<Homework>, IHomeWorkException>> getHomeworksByClass(
+      String classID) async {
+    try {
+      final result = await datasource.getHomeworksByClass(classID);
+
+      return result.toSuccess();
+    } on IHomeWorkException catch (e) {
+      return HomeWorkException(message: e.message).toFailure();
+    } catch (e) {
+      return HomeWorkException(message: e.toString()).toFailure();
+    }
   }
 }

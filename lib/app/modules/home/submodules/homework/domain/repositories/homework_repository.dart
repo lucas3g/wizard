@@ -3,7 +3,7 @@ import 'package:wizard/app/modules/home/submodules/homework/domain/entities/home
 import 'package:wizard/app/modules/home/submodules/homework/domain/exceptions/homework_exception.dart';
 
 abstract class IHomeworkRepository {
-  AsyncResult<bool, IHomeWorkException> saveHomework(Homework homework);
-  AsyncResult<List<Homework>, IHomeWorkException> getHomeworksByClass(
+  Future<Result<bool, IHomeWorkException>> saveHomework(Homework homework);
+  Future<Result<List<Homework>, IHomeWorkException>> getHomeworksByClass(
       String classID);
 }
