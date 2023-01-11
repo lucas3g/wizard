@@ -6,10 +6,13 @@ import 'package:wizard/app/modules/home/submodules/report/domain/entities/report
 class ReportAdapter {
   static Report empty() {
     return Report(
-        id: IdVO(const Uuid().v1()),
-        reportClass: ClassAdapter.empty(),
-        students: [],
-        presences: [],
-        homeworks: []);
+      id: IdVO(const Uuid().v1()),
+      obs: '',
+      reportClass: ClassAdapter.empty(),
+      students: [],
+      presences: [],
+      homeworks: [],
+      reviews: [],
+    );
   }
 }

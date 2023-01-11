@@ -10,3 +10,11 @@ class SaveReviewEvent extends ReviewEvents {
     required this.review,
   });
 }
+
+class GetReviewsByClassEvent extends ReviewEvents {
+  final String classID;
+
+  GetReviewsByClassEvent({
+    required this.classID,
+  });
+}

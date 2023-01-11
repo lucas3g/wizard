@@ -27,6 +27,13 @@ import 'package:wizard/app/modules/home/submodules/presence/infra/repositories/p
 import 'package:wizard/app/modules/home/submodules/presence/presence_module.dart';
 import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/presence_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/report/report_module.dart';
+import 'package:wizard/app/modules/home/submodules/review/domain/repositories/review_repository.dart';
+import 'package:wizard/app/modules/home/submodules/review/domain/usecases/get_review_by_class_usecase.dart';
+import 'package:wizard/app/modules/home/submodules/review/domain/usecases/save_review_usecase.dart';
+import 'package:wizard/app/modules/home/submodules/review/external/datasources/review_datasource.dart';
+import 'package:wizard/app/modules/home/submodules/review/infra/datasources/review_datasource.dart';
+import 'package:wizard/app/modules/home/submodules/review/infra/repositories/review_repository.dart';
+import 'package:wizard/app/modules/home/submodules/review/presenter/bloc/review_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/review/review_module.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/repositories/student_repository.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/usecases/get_student_by_class_usecase.dart';
@@ -179,6 +186,37 @@ class HomeModule extends Module {
       (i) => HomeworkBloc(
         saveHomeworkUsecase: i(),
         getHomeworksByClassUsecase: i(),
+      ),
+      export: true,
+    ),
+
+    //DATASOURCES
+    Bind.factory<IReviewDatasource>(
+      (i) => ReviewDatasource(onlineStorage: i()),
+      export: true,
+    ),
+
+    //REPOSITORIES
+    Bind.factory<IReviewRepository>(
+      (i) => ReviewRepository(datasource: i()),
+      export: true,
+    ),
+
+    //USECASES
+    Bind.factory<ISaveReviewUsecase>(
+      (i) => SaveReviewUsecase(repository: i()),
+      export: true,
+    ),
+    Bind.factory<IGetReviewsByClassUsecase>(
+      (i) => GetReviewsByClassUsecase(repository: i()),
+      export: true,
+    ),
+
+    //BLOCS
+    BlocBind.factory<ReviewBloc>(
+      (i) => ReviewBloc(
+        saveReviewUsecase: i(),
+        getReviewsByClassUsecase: i(),
       ),
       export: true,
     ),

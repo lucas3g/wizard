@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wizard/app/components/my_app_bar_widget.dart';
 import 'package:wizard/app/components/my_drop_down_button_widget.dart';
 import 'package:wizard/app/components/my_elevated_button_widget.dart';
+import 'package:wizard/app/components/my_input_widget.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
 import 'package:wizard/app/core_module/vos/id_vo.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/entities/class.dart';
@@ -27,6 +28,9 @@ import 'package:wizard/app/modules/home/submodules/report/infra/adapters/report_
 import 'package:wizard/app/modules/home/submodules/report/presenter/bloc/events/report_events.dart';
 import 'package:wizard/app/modules/home/submodules/report/presenter/bloc/report_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/report/presenter/bloc/states/report_states.dart';
+import 'package:wizard/app/modules/home/submodules/review/presenter/bloc/events/review_events.dart';
+import 'package:wizard/app/modules/home/submodules/review/presenter/bloc/review_bloc.dart';
+import 'package:wizard/app/modules/home/submodules/review/presenter/bloc/states/review_states.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/events/student_events.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/states/student_states.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/student_bloc.dart';
@@ -40,6 +44,7 @@ class ReportPage extends StatefulWidget {
   final ReportBloc reportBloc;
   final PresenceBloc presenceBloc;
   final HomeworkBloc homeworkBloc;
+  final ReviewBloc reviewBloc;
 
   const ReportPage({
     Key? key,
@@ -48,6 +53,7 @@ class ReportPage extends StatefulWidget {
     required this.reportBloc,
     required this.presenceBloc,
     required this.homeworkBloc,
+    required this.reviewBloc,
   }) : super(key: key);
 
   @override
@@ -65,6 +71,7 @@ class _ReportPageState extends State<ReportPage> {
   late StreamSubscription subPresence;
   late StreamSubscription subReport;
   late StreamSubscription subHomework;
+  late StreamSubscription subReview;
 
   @override
   void initState() {
@@ -124,6 +131,16 @@ class _ReportPageState extends State<ReportPage> {
         );
       }
     });
+
+    subReview = widget.reviewBloc.stream.listen((state) {
+      if (state is SuccessGetReviewsByClass) {
+        report.reviews.clear();
+
+        for (var review in state.reviews) {
+          report.reviews.add(review);
+        }
+      }
+    });
   }
 
   @override
@@ -132,6 +149,7 @@ class _ReportPageState extends State<ReportPage> {
     subPresence.cancel();
     subReport.cancel();
     subHomework.cancel();
+    subReview.cancel();
 
     super.dispose();
   }
@@ -207,6 +225,12 @@ class _ReportPageState extends State<ReportPage> {
                         classID: e,
                       ),
                     );
+
+                    widget.reviewBloc.add(
+                      GetReviewsByClassEvent(
+                        classID: e,
+                      ),
+                    );
                   },
                   value: dropDownValue,
                   items: classes
@@ -219,6 +243,16 @@ class _ReportPageState extends State<ReportPage> {
                       .toList(),
                 );
               },
+            ),
+            const Divider(),
+            Visibility(
+              visible: visibleButton,
+              child: MyInputWidget(
+                label: 'Observation',
+                hintText: 'Type a observation',
+                value: report.obs.value,
+                onChanged: (e) => report.setObs(e),
+              ),
             ),
             const Divider(),
             Visibility(

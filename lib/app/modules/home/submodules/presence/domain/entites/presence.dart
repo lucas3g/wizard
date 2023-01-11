@@ -43,7 +43,6 @@ class Presence extends Entity {
     return super
         .validate()
         .flatMap(presenceClass.validate)
-        .flatMap(presenceObs.validate)
         .flatMap(presenceHomeWork.validate)
         .pure(this);
   }

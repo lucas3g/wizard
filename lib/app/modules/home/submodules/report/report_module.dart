@@ -10,6 +10,7 @@ import 'package:wizard/app/modules/home/submodules/report/infra/datasources/repo
 import 'package:wizard/app/modules/home/submodules/report/infra/repositories/report_repository.dart';
 import 'package:wizard/app/modules/home/submodules/report/presenter/bloc/report_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/report/presenter/report_page.dart';
+import 'package:wizard/app/modules/home/submodules/review/presenter/bloc/review_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/student_bloc.dart';
 
 class ReportModule extends Module {
@@ -56,6 +57,7 @@ class ReportModule extends Module {
             reportBloc: Modular.get<ReportBloc>(),
             presenceBloc: Modular.get<PresenceBloc>(),
             homeworkBloc: Modular.get<HomeworkBloc>(),
+            reviewBloc: Modular.get<ReviewBloc>(),
           )),
     )
   ];

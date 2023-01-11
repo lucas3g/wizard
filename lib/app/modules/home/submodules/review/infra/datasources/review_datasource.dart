@@ -2,4 +2,5 @@ import 'package:wizard/app/modules/home/submodules/review/domain/entities/review
 
 abstract class IReviewDatasource {
   Future<bool> saveReview(Review review);
+  Future<List> getReviewsByClass(String classID);
 }

@@ -7,7 +7,7 @@ import 'package:wizard/app/modules/home/submodules/review/domain/vos/review_note
 class Review extends Entity {
   ReviewClass _reviewClass;
   ReviewName _reviewName;
-  late List<ReviewNote> reviewNote = [];
+  late List<ReviewNote> reviewNote;
 
   ReviewClass get reviewClass => _reviewClass;
   void setReviewClass(String value) => _reviewClass = ReviewClass(value);
@@ -15,11 +15,12 @@ class Review extends Entity {
   ReviewName get reviewName => _reviewName;
   void setReviewName(String value) => _reviewName = ReviewName(value);
 
-  Review({
-    required super.id,
-    required reviewClass,
-    required reviewName,
-  })  : _reviewClass = ReviewClass(reviewClass),
+  Review(
+      {required super.id,
+      required reviewClass,
+      required reviewName,
+      required this.reviewNote})
+      : _reviewClass = ReviewClass(reviewClass),
         _reviewName = ReviewName(reviewName);
 
   @override

@@ -47,7 +47,7 @@ class MyInputWidget extends StatelessWidget {
     this.expands = false,
     this.textInputAction,
     this.textAlignVertical = TextAlignVertical.center,
-    required this.validator,
+    this.validator,
     required this.value,
   }) : super(key: key);
 

@@ -202,80 +202,168 @@ class PDFService implements IPDF {
           pageFormat: PdfPageFormat.a4,
           margin: const pw.EdgeInsets.all(40),
           build: (pw.Context context) {
-            return pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                pw.Text('Notas', style: labelReporth1),
-                pw.SizedBox(height: 10),
-                pw.Text('Alunos',
-                    style: labelReporth1, textAlign: pw.TextAlign.center),
-                pw.SizedBox(height: 10),
-                pw.Row(children: [
-                  pw.Container(
-                    width: 50,
-                    decoration: pw.BoxDecoration(border: pw.Border.all()),
-                    child: pw.Text(
-                      'Lição',
-                      textAlign: pw.TextAlign.center,
-                    ),
-                  ),
-                  pw.ListView.builder(
-                    direction: pw.Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return pw.Row(children: [
+            return pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    children: [
+                      pw.Text('Notas', style: labelReporth1),
+                      pw.SizedBox(height: 10),
+                      pw.Text('Alunos', style: labelReporth1),
+                      pw.SizedBox(height: 5),
+                      pw.Row(children: [
+                        pw.Container(
+                          width: 50,
+                          decoration: pw.BoxDecoration(border: pw.Border.all()),
+                          child: pw.Text('Lição',
+                              textAlign: pw.TextAlign.center,
+                              style: labelReporth2),
+                        ),
                         pw.ListView.builder(
                           direction: pw.Axis.horizontal,
-                          itemBuilder: (context, index2) {
-                            return pw.Container(
-                              width: 30,
+                          itemBuilder: (context, index) {
+                            return pw.Row(children: [
+                              pw.ListView.builder(
+                                direction: pw.Axis.horizontal,
+                                itemBuilder: (context, index2) {
+                                  return pw.Container(
+                                    width: 30,
+                                    decoration: pw.BoxDecoration(
+                                        border: pw.Border.all()),
+                                    child: pw.Text(
+                                      (index2 + 1).toString(),
+                                      textAlign: pw.TextAlign.center,
+                                      style: labelReporth2,
+                                    ),
+                                  );
+                                },
+                                itemCount:
+                                    report.homeworks.first.homeworkNote.length,
+                              ),
+                            ]);
+                          },
+                          itemCount: 1,
+                        ),
+                      ]),
+                      pw.ListView.builder(
+                        itemBuilder: (context, index) {
+                          return pw.Row(children: [
+                            pw.Container(
+                              width: 50,
                               decoration:
                                   pw.BoxDecoration(border: pw.Border.all()),
                               child: pw.Text(
-                                (index2 + 1).toString(),
+                                report.homeworks[index].homeworkName.value,
                                 textAlign: pw.TextAlign.center,
                               ),
-                            );
-                          },
-                          itemCount: report.homeworks.first.homeworkNote.length,
-                        ),
-                      ]);
-                    },
-                    itemCount: 1,
-                  ),
-                ]),
-                pw.ListView.builder(
-                  itemBuilder: (context, index) {
-                    return pw.Row(children: [
-                      pw.Container(
-                        width: 50,
-                        decoration: pw.BoxDecoration(border: pw.Border.all()),
-                        child: pw.Text(
-                          report.homeworks[index].homeworkName.value,
-                          textAlign: pw.TextAlign.center,
-                        ),
-                      ),
-                      pw.ListView.builder(
-                        direction: pw.Axis.horizontal,
-                        itemBuilder: (context, index2) {
-                          return pw.Container(
-                            width: 30,
-                            decoration:
-                                pw.BoxDecoration(border: pw.Border.all()),
-                            child: pw.Text(
-                              report.homeworks[index].homeworkNote[index2].score
-                                  .value,
-                              textAlign: pw.TextAlign.center,
                             ),
-                          );
+                            pw.ListView.builder(
+                              direction: pw.Axis.horizontal,
+                              itemBuilder: (context, index2) {
+                                return pw.Container(
+                                  width: 30,
+                                  decoration:
+                                      pw.BoxDecoration(border: pw.Border.all()),
+                                  child: pw.Text(
+                                    report.homeworks[index].homeworkNote[index2]
+                                        .score.value,
+                                    textAlign: pw.TextAlign.center,
+                                  ),
+                                );
+                              },
+                              itemCount:
+                                  report.homeworks[index].homeworkNote.length,
+                            ),
+                          ]);
                         },
-                        itemCount: report.homeworks[index].homeworkNote.length,
+                        itemCount: report.homeworks.length,
                       ),
-                    ]);
-                  },
-                  itemCount: report.homeworks.length,
-                ),
-              ],
-            );
+                      pw.SizedBox(height: 30),
+                      pw.Text('Revisão', style: labelReporth1),
+                      pw.SizedBox(height: 10),
+                      pw.Text('Alunos', style: labelReporth1),
+                      pw.SizedBox(height: 5),
+                      pw.Row(children: [
+                        pw.Container(
+                          width: 70,
+                          decoration: pw.BoxDecoration(border: pw.Border.all()),
+                          child: pw.Text(
+                            'Revisão',
+                            textAlign: pw.TextAlign.center,
+                            style: labelReporth2,
+                          ),
+                        ),
+                        pw.ListView.builder(
+                          direction: pw.Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return pw.Row(children: [
+                              pw.ListView.builder(
+                                direction: pw.Axis.horizontal,
+                                itemBuilder: (context, index2) {
+                                  return pw.Container(
+                                    width: 30,
+                                    decoration: pw.BoxDecoration(
+                                        border: pw.Border.all()),
+                                    child: pw.Text(
+                                      (index2 + 1).toString(),
+                                      textAlign: pw.TextAlign.center,
+                                      style: labelReporth2,
+                                    ),
+                                  );
+                                },
+                                itemCount:
+                                    report.reviews.first.reviewNote.length,
+                              ),
+                            ]);
+                          },
+                          itemCount: 1,
+                        ),
+                      ]),
+                      pw.ListView.builder(
+                        itemBuilder: (context, index) {
+                          return pw.Row(children: [
+                            pw.Container(
+                              width: 70,
+                              decoration:
+                                  pw.BoxDecoration(border: pw.Border.all()),
+                              child: pw.Text(
+                                report.reviews[index].reviewName.value,
+                                textAlign: pw.TextAlign.center,
+                              ),
+                            ),
+                            pw.ListView.builder(
+                              direction: pw.Axis.horizontal,
+                              itemBuilder: (context, index2) {
+                                return pw.Container(
+                                  width: 30,
+                                  decoration:
+                                      pw.BoxDecoration(border: pw.Border.all()),
+                                  child: pw.Text(
+                                    report.reviews[index].reviewNote[index2]
+                                        .score.value,
+                                    textAlign: pw.TextAlign.center,
+                                  ),
+                                );
+                              },
+                              itemCount:
+                                  report.reviews[index].reviewNote.length,
+                            ),
+                          ]);
+                        },
+                        itemCount: report.reviews.length,
+                      ),
+                    ],
+                  ),
+                  pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    children: [
+                      pw.Text('Observações', style: labelReporth1),
+                      pw.Text(report.obs.value),
+                    ],
+                  ),
+                  pw.SizedBox(),
+                ]);
           }));
 
       final output = await getExternalStorageDirectory();

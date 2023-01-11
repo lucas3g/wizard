@@ -83,7 +83,7 @@ class _ReviewPageState extends State<ReviewPage> {
 
         for (var student in state.students) {
           review.reviewNote.add(
-            ReviewNote(student: student, score: ''),
+            ReviewNote(studentID: student.id.value, score: ''),
           );
         }
       }
