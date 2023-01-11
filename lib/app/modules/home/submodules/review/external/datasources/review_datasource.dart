@@ -32,4 +32,21 @@ class ReviewDatasource implements IReviewDatasource {
 
     return result;
   }
+
+  @override
+  Future<List> getReviewsByClass(String classID) async {
+    final params = FireStoreGetDataByCollectionParams(
+      collection: 'reviews',
+      doc: GlobalUser.instance.user.id.value,
+      field: classID,
+    );
+
+    final result = await onlineStorage.getDataByCollection(params: params);
+
+    if (result.docs.isEmpty) {
+      throw const ReviewException(message: 'Reviews is empty!');
+    }
+
+    return result.docs;
+  }
 }
