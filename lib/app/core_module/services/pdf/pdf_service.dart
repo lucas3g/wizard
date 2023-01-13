@@ -359,7 +359,122 @@ class PDFService implements IPDF {
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
                       pw.Text('Observações', style: labelReporth1),
-                      pw.Text(report.obs.value),
+                      pw.SizedBox(
+                        width: 200,
+                        height: report.obs.value.isEmpty ? null : 130,
+                        child: pw.Text(
+                          report.obs.value,
+                          softWrap: true,
+                        ),
+                      ),
+                      pw.Text('Conceito Final', style: labelReporth1),
+                      pw.SizedBox(height: 5),
+                      pw.Row(children: [
+                        pw.Container(
+                          width: 50,
+                          decoration: pw.BoxDecoration(border: pw.Border.all()),
+                          child: pw.Text(
+                            'Aluno',
+                            textAlign: pw.TextAlign.center,
+                            style: labelReporth2,
+                          ),
+                        ),
+                        pw.Container(
+                          width: 30,
+                          decoration: pw.BoxDecoration(border: pw.Border.all()),
+                          child: pw.Text(
+                            'F',
+                            textAlign: pw.TextAlign.center,
+                            style: labelReporth2,
+                          ),
+                        ),
+                        pw.Container(
+                          width: 30,
+                          decoration: pw.BoxDecoration(border: pw.Border.all()),
+                          child: pw.Text(
+                            'A',
+                            textAlign: pw.TextAlign.center,
+                            style: labelReporth2,
+                          ),
+                        ),
+                        pw.Container(
+                          width: 30,
+                          decoration: pw.BoxDecoration(border: pw.Border.all()),
+                          child: pw.Text(
+                            'L',
+                            textAlign: pw.TextAlign.center,
+                            style: labelReporth2,
+                          ),
+                        ),
+                        pw.Container(
+                          width: 30,
+                          decoration: pw.BoxDecoration(border: pw.Border.all()),
+                          child: pw.Text(
+                            'E',
+                            textAlign: pw.TextAlign.center,
+                            style: labelReporth2,
+                          ),
+                        ),
+                        pw.Container(
+                          width: 30,
+                          decoration: pw.BoxDecoration(border: pw.Border.all()),
+                          child: pw.Text(
+                            'A/R',
+                            textAlign: pw.TextAlign.center,
+                            style: labelReporth2,
+                          ),
+                        ),
+                      ]),
+                      pw.Row(children: [
+                        pw.ListView.builder(
+                          direction: pw.Axis.vertical,
+                          itemBuilder: (context, index) {
+                            return pw.Row(children: [
+                              pw.ListView.builder(
+                                direction: pw.Axis.vertical,
+                                itemBuilder: (context, index2) {
+                                  return pw.Container(
+                                    width: 50,
+                                    height: 15,
+                                    decoration: pw.BoxDecoration(
+                                        border: pw.Border.all()),
+                                    child: pw.Text(
+                                      (index2 + 1).toString(),
+                                      textAlign: pw.TextAlign.center,
+                                      style: labelReporth2,
+                                    ),
+                                  );
+                                },
+                                itemCount:
+                                    report.reviews.first.reviewNote.length,
+                              ),
+                            ]);
+                          },
+                          itemCount: 1,
+                        ),
+                        pw.ListView.builder(
+                          direction: pw.Axis.vertical,
+                          itemBuilder: (context, index) {
+                            return pw.Row(children: [
+                              pw.ListView.builder(
+                                direction: pw.Axis.horizontal,
+                                itemBuilder: (context, index2) {
+                                  return pw.Container(
+                                    width: 30,
+                                    height: 15,
+                                    decoration: pw.BoxDecoration(
+                                      border: pw.Border.all(),
+                                    ),
+                                    child: pw.Text(''),
+                                  );
+                                },
+                                itemCount: 5,
+                              ),
+                            ]);
+                          },
+                          itemCount: report.reviews.first.reviewNote.length,
+                        ),
+                      ]),
                     ],
                   ),
                   pw.SizedBox(),
