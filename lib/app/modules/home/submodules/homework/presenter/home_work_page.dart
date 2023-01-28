@@ -1,7 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -46,7 +48,8 @@ class HomeWorkPage extends StatefulWidget {
 
 class _HomeWorkPageState extends State<HomeWorkPage> {
   final fClass = FocusNode();
-  final fName = FocusNode();
+  final fNumber = FocusNode();
+  final fDate = FocusNode();
 
   late bool visibleList = false;
 
@@ -200,7 +203,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                     return Column(
                       children: [
                         MyInputWidget(
-                          focusNode: fName,
+                          focusNode: fNumber,
                           hintText: 'Enter the number of the homework',
                           label: 'Number',
                           onChanged: homework.setHomeworkName,
@@ -209,6 +212,22 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                               .exceptionOrNull(),
                           value: homework.homeworkName.value,
                           keyboardType: TextInputType.number,
+                        ),
+                        const SizedBox(height: 15),
+                        MyInputWidget(
+                          focusNode: fDate,
+                          hintText: 'Enter the date of homework',
+                          label: 'Date',
+                          onChanged: homework.setHomeworkData,
+                          validator: (v) => homework.homeworkData
+                              .validate()
+                              .exceptionOrNull(),
+                          value: homework.homeworkData.value,
+                          keyboardType: TextInputType.number,
+                          inputFormaters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            DataInputFormatter(),
+                          ],
                         ),
                         const SizedBox(height: 15),
                         ListView.separated(
