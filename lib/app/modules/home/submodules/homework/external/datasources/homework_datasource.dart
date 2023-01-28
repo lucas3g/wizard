@@ -19,7 +19,7 @@ class HomeworkDatasource implements IHomeworkDatasource {
   Future<bool> saveHomework(Homework homework) async {
     final params = FireStoreSaveOrUpdateParams(
       collection:
-          'homeworks/${GlobalUser.instance.user.id.value}/${homework.homeworkClass.value}',
+          'homeworks/${GlobalUser.instance.user.id.value}/${homework.homeworkClass.value}/${homework.homeworkData.value}/',
       doc: homework.homeworkName.value,
       data: HomeworkAdapter.toMap(homework),
     );

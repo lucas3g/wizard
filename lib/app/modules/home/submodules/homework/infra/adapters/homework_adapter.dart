@@ -9,6 +9,7 @@ class HomeworkAdapter {
       id: IdVO(const Uuid().v1()),
       homeworkName: '',
       homeworkClass: '',
+      homeworkData: '',
       homeworkNote: [],
     );
   }
@@ -18,6 +19,7 @@ class HomeworkAdapter {
       id: IdVO(map['id']),
       homeworkClass: map['class'],
       homeworkName: map['name'],
+      homeworkData: map['date'].replaceAll('.', '/'),
       homeworkNote: List.from(map['notes'])
           .map(
             (e) => HomeworkNote(
@@ -34,6 +36,7 @@ class HomeworkAdapter {
       'id': homework.id.value,
       'class': homework.homeworkClass.value,
       'name': homework.homeworkName.value,
+      'date': homework.homeworkData.value.replaceAll('/', '.'),
       'notes': homework.homeworkNote
           .map(
             (e) => {
