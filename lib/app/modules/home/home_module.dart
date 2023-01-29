@@ -60,10 +60,9 @@ class HomeModule extends Module {
   final List<Bind<Object>> binds = [
     //DATASOURCES
     Bind.factory<IClassDataSource>(
-        (i) => ClassDataSource(
-              onlineStorage: i(),
-            ),
-        export: true),
+      (i) => ClassDataSource(supa: i()),
+      export: true,
+    ),
 
     //REPOSITORIES
     Bind.factory<IClassRepository>(

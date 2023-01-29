@@ -34,7 +34,7 @@ class ClassRepository implements IClassRepository {
       late List<Class> list = [];
 
       for (var doc in result) {
-        list.add(ClassAdapter.fromMap(doc.data()));
+        list.add(ClassAdapter.fromMap(doc));
       }
 
       return list.toSuccess();

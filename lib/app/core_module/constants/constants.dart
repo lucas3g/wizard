@@ -9,7 +9,7 @@ import 'package:wizard/app/modules/auth/domain/entities/user_entity.dart';
 import 'package:wizard/app/modules/auth/infra/adapters/user_adapter.dart';
 
 const baseUrl = String.fromEnvironment('BASE_URL');
-const baseUrlLicense = String.fromEnvironment('BASE_URL_LICENSE');
+const apiKey = String.fromEnvironment('API_KEY');
 
 final notes = [
   {'type': 'O', 'name': 'Ótimo'},

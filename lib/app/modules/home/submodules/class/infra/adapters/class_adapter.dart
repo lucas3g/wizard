@@ -6,9 +6,8 @@ import 'package:wizard/app/modules/home/submodules/class/domain/entities/class.d
 class ClassAdapter {
   static Map<String, dynamic> toMap(Class pClass) {
     return {
-      'id': pClass.id.value,
       'name': pClass.name.value,
-      'dayWeek': pClass.dayWeek.value,
+      'dayweek': pClass.dayWeek.value,
       'schedule': pClass.schedule.value,
       'idTeacher': pClass.idTeacher.value,
     };
@@ -16,9 +15,9 @@ class ClassAdapter {
 
   static Class fromMap(dynamic map) {
     return Class(
-      id: IdVO(map['id']),
+      id: IdVO(map['id'].toString()),
       name: map['name'],
-      dayWeek: map['dayWeek'],
+      dayWeek: map['dayweek'],
       schedule: map['schedule'],
       idTeacher: map['idTeacher'],
     );

@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wizard/app/core_module/services/firestore/firestore_service.dart';
-import 'package:wizard/app/core_module/services/firestore/online_storage_interface.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wizard/app/core_module/services/pdf/pdf_interface.dart';
 import 'package:wizard/app/core_module/services/pdf/pdf_service.dart';
+import 'package:wizard/app/core_module/services/supabase/supabase_interface.dart';
+import 'package:wizard/app/core_module/services/supabase/supabase_service.dart';
 
 import 'services/shared_preferences/local_storage_interface.dart';
 import 'services/shared_preferences/shared_preferences_service.dart';
@@ -45,15 +45,15 @@ class CoreModule extends Module {
       export: true,
     ),
 
-    //FIREBASE FIRESTORE
-    Bind<FirebaseFirestore>(
-      (i) => FirebaseFirestore.instance,
+    //SUPABASE
+    Bind<SupabaseClient>(
+      (i) => Supabase.instance.client,
       export: true,
     ),
 
     //ONLINE STORAGE
-    Bind<IOnlineStorage>(
-      ((i) => FireStoreService(firestore: i())),
+    Bind<ISupaBase>(
+      ((i) => SupaBaseService(supa: i())),
       export: true,
     ),
 

@@ -1,25 +1,30 @@
 {
-    // Use o IntelliSense para saber mais sobre os atributos possíveis.
-    // Focalizar para exibir as descrições dos atributos existentes.
-    // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "wizard",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "wizard (profile mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "wizard (release mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        }
-    ]
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "name": "[dev] wizard",
+          "request": "launch",
+          "type": "dart",
+          "toolArgs": [
+              "--dart-define",
+              "BASE_URL=https://oeuqtuxabkzeowqwjwnl.supabase.co", 
+              "--dart-define",
+              "API_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ldXF0dXhhYmt6ZW93cXdqd25sIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzQ5NTA1MjEsImV4cCI6MTk5MDUyNjUyMX0.U1M9ohWN4G0Abhb14Ct-8qAsdaLSmrjK8dnAvTMqhdA",
+          ]
+      },
+      {
+          "name": "[prod] wizard",
+          "request": "launch",
+          "type": "dart",
+          "args": [
+              "--debug"
+          ],
+          "toolArgs": [
+              "--dart-define",
+              "BASE_URL=http://elinfo2.jelastic.saveincloud.net/AppColetaLeite",
+              "--dart-define",
+              "API_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ldXF0dXhhYmt6ZW93cXdqd25sIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzQ5NTA1MjEsImV4cCI6MTk5MDUyNjUyMX0.U1M9ohWN4G0Abhb14Ct-8qAsdaLSmrjK8dnAvTMqhdA",
+          ]            
+      },
+  ]
 }
