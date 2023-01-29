@@ -114,21 +114,6 @@ class _ReviewPageState extends State<ReviewPage> {
     super.dispose();
   }
 
-  Color makeBackGroundColorListTile(String score) {
-    switch (score) {
-      case 'O':
-        return Colors.green.shade400;
-      case 'MB':
-        return Colors.blue.shade400;
-      case 'B':
-        return Colors.orange.shade400;
-      case 'R':
-        return Colors.red.shade400;
-      default:
-        return Colors.white;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -27,7 +27,7 @@ class PresenceAdapter {
       presenceCheck: List.from(map['presence'])
           .map(
             (e) => PresenceCheck(
-              studentID: e['student'],
+              studentID: e['studentID'],
               presencePresent: e['type'],
             ),
           )
@@ -37,20 +37,23 @@ class PresenceAdapter {
 
   static Map<String, dynamic> toMap(Presence presence) {
     return {
-      'id': presence.id.value,
       'class': presence.presenceClass.value,
-      'teacher': GlobalUser.instance.user.id.value,
+      'idTeacher': GlobalUser.instance.user.id.value,
       'date': DateTime.now().DiaMesAnoDB(),
       'obs': presence.presenceObs.value,
       'homework': presence.presenceHomeWork.value,
-      'presence': presence.presenceCheck!
-          .map(
-            (e) => {
-              'student': e.studentID.value,
-              'type': e.presencePresent.value,
-            },
-          )
-          .toList(),
     };
+  }
+
+  static List<Map<String, dynamic>> toMapCheck(Presence presence) {
+    return presence.presenceCheck!
+        .map(
+          (e) => {
+            'studentID': e.studentID.value,
+            'type': e.presencePresent.value,
+            'class': presence.presenceClass.value,
+          },
+        )
+        .toList();
   }
 }

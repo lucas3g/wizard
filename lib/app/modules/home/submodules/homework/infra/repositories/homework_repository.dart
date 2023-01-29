@@ -36,8 +36,8 @@ class HomeworkRepository implements IHomeworkRepository {
 
       final List<Homework> list = [];
 
-      for (var doc in result) {
-        list.add(HomeworkAdapter.fromMap(doc.data()));
+      for (var homework in result) {
+        list.add(HomeworkAdapter.fromMap(homework));
       }
 
       return list.toSuccess();

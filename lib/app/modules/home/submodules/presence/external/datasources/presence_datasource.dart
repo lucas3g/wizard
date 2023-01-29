@@ -1,49 +1,66 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:wizard/app/core_module/services/firestore/adapters/firestore_params.dart';
 
-import 'package:wizard/app/core_module/services/firestore/online_storage_interface.dart';
+import 'package:wizard/app/core_module/services/supabase/adapters/supabase_params.dart';
+import 'package:wizard/app/core_module/services/supabase/helpers/tables.dart';
+import 'package:wizard/app/core_module/services/supabase/supabase_interface.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/entites/presence.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/exceptions/presence_exception.dart';
 import 'package:wizard/app/modules/home/submodules/presence/infra/adapters/presence_adapter.dart';
 import 'package:wizard/app/modules/home/submodules/presence/infra/datasources/presence_datasource.dart';
-import 'package:wizard/app/utils/formatters.dart';
 
 class PresenceDatasource implements IPresenceDatasource {
-  final IOnlineStorage onlineStorage;
+  final ISupaBase supa;
 
-  PresenceDatasource({required this.onlineStorage});
+  PresenceDatasource({required this.supa});
 
   @override
   Future<bool> savePresence(Presence presence) async {
-    final params = FireStoreSaveOrUpdateParams(
-      collection: 'presences/${presence.presenceClass.value}/presences',
-      doc: DateTime.now().DiaMesAnoDB(),
+    final paramsPresence = SupaBaseSaveParams(
+      table: Tables.presences,
       data: PresenceAdapter.toMap(presence),
     );
 
-    final result = await onlineStorage.saveOrUpdateData(params: params);
+    final resultPresence = await supa.saveData(params: paramsPresence);
 
-    if (!result) {
+    final paramsCheck = SupaBaseSaveParams(
+      table: Tables.presences_check,
+      data: PresenceAdapter.toMapCheck(presence),
+    );
+
+    final resultCheck = await supa.saveData(params: paramsCheck);
+
+    if (!resultPresence || !resultCheck) {
       throw const PresenceException(message: 'Error saving presence');
     }
 
-    return result;
+    return resultPresence && resultCheck;
   }
 
   @override
   Future<List> getPresenceByClass(String pClass) async {
-    final params = FireStoreGetDataByCollectionParams(
-      collection: 'presences',
-      doc: pClass,
-      field: 'presences',
+    final params = SupaBaseGetDataByFieldParams(
+        table: Tables.presences,
+        field: 'class',
+        value: pClass,
+        orderBy: 'class');
+
+    final result = await supa.getDataByField(params: params);
+
+    final paramsCheck = SupaBaseGetDataByFieldParams(
+      table: Tables.homeworks_notes,
+      field: 'class',
+      value: pClass,
+      orderBy: 'class',
     );
 
-    final result = await onlineStorage.getDataByCollection(params: params);
+    final resultChecks = await supa.getDataByField(params: paramsCheck);
 
-    if (result.docs.isEmpty) {
+    result[0]['presence'] = resultChecks;
+
+    if (result.isEmpty) {
       throw const PresenceException(message: 'Presences is empty!');
     }
 
-    return result.docs;
+    return result;
   }
 }

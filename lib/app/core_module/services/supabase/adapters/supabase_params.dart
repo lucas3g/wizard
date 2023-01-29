@@ -3,7 +3,7 @@ import 'package:wizard/app/core_module/services/supabase/helpers/tables.dart';
 
 class SupaBaseSaveParams {
   final Tables table;
-  final Map<String, dynamic> data;
+  final dynamic data;
 
   SupaBaseSaveParams({
     required this.table,
@@ -14,11 +14,13 @@ class SupaBaseSaveParams {
 class SupaBaseGetDataByFieldParams {
   final Tables table;
   final String field;
+  final String value;
   final String orderBy;
 
   SupaBaseGetDataByFieldParams({
     required this.table,
     required this.field,
+    required this.value,
     required this.orderBy,
   });
 }

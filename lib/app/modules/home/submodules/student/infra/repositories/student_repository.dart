@@ -34,8 +34,8 @@ class StudentRepository implements IStudentRepository {
 
       late List<Student> students = [];
 
-      for (var doc in result) {
-        students.add(StudentAdapter.fromMap(doc.data()));
+      for (var student in result) {
+        students.add(StudentAdapter.fromMap(student));
       }
 
       return students.toSuccess();
@@ -54,8 +54,8 @@ class StudentRepository implements IStudentRepository {
 
       late List<Student> students = [];
 
-      for (var doc in result) {
-        students.add(StudentAdapter.fromMap(doc.data()));
+      for (var student in result) {
+        students.add(StudentAdapter.fromMap(student));
       }
 
       return students.toSuccess();

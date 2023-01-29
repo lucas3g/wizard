@@ -93,7 +93,7 @@ class HomeModule extends Module {
 
     //DATASOURCES
     Bind.factory<IStudentDataSource>(
-      (i) => StudentDataSource(onlineStorage: i()),
+      (i) => StudentDataSource(supa: i()),
       export: true,
     ),
 
@@ -129,7 +129,7 @@ class HomeModule extends Module {
 
     //DATASOURCES
     Bind.factory<IPresenceDatasource>(
-      (i) => PresenceDatasource(onlineStorage: i()),
+      (i) => PresenceDatasource(supa: i()),
       export: true,
     ),
 
@@ -160,7 +160,7 @@ class HomeModule extends Module {
 
     //DATASOURCES
     Bind.factory<IHomeworkDatasource>(
-      (i) => HomeworkDatasource(onlineStorage: i()),
+      (i) => HomeworkDatasource(supa: i()),
       export: true,
     ),
 
@@ -191,7 +191,7 @@ class HomeModule extends Module {
 
     //DATASOURCES
     Bind.factory<IReviewDatasource>(
-      (i) => ReviewDatasource(onlineStorage: i()),
+      (i) => ReviewDatasource(supa: i()),
       export: true,
     ),
 

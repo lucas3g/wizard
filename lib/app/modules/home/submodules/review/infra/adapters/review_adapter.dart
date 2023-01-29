@@ -21,8 +21,8 @@ class ReviewAdapter {
       reviewNote: List.from(map['notes'])
           .map(
             (e) => ReviewNote(
+              studentID: e['studentID'],
               score: e['score'],
-              studentID: e['student'],
             ),
           )
           .toList(),
@@ -31,17 +31,20 @@ class ReviewAdapter {
 
   static Map<String, dynamic> toMap(Review review) {
     return {
-      'id': review.id.value,
       'class': review.reviewClass.value,
       'name': review.reviewName.value,
-      'notes': review.reviewNote
-          .map(
-            (e) => {
-              'student': e.studentID,
-              'score': e.score.value,
-            },
-          )
-          .toList(),
     };
+  }
+
+  static List<Map<String, dynamic>> toMapNotes(Review review) {
+    return review.reviewNote
+        .map(
+          (e) => {
+            'studentID': e.studentID,
+            'score': e.score.value,
+            'class': review.reviewClass.value,
+          },
+        )
+        .toList();
   }
 }

@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:wizard/app/theme/app_theme.dart';
 
 class MyElevatedButtonWidget extends StatefulWidget {
   final Widget label;
@@ -22,6 +23,7 @@ class _MyElevatedButtonWidgetState extends State<MyElevatedButtonWidget> {
     return ElevatedButton.icon(
       onPressed: widget.onPressed,
       style: ElevatedButton.styleFrom(
+        foregroundColor: AppTheme.colors.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),

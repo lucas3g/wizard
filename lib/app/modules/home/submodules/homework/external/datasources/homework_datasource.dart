@@ -1,52 +1,69 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:wizard/app/core_module/constants/constants.dart';
-import 'package:wizard/app/core_module/services/firestore/adapters/firestore_params.dart';
 
-import 'package:wizard/app/core_module/services/firestore/online_storage_interface.dart';
+import 'package:wizard/app/core_module/services/supabase/adapters/supabase_params.dart';
+import 'package:wizard/app/core_module/services/supabase/helpers/tables.dart';
+import 'package:wizard/app/core_module/services/supabase/supabase_interface.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/entities/homework.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/exceptions/homework_exception.dart';
 import 'package:wizard/app/modules/home/submodules/homework/infra/adapters/homework_adapter.dart';
 import 'package:wizard/app/modules/home/submodules/homework/infra/datasources/homework_datasource.dart';
 
 class HomeworkDatasource implements IHomeworkDatasource {
-  final IOnlineStorage onlineStorage;
+  final ISupaBase supa;
 
   HomeworkDatasource({
-    required this.onlineStorage,
+    required this.supa,
   });
 
   @override
   Future<bool> saveHomework(Homework homework) async {
-    final params = FireStoreSaveOrUpdateParams(
-      collection:
-          'homeworks/${GlobalUser.instance.user.id.value}/${homework.homeworkClass.value}/${homework.homeworkData.value}/',
-      doc: homework.homeworkName.value,
+    final paramsHome = SupaBaseSaveParams(
+      table: Tables.homeworks,
       data: HomeworkAdapter.toMap(homework),
     );
 
-    final result = await onlineStorage.saveOrUpdateData(params: params);
+    final resultHomeworks = await supa.saveData(params: paramsHome);
 
-    if (!result) {
+    final paramsNotes = SupaBaseSaveParams(
+      table: Tables.homeworks_notes,
+      data: HomeworkAdapter.toMapNotes(homework),
+    );
+
+    final resultNotes = await supa.saveData(params: paramsNotes);
+
+    if (!resultHomeworks || !resultNotes) {
       throw const HomeWorkException(message: 'Error saving homework');
     }
 
-    return result;
+    return resultHomeworks && resultNotes;
   }
 
   @override
   Future<List> getHomeworksByClass(String classID) async {
-    final params = FireStoreGetDataByCollectionParams(
-      collection: 'homeworks',
-      doc: GlobalUser.instance.user.id.value,
-      field: classID,
+    final paramsHomework = SupaBaseGetDataByFieldParams(
+      table: Tables.homeworks,
+      field: 'class',
+      value: classID,
+      orderBy: 'name',
     );
 
-    final result = await onlineStorage.getDataByCollection(params: params);
+    final resultHomework = await supa.getDataByField(params: paramsHomework);
 
-    if (result.docs.isEmpty) {
+    final paramsNotes = SupaBaseGetDataByFieldParams(
+      table: Tables.homeworks_notes,
+      field: 'class',
+      value: classID,
+      orderBy: 'class',
+    );
+
+    final resultNotes = await supa.getDataByField(params: paramsNotes);
+
+    if (resultHomework.isEmpty) {
       throw const HomeWorkException(message: 'Homeworks is empty!');
     }
 
-    return result.docs;
+    resultHomework[0]['notes'] = resultNotes;
+
+    return resultHomework;
   }
 }

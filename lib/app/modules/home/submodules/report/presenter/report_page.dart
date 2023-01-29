@@ -19,7 +19,6 @@ import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/states/c
 import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/events/homework_events.dart';
 import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/homework_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/states/homework_states.dart';
-import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/events/presence_events.dart';
 import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/presence_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/states/presence_states.dart';
 import 'package:wizard/app/modules/home/submodules/report/domain/entities/report.dart';
@@ -28,7 +27,6 @@ import 'package:wizard/app/modules/home/submodules/report/infra/adapters/report_
 import 'package:wizard/app/modules/home/submodules/report/presenter/bloc/events/report_events.dart';
 import 'package:wizard/app/modules/home/submodules/report/presenter/bloc/report_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/report/presenter/bloc/states/report_states.dart';
-import 'package:wizard/app/modules/home/submodules/review/presenter/bloc/events/review_events.dart';
 import 'package:wizard/app/modules/home/submodules/review/presenter/bloc/review_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/review/presenter/bloc/states/review_states.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/events/student_events.dart';
@@ -214,11 +212,11 @@ class _ReportPageState extends State<ReportPage> {
                       ),
                     );
 
-                    widget.presenceBloc.add(
-                      GetPresenceByClassEvent(
-                        pClass: e,
-                      ),
-                    );
+                    // widget.presenceBloc.add(
+                    //   GetPresenceByClassEvent(
+                    //     pClass: e,
+                    //   ),
+                    // );
 
                     widget.homeworkBloc.add(
                       GetHomeworksByClassEvent(
@@ -226,11 +224,11 @@ class _ReportPageState extends State<ReportPage> {
                       ),
                     );
 
-                    widget.reviewBloc.add(
-                      GetReviewsByClassEvent(
-                        classID: e,
-                      ),
-                    );
+                    // widget.reviewBloc.add(
+                    //   GetReviewsByClassEvent(
+                    //     classID: e,
+                    //   ),
+                    // );
                   },
                   value: dropDownValue,
                   items: classes

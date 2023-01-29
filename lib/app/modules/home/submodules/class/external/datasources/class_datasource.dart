@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:wizard/app/core_module/services/supabase/adapters/supabase_params.dart';
 import 'package:wizard/app/core_module/services/supabase/helpers/tables.dart';
 import 'package:wizard/app/core_module/services/supabase/supabase_interface.dart';
@@ -34,7 +32,8 @@ class ClassDataSource implements IClassDataSource {
   Future<List> getClassesByTeacher(ClassIDTeacher idTeacher) async {
     final params = SupaBaseGetDataByFieldParams(
       table: Tables.classes,
-      field: idTeacher.value,
+      field: 'idTeacher',
+      value: idTeacher.value,
       orderBy: 'name',
     );
 

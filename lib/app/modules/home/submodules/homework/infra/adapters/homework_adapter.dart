@@ -33,18 +33,19 @@ class HomeworkAdapter {
 
   static Map<String, dynamic> toMap(Homework homework) {
     return {
-      'id': homework.id.value,
       'class': homework.homeworkClass.value,
       'name': homework.homeworkName.value,
       'date': homework.homeworkData.value.replaceAll('/', '.'),
-      'notes': homework.homeworkNote
-          .map(
-            (e) => {
-              'student': e.studentID,
-              'score': e.score.value,
-            },
-          )
-          .toList(),
     };
+  }
+
+  static List<Map<String, dynamic>> toMapNotes(Homework homework) {
+    return homework.homeworkNote
+        .map((e) => {
+              'studentID': e.studentID,
+              'score': e.score.value,
+              'class': homework.homeworkClass.value,
+            })
+        .toList();
   }
 }

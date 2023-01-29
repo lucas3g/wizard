@@ -17,7 +17,7 @@ class SupaBaseService implements ISupaBase {
     final result = await supa
         .from(params.table.name)
         .select()
-        .eq('idTeacher', params.field)
+        .eq(params.field, params.value)
         .order(params.orderBy, ascending: true);
 
     return result;

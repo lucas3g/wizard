@@ -44,16 +44,16 @@ class AppColorDefault implements AppColors {
   Color get logadoComSucesso => const Color(0xff009342);
 
   Map<int, Color> color = {
-    50: const Color.fromRGBO(136, 14, 79, .1),
-    100: const Color.fromRGBO(136, 14, 79, .2),
-    200: const Color.fromRGBO(136, 14, 79, .3),
-    300: const Color.fromRGBO(136, 14, 79, .4),
-    400: const Color.fromRGBO(136, 14, 79, .5),
-    500: const Color.fromRGBO(136, 14, 79, .6),
-    600: const Color.fromRGBO(136, 14, 79, .7),
-    700: const Color.fromRGBO(136, 14, 79, .8),
-    800: const Color.fromRGBO(136, 14, 79, .9),
-    900: const Color.fromRGBO(136, 14, 79, 1),
+    50: const Color.fromRGBO(0, 44, 77, .1),
+    100: const Color.fromRGBO(0, 44, 77, .2),
+    200: const Color.fromRGBO(0, 44, 77, .3),
+    300: const Color.fromRGBO(0, 44, 77, .4),
+    400: const Color.fromRGBO(0, 44, 77, .5),
+    500: const Color.fromRGBO(0, 44, 77, .6),
+    600: const Color.fromRGBO(0, 44, 77, .7),
+    700: const Color.fromRGBO(0, 44, 77, .8),
+    800: const Color.fromRGBO(0, 44, 77, .9),
+    900: const Color.fromRGBO(0, 44, 77, 1),
   };
 
   @override
