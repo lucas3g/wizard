@@ -9,19 +9,21 @@ class ReviewAdapter {
       id: IdVO(const Uuid().v1()),
       reviewClass: '',
       reviewName: '',
+      reviewDate: '',
       reviewNote: [],
     );
   }
 
   static Review fromMap(dynamic map) {
     return Review(
-      id: IdVO(map['id']),
-      reviewClass: map['class'],
+      id: IdVO(map['id'].toString()),
+      reviewClass: map['class'].toString(),
       reviewName: map['name'],
+      reviewDate: map['date'].replaceAll('.', '/'),
       reviewNote: List.from(map['notes'])
           .map(
             (e) => ReviewNote(
-              studentID: e['studentID'],
+              studentID: e['studentID'].toString(),
               score: e['score'],
             ),
           )
@@ -33,6 +35,7 @@ class ReviewAdapter {
     return {
       'class': review.reviewClass.value,
       'name': review.reviewName.value,
+      'date': review.reviewDate.value.replaceAll('/', '.'),
     };
   }
 

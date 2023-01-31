@@ -58,7 +58,11 @@ class ReviewDatasource implements IReviewDatasource {
 
     final resultNotes = await supa.getDataByField(params: paramsNotes);
 
-    result[0]['notes'] = resultNotes;
+    for (var review in result) {
+      for (var notes in resultNotes) {
+        review['notes'] = notes;
+      }
+    }
 
     if (result.isEmpty) {
       throw const ReviewException(message: 'Reviews is empty!');

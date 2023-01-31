@@ -18,7 +18,7 @@ class StudentAdapter {
     return Student(
       id: IdVO(map['id'].toString()),
       studentName: map['name'],
-      studentClass: map['class'],
+      studentClass: map['class'].toString(),
       studentPhoneNumber: map['phoneNumber'],
       studentParents: map['parents'],
     );

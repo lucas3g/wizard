@@ -47,7 +47,7 @@ class PresenceDatasource implements IPresenceDatasource {
     final result = await supa.getDataByField(params: params);
 
     final paramsCheck = SupaBaseGetDataByFieldParams(
-      table: Tables.homeworks_notes,
+      table: Tables.presences_check,
       field: 'class',
       value: pClass,
       orderBy: 'class',

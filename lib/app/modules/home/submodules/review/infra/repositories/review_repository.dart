@@ -36,7 +36,7 @@ class ReviewRepository implements IReviewRepository {
       final List<Review> list = [];
 
       for (var review in result) {
-        list.add((ReviewAdapter.fromMap(review.data())));
+        list.add((ReviewAdapter.fromMap(review)));
       }
 
       return list.toSuccess();

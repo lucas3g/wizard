@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,6 +53,7 @@ class _PresencePageState extends State<PresencePage> {
   final fClass = FocusNode();
   final fObs = FocusNode();
   final fHomework = FocusNode();
+  final fDate = FocusNode();
 
   late bool visibleList = false;
 
@@ -205,7 +207,25 @@ class _PresencePageState extends State<PresencePage> {
                 ],
               ),
             ),
-            Visibility(visible: visibleList, child: const SizedBox(height: 15)),
+            Visibility(visible: visibleList, child: const SizedBox(height: 10)),
+            Visibility(
+              visible: visibleList,
+              child: MyInputWidget(
+                focusNode: fDate,
+                hintText: 'Enter the date of presence',
+                label: 'Date',
+                onChanged: presence.setPresenceDate,
+                validator: (v) =>
+                    presence.presenceDate.validate().exceptionOrNull(),
+                value: presence.presenceDate.value,
+                keyboardType: TextInputType.number,
+                inputFormaters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  DataInputFormatter(),
+                ],
+              ),
+            ),
+            Visibility(visible: visibleList, child: const SizedBox(height: 10)),
             Visibility(
               visible: visibleList,
               child: MyInputWidget(

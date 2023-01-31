@@ -1,7 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -47,13 +49,7 @@ class ReviewPage extends StatefulWidget {
 class _ReviewPageState extends State<ReviewPage> {
   final fClass = FocusNode();
   final fName = FocusNode();
-
-  final notes = [
-    {'type': 'O', 'name': 'Ótimo'},
-    {'type': 'MB', 'name': 'Muito bom'},
-    {'type': 'B', 'name': 'Bom'},
-    {'type': 'R', 'name': 'Regular'},
-  ];
+  final fDate = FocusNode();
 
   late bool visibleList = false;
 
@@ -204,17 +200,41 @@ class _ReviewPageState extends State<ReviewPage> {
 
                     return Column(
                       children: [
-                        MyInputWidget(
-                          focusNode: fName,
-                          hintText: 'Enter the number of the review',
-                          label: 'Number',
-                          onChanged: review.setReviewName,
-                          validator: (v) =>
-                              review.reviewName.validate().exceptionOrNull(),
-                          value: review.reviewName.value,
-                          keyboardType: TextInputType.number,
+                        Visibility(
+                          visible: visibleList,
+                          child: MyInputWidget(
+                            focusNode: fName,
+                            hintText: 'Enter the number of the review',
+                            label: 'Number',
+                            onChanged: review.setReviewName,
+                            validator: (v) =>
+                                review.reviewName.validate().exceptionOrNull(),
+                            value: review.reviewName.value,
+                            keyboardType: TextInputType.number,
+                          ),
                         ),
-                        const SizedBox(height: 15),
+                        Visibility(
+                          visible: visibleList,
+                          child: const SizedBox(height: 10),
+                        ),
+                        Visibility(
+                          visible: visibleList,
+                          child: MyInputWidget(
+                            focusNode: fDate,
+                            hintText: 'Enter the date of presence',
+                            label: 'Date',
+                            onChanged: review.setReviewDate,
+                            validator: (v) =>
+                                review.reviewDate.validate().exceptionOrNull(),
+                            value: review.reviewDate.value,
+                            keyboardType: TextInputType.number,
+                            inputFormaters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              DataInputFormatter(),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 10),
                         ListView.separated(
                           shrinkWrap: true,
                           itemBuilder: (context, index) {

@@ -3,7 +3,6 @@ import 'package:wizard/app/core_module/constants/constants.dart';
 import 'package:wizard/app/core_module/vos/id_vo.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/entites/presence.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/vos/presence_check.dart';
-import 'package:wizard/app/utils/formatters.dart';
 
 class PresenceAdapter {
   static Presence empty() {
@@ -19,15 +18,15 @@ class PresenceAdapter {
 
   static Presence fromMap(dynamic map) {
     return Presence(
-      id: IdVO(map['id']),
-      presenceClass: map['class'],
-      presenceObs: map['obs'],
-      presenceDate: map['date'],
+      id: IdVO(map['id'].toString()),
+      presenceClass: map['class'].toString(),
+      presenceObs: map['obs'] ?? '',
+      presenceDate: map['date'].replaceAll('.', '/'),
       presenceHomeWork: map['homework'],
       presenceCheck: List.from(map['presence'])
           .map(
             (e) => PresenceCheck(
-              studentID: e['studentID'],
+              studentID: e['studentID'].toString(),
               presencePresent: e['type'],
             ),
           )
@@ -39,7 +38,7 @@ class PresenceAdapter {
     return {
       'class': presence.presenceClass.value,
       'idTeacher': GlobalUser.instance.user.id.value,
-      'date': DateTime.now().DiaMesAnoDB(),
+      'date': presence.presenceDate.value.replaceAll('/', '.'),
       'obs': presence.presenceObs.value,
       'homework': presence.presenceHomeWork.value,
     };

@@ -16,15 +16,15 @@ class HomeworkAdapter {
 
   static Homework fromMap(dynamic map) {
     return Homework(
-      id: IdVO(map['id']),
-      homeworkClass: map['class'],
+      id: IdVO(map['id'].toString()),
+      homeworkClass: map['class'].toString(),
       homeworkName: map['name'],
       homeworkData: map['date'].replaceAll('.', '/'),
       homeworkNote: List.from(map['notes'])
           .map(
             (e) => HomeworkNote(
               score: e['score'],
-              studentID: e['student'],
+              studentID: e['studentID'].toString(),
             ),
           )
           .toList(),
