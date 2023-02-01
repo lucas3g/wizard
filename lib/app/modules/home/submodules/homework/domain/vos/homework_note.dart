@@ -2,7 +2,7 @@
 import 'package:wizard/app/modules/home/submodules/homework/domain/vos/score.dart';
 
 class HomeworkNote {
-  final String studentID;
+  final int studentID;
   Score _score;
 
   Score get score => _score;

@@ -48,6 +48,6 @@ class GlobalUser {
       return user;
     }
 
-    return User(id: const IdVO('1'), name: '', email: '', photoURL: '');
+    return User(id: const IdVO(1), name: '', email: '', photoURL: '');
   }
 }

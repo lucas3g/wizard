@@ -21,7 +21,7 @@ class Class extends Entity {
   void setSchedule(String value) => _schedule = ClassSchedule(value);
 
   ClassIDTeacher get idTeacher => _idTeacher;
-  void setIdTeacher(String value) => _idTeacher = ClassIDTeacher(value);
+  void setIdTeacher(int value) => _idTeacher = ClassIDTeacher(value);
 
   Class({
     required super.id,

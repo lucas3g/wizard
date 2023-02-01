@@ -15,7 +15,7 @@ class ClassAdapter {
 
   static Class fromMap(dynamic map) {
     return Class(
-      id: IdVO(map['id'].toString()),
+      id: IdVO(map['id']),
       name: map['name'],
       dayWeek: map['dayweek'],
       schedule: map['schedule'],
@@ -25,7 +25,7 @@ class ClassAdapter {
 
   static Class empty() {
     return Class(
-      id: IdVO(const Uuid().v1()),
+      id: const IdVO(1),
       name: '',
       dayWeek: '',
       schedule: '',

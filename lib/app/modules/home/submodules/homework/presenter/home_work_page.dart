@@ -152,7 +152,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                     validator: (v) =>
                         homework.homeworkClass.validate().exceptionOrNull(),
                     onChanged: (String? e) {
-                      homework.setHomeworkClass(e!);
+                      homework.setHomeworkClass(int.parse(e!));
 
                       widget.studentBloc.add(
                         GetStudentByClassEvent(
@@ -172,7 +172,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                             child: Text(e.name.value),
                           ),
                         )
-                        .toList(),
+                        .toList() as List<String>,
                   );
                 },
               ),

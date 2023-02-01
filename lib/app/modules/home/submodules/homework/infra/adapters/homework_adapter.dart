@@ -1,4 +1,3 @@
-import 'package:uuid/uuid.dart';
 import 'package:wizard/app/core_module/vos/id_vo.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/entities/homework.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/vos/homework_note.dart';
@@ -6,7 +5,7 @@ import 'package:wizard/app/modules/home/submodules/homework/domain/vos/homework_
 class HomeworkAdapter {
   static Homework empty() {
     return Homework(
-      id: IdVO(const Uuid().v1()),
+      id: const IdVO(1),
       homeworkName: '',
       homeworkClass: '',
       homeworkData: '',
@@ -16,7 +15,7 @@ class HomeworkAdapter {
 
   static Homework fromMap(dynamic map) {
     return Homework(
-      id: IdVO(map['id'].toString()),
+      id: IdVO(map['id']),
       homeworkClass: map['class'].toString(),
       homeworkName: map['name'],
       homeworkData: map['date'].replaceAll('.', '/'),
@@ -24,7 +23,7 @@ class HomeworkAdapter {
           .map(
             (e) => HomeworkNote(
               score: e['score'],
-              studentID: e['studentID'].toString(),
+              studentID: e['studentID'],
             ),
           )
           .toList(),
@@ -42,6 +41,7 @@ class HomeworkAdapter {
   static List<Map<String, dynamic>> toMapNotes(Homework homework) {
     return homework.homeworkNote
         .map((e) => {
+              'id_homework': homework.id.value,
               'studentID': e.studentID,
               'score': e.score.value,
               'class': homework.homeworkClass.value,

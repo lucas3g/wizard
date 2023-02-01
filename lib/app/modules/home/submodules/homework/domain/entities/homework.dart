@@ -12,7 +12,7 @@ class Homework extends Entity {
   late List<HomeworkNote> homeworkNote;
 
   HomeworkClass get homeworkClass => _homeworkClass;
-  void setHomeworkClass(String value) => _homeworkClass = HomeworkClass(value);
+  void setHomeworkClass(int value) => _homeworkClass = HomeworkClass(value);
 
   HomeworkName get homeworkName => _homeworkName;
   void setHomeworkName(String value) => _homeworkName = HomeworkName(value);

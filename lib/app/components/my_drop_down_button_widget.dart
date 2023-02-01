@@ -9,7 +9,7 @@ class MyDropDownButtonWidget extends StatefulWidget {
   final List<DropdownMenuItem<String>>? items;
   final void Function(String?)? onChanged;
   final String hint;
-  final String value;
+  final int? value;
   final bool? border;
 
   const MyDropDownButtonWidget({
@@ -51,7 +51,8 @@ class _MyDropDownButtonWidgetState extends State<MyDropDownButtonWidget> {
         borderRadius: BorderRadius.circular(10),
         isDense: true,
         validator: widget.validator,
-        value: widget.value.isEmpty ? null : widget.value,
+        value:
+            widget.value.toString() == 'null' ? null : widget.value.toString(),
         hint: Text(widget.hint),
         items: widget.items,
         onChanged: widget.onChanged,

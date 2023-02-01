@@ -1,4 +1,3 @@
-import 'package:uuid/uuid.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
 import 'package:wizard/app/core_module/vos/id_vo.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/entity/student.dart';
@@ -6,7 +5,7 @@ import 'package:wizard/app/modules/home/submodules/student/domain/entity/student
 class StudentAdapter {
   static Student empty() {
     return Student(
-      id: IdVO(const Uuid().v1()),
+      id: const IdVO(1),
       studentName: '',
       studentClass: '',
       studentPhoneNumber: '',
@@ -16,7 +15,7 @@ class StudentAdapter {
 
   static Student fromMap(dynamic map) {
     return Student(
-      id: IdVO(map['id'].toString()),
+      id: IdVO(map['id']),
       studentName: map['name'],
       studentClass: map['class'].toString(),
       studentPhoneNumber: map['phoneNumber'],

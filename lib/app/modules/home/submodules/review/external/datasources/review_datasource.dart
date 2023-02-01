@@ -59,7 +59,8 @@ class ReviewDatasource implements IReviewDatasource {
     final resultNotes = await supa.getDataByField(params: paramsNotes);
 
     for (var review in result) {
-      for (var notes in resultNotes) {
+      for (var notes
+          in resultNotes.where((e) => e['id_homework'] == review['id'])) {
         review['notes'] = notes;
       }
     }

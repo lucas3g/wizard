@@ -14,7 +14,7 @@ class SupaBaseSaveParams {
 class SupaBaseGetDataByFieldParams {
   final Tables table;
   final String field;
-  final String value;
+  final dynamic value;
   final String orderBy;
 
   SupaBaseGetDataByFieldParams({
