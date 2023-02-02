@@ -15,7 +15,7 @@ class Student extends Entity {
   void setStudentName(String value) => _studentName = StudentName(value);
 
   StudentClass get studentClass => _studentClass;
-  void setStudentClass(String value) => _studentClass = StudentClass(value);
+  void setStudentClass(int value) => _studentClass = StudentClass(value);
 
   StudentPhoneNumber get studentPhoneNumber => _studentPhoneNumber;
   void setStudentPhoneNumber(String value) =>

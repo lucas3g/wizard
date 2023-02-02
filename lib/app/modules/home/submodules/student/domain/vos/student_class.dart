@@ -1,5 +1,5 @@
-import 'package:wizard/app/core_module/vos/text_vo.dart';
+import 'package:wizard/app/core_module/vos/id_vo.dart';
 
-class StudentClass extends TextVO {
+class StudentClass extends IdVO {
   StudentClass(super.value);
 }

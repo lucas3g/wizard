@@ -12,7 +12,7 @@ class SaveHomeworkEvent extends HomeworkEvents {
 }
 
 class GetHomeworksByClassEvent extends HomeworkEvents {
-  final String classID;
+  final int classID;
 
   GetHomeworksByClassEvent({
     required this.classID,

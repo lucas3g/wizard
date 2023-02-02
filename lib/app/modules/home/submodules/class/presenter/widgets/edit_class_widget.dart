@@ -118,7 +118,7 @@ class _EditClassWidgetState extends State<EditClassWidget> {
                     ),
                   )
                   .toList(),
-              onChanged: (String? value) => pClass.setDayWeek(value!),
+              onChanged: (dynamic value) => pClass.setDayWeek(value!),
             ),
             const SizedBox(height: 10),
             MyInputWidget(

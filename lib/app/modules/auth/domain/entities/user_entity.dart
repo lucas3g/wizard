@@ -1,10 +1,10 @@
 import 'package:result_dart/result_dart.dart';
-import 'package:wizard/app/core_module/types/entity.dart';
+import 'package:wizard/app/core_module/types/entity_account_google.dart';
 import 'package:wizard/app/modules/auth/domain/vos/personal/photoUrl.dart';
 import 'package:wizard/app/modules/auth/domain/vos/personal/email.dart';
 import 'package:wizard/app/modules/auth/domain/vos/personal/name.dart';
 
-class User extends Entity {
+class User extends EntityAccountGoogle {
   Name _name;
   Email _email;
   PhotoURL _photoURL;

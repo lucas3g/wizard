@@ -166,7 +166,7 @@ class _PresencePageState extends State<PresencePage> {
                   hint: 'Select a class',
                   validator: (v) =>
                       presence.presenceClass.validate().exceptionOrNull(),
-                  onChanged: (String? e) {
+                  onChanged: (dynamic e) {
                     presence.setPresenceClass(e!);
 
                     widget.studentBloc.add(

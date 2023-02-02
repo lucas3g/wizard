@@ -28,7 +28,7 @@ class PresenceRepository implements IPresenceRepository {
 
   @override
   Future<Result<List<Presence>, IPresenceException>> getPresenceByClass(
-      String pClass) async {
+      int pClass) async {
     try {
       final result = await datasource.getPresenceByClass(pClass);
 

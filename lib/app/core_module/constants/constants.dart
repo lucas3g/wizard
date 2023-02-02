@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:wizard/app/core_module/services/shared_preferences/local_storage_interface.dart';
-import 'package:wizard/app/core_module/vos/id_vo.dart';
+import 'package:wizard/app/core_module/vos/id_account_google.dart';
 import 'package:wizard/app/modules/auth/domain/entities/user_entity.dart';
 import 'package:wizard/app/modules/auth/infra/adapters/user_adapter.dart';
 
@@ -48,6 +48,7 @@ class GlobalUser {
       return user;
     }
 
-    return User(id: const IdVO(1), name: '', email: '', photoURL: '');
+    return User(
+        id: const IdAccountGoogleVO('1'), name: '', email: '', photoURL: '');
   }
 }

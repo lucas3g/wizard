@@ -5,5 +5,5 @@ import 'package:wizard/app/modules/home/submodules/presence/domain/exceptions/pr
 abstract class IPresenceRepository {
   Future<Result<bool, IPresenceException>> savePresence(Presence presence);
   Future<Result<List<Presence>, IPresenceException>> getPresenceByClass(
-      String pClass);
+      int pClass);
 }

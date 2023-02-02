@@ -65,7 +65,7 @@ class _ReportPageState extends State<ReportPage> {
   late Report report;
 
   late bool visibleButton = false;
-  late String dropDownValue = '';
+  late int dropDownValue = -1;
 
   late StreamSubscription sub;
   late StreamSubscription subPresence;
@@ -212,7 +212,7 @@ class _ReportPageState extends State<ReportPage> {
                   hint: 'Select a class',
                   validator: (v) =>
                       report.reportClass.validate().exceptionOrNull(),
-                  onChanged: (String? e) {
+                  onChanged: (dynamic e) {
                     final pClass = classes.firstWhere((v) => v.id.value == e);
 
                     report.reportClass = Class(

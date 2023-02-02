@@ -10,7 +10,7 @@ class SavePresenceEvent extends PresenceEvents {
 }
 
 class GetPresenceByClassEvent extends PresenceEvents {
-  final String pClass;
+  final int pClass;
 
   GetPresenceByClassEvent({
     required this.pClass,

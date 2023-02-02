@@ -39,7 +39,7 @@ class ReviewDatasource implements IReviewDatasource {
   }
 
   @override
-  Future<List> getReviewsByClass(String classID) async {
+  Future<List> getReviewsByClass(int classID) async {
     final params = SupaBaseGetDataByFieldParams(
       table: Tables.reviews,
       field: 'class',

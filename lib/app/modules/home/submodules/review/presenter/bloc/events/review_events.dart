@@ -12,7 +12,7 @@ class SaveReviewEvent extends ReviewEvents {
 }
 
 class GetReviewsByClassEvent extends ReviewEvents {
-  final String classID;
+  final int classID;
 
   GetReviewsByClassEvent({
     required this.classID,

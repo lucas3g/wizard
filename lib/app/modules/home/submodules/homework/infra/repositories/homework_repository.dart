@@ -30,7 +30,7 @@ class HomeworkRepository implements IHomeworkRepository {
 
   @override
   Future<Result<List<Homework>, IHomeWorkException>> getHomeworksByClass(
-      String classID) async {
+      int classID) async {
     try {
       final result = await datasource.getHomeworksByClass(classID);
 

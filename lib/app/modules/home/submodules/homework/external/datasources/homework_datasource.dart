@@ -39,7 +39,7 @@ class HomeworkDatasource implements IHomeworkDatasource {
   }
 
   @override
-  Future<List> getHomeworksByClass(String classID) async {
+  Future<List> getHomeworksByClass(int classID) async {
     final paramsHomework = SupaBaseGetDataByFieldParams(
       table: Tables.homeworks,
       field: 'class',

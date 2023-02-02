@@ -12,7 +12,7 @@ class Review extends Entity {
   late List<ReviewNote> reviewNote;
 
   ReviewClass get reviewClass => _reviewClass;
-  void setReviewClass(String value) => _reviewClass = ReviewClass(value);
+  void setReviewClass(int value) => _reviewClass = ReviewClass(value);
 
   ReviewName get reviewName => _reviewName;
   void setReviewName(String value) => _reviewName = ReviewName(value);

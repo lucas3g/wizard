@@ -1,4 +1,3 @@
-import 'package:uuid/uuid.dart';
 import 'package:wizard/app/core_module/vos/id_vo.dart';
 import 'package:wizard/app/modules/home/submodules/review/domain/entities/review.dart';
 import 'package:wizard/app/modules/home/submodules/review/domain/vos/review_note.dart';
@@ -6,7 +5,7 @@ import 'package:wizard/app/modules/home/submodules/review/domain/vos/review_note
 class ReviewAdapter {
   static Review empty() {
     return Review(
-      id: IdVO(const Uuid().v1()),
+      id: const IdVO(1),
       reviewClass: '',
       reviewName: '',
       reviewDate: '',
@@ -16,14 +15,14 @@ class ReviewAdapter {
 
   static Review fromMap(dynamic map) {
     return Review(
-      id: IdVO(map['id'].toString()),
+      id: IdVO(map['id']),
       reviewClass: map['class'].toString(),
       reviewName: map['name'],
       reviewDate: map['date'].replaceAll('.', '/'),
       reviewNote: List.from(map['notes'])
           .map(
             (e) => ReviewNote(
-              studentID: e['studentID'].toString(),
+              studentID: e['studentID'],
               score: e['score'],
             ),
           )

@@ -1,4 +1,3 @@
-import 'package:uuid/uuid.dart';
 import 'package:wizard/app/core_module/vos/id_vo.dart';
 import 'package:wizard/app/modules/home/submodules/class/infra/adapters/class_adapter.dart';
 import 'package:wizard/app/modules/home/submodules/report/domain/entities/report.dart';
@@ -6,7 +5,7 @@ import 'package:wizard/app/modules/home/submodules/report/domain/entities/report
 class ReportAdapter {
   static Report empty() {
     return Report(
-      id: IdVO(const Uuid().v1()),
+      id: const IdVO(1),
       obs: '',
       reportClass: ClassAdapter.empty(),
       students: [],

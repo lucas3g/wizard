@@ -1,5 +1,5 @@
-import 'package:wizard/app/core_module/vos/id_vo.dart';
+import 'package:wizard/app/core_module/vos/id_account_google.dart';
 
-class ClassIDTeacher extends IdVO {
+class ClassIDTeacher extends IdAccountGoogleVO {
   ClassIDTeacher(super.value);
 }

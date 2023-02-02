@@ -37,7 +37,7 @@ class PresenceDatasource implements IPresenceDatasource {
   }
 
   @override
-  Future<List> getPresenceByClass(String pClass) async {
+  Future<List> getPresenceByClass(int pClass) async {
     final params = SupaBaseGetDataByFieldParams(
         table: Tables.presences,
         field: 'class',

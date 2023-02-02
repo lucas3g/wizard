@@ -29,7 +29,7 @@ class ReviewRepository implements IReviewRepository {
 
   @override
   Future<Result<List<Review>, IReviewException>> getReviewsByClass(
-      String classID) async {
+      int classID) async {
     try {
       final result = await datasource.getReviewsByClass(classID);
 

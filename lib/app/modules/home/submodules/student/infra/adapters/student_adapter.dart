@@ -7,7 +7,7 @@ class StudentAdapter {
     return Student(
       id: const IdVO(1),
       studentName: '',
-      studentClass: '',
+      studentClass: -1,
       studentPhoneNumber: '',
       studentParents: '',
     );
@@ -17,7 +17,7 @@ class StudentAdapter {
     return Student(
       id: IdVO(map['id']),
       studentName: map['name'],
-      studentClass: map['class'].toString(),
+      studentClass: map['class'],
       studentPhoneNumber: map['phoneNumber'],
       studentParents: map['parents'],
     );

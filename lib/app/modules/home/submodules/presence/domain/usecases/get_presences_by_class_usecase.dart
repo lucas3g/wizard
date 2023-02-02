@@ -6,7 +6,7 @@ import 'package:wizard/app/modules/home/submodules/presence/domain/exceptions/pr
 import 'package:wizard/app/modules/home/submodules/presence/domain/repositories/presence_repository.dart';
 
 abstract class IGetPresencesByClassUseCase {
-  AsyncResult<List<Presence>, IPresenceException> call(String pClass);
+  AsyncResult<List<Presence>, IPresenceException> call(int pClass);
 }
 
 class GetPresencesByClassUseCase implements IGetPresencesByClassUseCase {
@@ -15,7 +15,7 @@ class GetPresencesByClassUseCase implements IGetPresencesByClassUseCase {
   GetPresencesByClassUseCase({required this.repository});
 
   @override
-  AsyncResult<List<Presence>, IPresenceException> call(String pClass) {
+  AsyncResult<List<Presence>, IPresenceException> call(int pClass) {
     return repository.getPresenceByClass(pClass);
   }
 }

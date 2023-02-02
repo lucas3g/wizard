@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:result_dart/result_dart.dart';
+import 'package:wizard/app/core_module/vos/id_account_google.dart';
 import 'package:wizard/app/core_module/vos/id_vo.dart';
 
 import 'package:wizard/app/modules/home/submodules/student/domain/entity/student.dart';
@@ -48,7 +49,7 @@ class StudentRepository implements IStudentRepository {
 
   @override
   Future<Result<List<Student>, IStudentException>> getStudentByTeacher(
-      IdVO teacherID) async {
+      IdAccountGoogleVO teacherID) async {
     try {
       final result = await dataSource.getStudentByTeacher(teacherID);
 

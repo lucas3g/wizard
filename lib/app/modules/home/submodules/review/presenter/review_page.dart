@@ -151,7 +151,7 @@ class _ReviewPageState extends State<ReviewPage> {
                     hint: 'Select a class',
                     validator: (v) =>
                         review.reviewClass.validate().exceptionOrNull(),
-                    onChanged: (String? e) {
+                    onChanged: (dynamic e) {
                       review.setReviewClass(e!);
 
                       widget.studentBloc.add(
@@ -264,7 +264,7 @@ class _ReviewPageState extends State<ReviewPage> {
                                         .exceptionOrNull(),
                                     value: review.reviewNote[index].score.value,
                                     hint: 'Select the note',
-                                    onChanged: (String? e) {
+                                    onChanged: (dynamic e) {
                                       review.reviewNote[index].setScore(e!);
                                       setState(() {});
                                     },

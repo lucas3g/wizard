@@ -1,4 +1,3 @@
-import 'package:uuid/uuid.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
 import 'package:wizard/app/core_module/vos/id_vo.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/entites/presence.dart';
@@ -7,7 +6,7 @@ import 'package:wizard/app/modules/home/submodules/presence/domain/vos/presence_
 class PresenceAdapter {
   static Presence empty() {
     return Presence(
-      id: IdVO(const Uuid().v1()),
+      id: const IdVO(1),
       presenceClass: '',
       presenceObs: '',
       presenceHomeWork: '',
@@ -18,15 +17,15 @@ class PresenceAdapter {
 
   static Presence fromMap(dynamic map) {
     return Presence(
-      id: IdVO(map['id'].toString()),
-      presenceClass: map['class'].toString(),
+      id: IdVO(map['id']),
+      presenceClass: map['class'],
       presenceObs: map['obs'] ?? '',
       presenceDate: map['date'].replaceAll('.', '/'),
       presenceHomeWork: map['homework'],
       presenceCheck: List.from(map['presence'])
           .map(
             (e) => PresenceCheck(
-              studentID: e['studentID'].toString(),
+              studentID: e['studentID'],
               presencePresent: e['type'],
             ),
           )

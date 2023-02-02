@@ -7,7 +7,7 @@ class HomeworkAdapter {
     return Homework(
       id: const IdVO(1),
       homeworkName: '',
-      homeworkClass: '',
+      homeworkClass: -1,
       homeworkData: '',
       homeworkNote: [],
     );
@@ -16,7 +16,7 @@ class HomeworkAdapter {
   static Homework fromMap(dynamic map) {
     return Homework(
       id: IdVO(map['id']),
-      homeworkClass: map['class'].toString(),
+      homeworkClass: map['class'],
       homeworkName: map['name'],
       homeworkData: map['date'].replaceAll('.', '/'),
       homeworkNote: List.from(map['notes'])

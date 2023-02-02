@@ -6,7 +6,7 @@ import 'package:wizard/app/modules/home/submodules/homework/domain/exceptions/ho
 import 'package:wizard/app/modules/home/submodules/homework/domain/repositories/homework_repository.dart';
 
 abstract class IGetHomeworksByClassUsecase {
-  AsyncResult<List<Homework>, IHomeWorkException> call(String classID);
+  AsyncResult<List<Homework>, IHomeWorkException> call(int classID);
 }
 
 class GetHomeworksByClassUsecase extends IGetHomeworksByClassUsecase {
@@ -17,7 +17,7 @@ class GetHomeworksByClassUsecase extends IGetHomeworksByClassUsecase {
   });
 
   @override
-  AsyncResult<List<Homework>, IHomeWorkException> call(String classID) {
+  AsyncResult<List<Homework>, IHomeWorkException> call(int classID) {
     return repository.getHomeworksByClass(classID);
   }
 }

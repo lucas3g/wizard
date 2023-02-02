@@ -6,7 +6,7 @@ import 'package:wizard/app/modules/home/submodules/review/domain/exceptions/revi
 import 'package:wizard/app/modules/home/submodules/review/domain/repositories/review_repository.dart';
 
 abstract class IGetReviewsByClassUsecase {
-  AsyncResult<List<Review>, IReviewException> call(String classID);
+  AsyncResult<List<Review>, IReviewException> call(int classID);
 }
 
 class GetReviewsByClassUsecase extends IGetReviewsByClassUsecase {
@@ -17,7 +17,7 @@ class GetReviewsByClassUsecase extends IGetReviewsByClassUsecase {
   });
 
   @override
-  AsyncResult<List<Review>, IReviewException> call(String classID) {
+  AsyncResult<List<Review>, IReviewException> call(int classID) {
     return repository.getReviewsByClass(classID);
   }
 }

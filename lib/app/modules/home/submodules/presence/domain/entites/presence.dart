@@ -14,7 +14,7 @@ class Presence extends Entity {
   late List<PresenceCheck>? presenceCheck;
 
   PresenceClass get presenceClass => _presenceClass;
-  void setPresenceClass(String value) => _presenceClass = PresenceClass(value);
+  void setPresenceClass(int value) => _presenceClass = PresenceClass(value);
 
   PresenceObs get presenceObs => _presenceObs;
   void setPresenceObs(String value) => _presenceObs = PresenceObs(value);

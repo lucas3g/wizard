@@ -2,7 +2,7 @@
 import 'package:wizard/app/modules/home/submodules/review/domain/vos/score.dart';
 
 class ReviewNote {
-  final String studentID;
+  final int studentID;
   ScoreReview _score;
 
   ScoreReview get score => _score;

@@ -1,5 +1,5 @@
-import 'package:wizard/app/core_module/vos/text_vo.dart';
+import 'package:wizard/app/core_module/vos/id_vo.dart';
 
-class ReviewClass extends TextVO {
+class ReviewClass extends IdVO {
   ReviewClass(super.value);
 }

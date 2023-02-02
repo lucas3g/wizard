@@ -2,5 +2,5 @@ import 'package:wizard/app/modules/home/submodules/homework/domain/entities/home
 
 abstract class IHomeworkDatasource {
   Future<bool> saveHomework(Homework homework);
-  Future<List> getHomeworksByClass(String classID);
+  Future<List> getHomeworksByClass(int classID);
 }

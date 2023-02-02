@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 import 'package:wizard/app/theme/app_theme.dart';
 
-class MyDropDownButtonWidget extends StatefulWidget {
+class MyDropDownButtonWidget<T> extends StatefulWidget {
   final FocusNode? focusNode;
-  final String? Function(String?)? validator;
-  final List<DropdownMenuItem<String>>? items;
-  final void Function(String?)? onChanged;
+  final String? Function(T)? validator;
+  final List<DropdownMenuItem<T>>? items;
+  final void Function(dynamic)? onChanged;
   final String hint;
-  final int? value;
+  final dynamic value;
   final bool? border;
 
   const MyDropDownButtonWidget({
@@ -28,6 +28,18 @@ class MyDropDownButtonWidget extends StatefulWidget {
 }
 
 class _MyDropDownButtonWidgetState extends State<MyDropDownButtonWidget> {
+  dynamic retornaValor(dynamic value) {
+    if (value.runtimeType is int) {
+      return value < 0 ? null : value;
+    }
+
+    if (value.runtimeType is String) {
+      return value.isEmpty ? null : value;
+    }
+
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,7 +53,7 @@ class _MyDropDownButtonWidgetState extends State<MyDropDownButtonWidget> {
               )
             : null,
       ),
-      child: DropdownButtonFormField<String>(
+      child: DropdownButtonFormField<dynamic>(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         focusNode: widget.focusNode,
         decoration: const InputDecoration(
@@ -51,8 +63,7 @@ class _MyDropDownButtonWidgetState extends State<MyDropDownButtonWidget> {
         borderRadius: BorderRadius.circular(10),
         isDense: true,
         validator: widget.validator,
-        value:
-            widget.value.toString() == 'null' ? null : widget.value.toString(),
+        value: retornaValor(widget.value),
         hint: Text(widget.hint),
         items: widget.items,
         onChanged: widget.onChanged,

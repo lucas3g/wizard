@@ -83,6 +83,10 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
           );
         }
       }
+
+      if (state is ErrorStudent) {
+        MySnackBar(message: state.message, type: TypeSnackBar.error);
+      }
     });
 
     subHome = widget.homeworkBloc.stream.listen((state) async {
@@ -151,8 +155,8 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                     hint: 'Select a class',
                     validator: (v) =>
                         homework.homeworkClass.validate().exceptionOrNull(),
-                    onChanged: (String? e) {
-                      homework.setHomeworkClass(int.parse(e!));
+                    onChanged: (dynamic e) {
+                      homework.setHomeworkClass(e!);
 
                       widget.studentBloc.add(
                         GetStudentByClassEvent(
@@ -172,7 +176,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                             child: Text(e.name.value),
                           ),
                         )
-                        .toList() as List<String>,
+                        .toList(),
                   );
                 },
               ),
@@ -260,7 +264,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                                     value: homework
                                         .homeworkNote[index].score.value,
                                     hint: 'Select the note',
-                                    onChanged: (String? e) {
+                                    onChanged: (dynamic e) {
                                       homework.homeworkNote[index].setScore(e!);
                                       setState(() {});
                                     },
