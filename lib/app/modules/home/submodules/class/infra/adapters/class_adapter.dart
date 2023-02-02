@@ -1,4 +1,3 @@
-import 'package:uuid/uuid.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
 import 'package:wizard/app/core_module/vos/id_vo.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/entities/class.dart';

@@ -7,7 +7,7 @@ class PresenceAdapter {
   static Presence empty() {
     return Presence(
       id: const IdVO(1),
-      presenceClass: '',
+      presenceClass: -1,
       presenceObs: '',
       presenceHomeWork: '',
       presenceDate: '',
