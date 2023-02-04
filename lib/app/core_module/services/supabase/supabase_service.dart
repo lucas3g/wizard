@@ -18,16 +18,16 @@ class SupaBaseService implements ISupaBase {
         .from(params.table.name)
         .select()
         .eq(params.field, params.value)
-        .order(params.orderBy, ascending: true);
+        .execute();
 
-    return result;
+    return result.data;
   }
 
   @override
   Future<bool> saveData({required SupaBaseSaveParams params}) async {
     final result =
-        await supa.from(params.table.name).insert(params.data).select();
+        await supa.from(params.table.name).insert(params.data).execute();
 
-    return result != null;
+    return result.data != null;
   }
 }
