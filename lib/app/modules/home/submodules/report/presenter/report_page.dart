@@ -230,7 +230,7 @@ class _ReportPageState extends State<ReportPage> {
 
                     widget.studentBloc.add(
                       GetStudentByClassEvent(
-                        classID: IdVO(e),
+                        classID: e,
                       ),
                     );
 

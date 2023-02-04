@@ -4,7 +4,6 @@ import 'package:wizard/app/core_module/services/supabase/adapters/supabase_param
 import 'package:wizard/app/core_module/services/supabase/helpers/tables.dart';
 import 'package:wizard/app/core_module/services/supabase/supabase_interface.dart';
 import 'package:wizard/app/core_module/vos/id_account_google.dart';
-import 'package:wizard/app/core_module/vos/id_vo.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/entity/student.dart';
 import 'package:wizard/app/modules/home/submodules/student/infra/adapters/student_adapter.dart';
 import 'package:wizard/app/modules/home/submodules/student/infra/datasources/student_datasource.dart';
@@ -27,11 +26,11 @@ class StudentDataSource implements IStudentDataSource {
   }
 
   @override
-  Future<List> getStudentByClass(IdVO classID) async {
+  Future<List> getStudentByClass(int classID) async {
     final params = SupaBaseGetDataByFieldParams(
       table: Tables.students,
       field: 'class',
-      value: classID.value,
+      value: classID,
       orderBy: 'name',
     );
 

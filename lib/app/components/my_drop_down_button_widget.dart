@@ -6,8 +6,8 @@ import 'package:wizard/app/theme/app_theme.dart';
 class MyDropDownButtonWidget<T> extends StatefulWidget {
   final FocusNode? focusNode;
   final String? Function(T)? validator;
-  final List<DropdownMenuItem<T>>? items;
-  final void Function(dynamic)? onChanged;
+  final List<DropdownMenuItem<T>> items;
+  final void Function(T)? onChanged;
   final String hint;
   final dynamic value;
   final bool? border;
@@ -16,7 +16,7 @@ class MyDropDownButtonWidget<T> extends StatefulWidget {
     Key? key,
     this.focusNode,
     this.validator,
-    this.items,
+    required this.items,
     this.onChanged,
     required this.value,
     required this.hint,
@@ -27,13 +27,13 @@ class MyDropDownButtonWidget<T> extends StatefulWidget {
   State<MyDropDownButtonWidget> createState() => _MyDropDownButtonWidgetState();
 }
 
-class _MyDropDownButtonWidgetState extends State<MyDropDownButtonWidget> {
-  dynamic retornaValor(dynamic value) {
-    if (value.runtimeType is int) {
+class _MyDropDownButtonWidgetState<T> extends State<MyDropDownButtonWidget> {
+  retornaValor(value) {
+    if (value is int) {
       return value < 0 ? null : value;
     }
 
-    if (value.runtimeType is String) {
+    if (value is String) {
       return value.isEmpty ? null : value;
     }
 
@@ -53,7 +53,7 @@ class _MyDropDownButtonWidgetState extends State<MyDropDownButtonWidget> {
               )
             : null,
       ),
-      child: DropdownButtonFormField<dynamic>(
+      child: DropdownButtonFormField<T>(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         focusNode: widget.focusNode,
         decoration: const InputDecoration(
@@ -65,7 +65,7 @@ class _MyDropDownButtonWidgetState extends State<MyDropDownButtonWidget> {
         validator: widget.validator,
         value: retornaValor(widget.value),
         hint: Text(widget.hint),
-        items: widget.items,
+        items: widget.items as List<DropdownMenuItem<T>>,
         onChanged: widget.onChanged,
       ),
     );

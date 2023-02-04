@@ -141,7 +141,7 @@ class _EditStudentWidgetState extends State<EditStudentWidget> {
                     hint: 'Select a class',
                     validator: (v) =>
                         student.studentClass.validate().exceptionOrNull(),
-                    onChanged: (dynamic e) => student.setStudentClass(e!),
+                    onChanged: (dynamic e) => student.setStudentClass(e),
                     value: student.studentClass.value,
                     items: classes
                         .map(

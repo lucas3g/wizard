@@ -27,10 +27,10 @@ class Student extends Entity {
 
   Student({
     required super.id,
-    required studentName,
-    required studentClass,
-    required studentPhoneNumber,
-    required studentParents,
+    required String studentName,
+    required int studentClass,
+    required String studentPhoneNumber,
+    required String studentParents,
   })  : _studentName = StudentName(studentName),
         _studentClass = StudentClass(studentClass),
         _studentPhoneNumber = StudentPhoneNumber(studentPhoneNumber),
