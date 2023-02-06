@@ -44,7 +44,7 @@ class ReviewDatasource implements IReviewDatasource {
   Future<List> getReviewsByClass(int classID) async {
     final params = SupaBaseGetDataByFieldParams(
       table: Tables.reviews,
-      field: 'class',
+      field: 'id_class',
       value: classID,
       orderBy: 'class',
     );
@@ -53,7 +53,7 @@ class ReviewDatasource implements IReviewDatasource {
 
     final paramsNotes = SupaBaseGetDataByFieldParams(
       table: Tables.reviews_notes,
-      field: 'class',
+      field: 'id_class',
       value: classID,
       orderBy: 'class',
     );

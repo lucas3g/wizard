@@ -7,9 +7,9 @@
           "type": "dart",
           "toolArgs": [
               "--dart-define",
-              "BASE_URL=https://oeuqtuxabkzeowqwjwnl.supabase.co", 
+              "BASE_URL=https://lrpviyzrhbxscueacpjv.supabase.co", 
               "--dart-define",
-              "API_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ldXF0dXhhYmt6ZW93cXdqd25sIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzQ5NTA1MjEsImV4cCI6MTk5MDUyNjUyMX0.U1M9ohWN4G0Abhb14Ct-8qAsdaLSmrjK8dnAvTMqhdA",
+              "API_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxycHZpeXpyaGJ4c2N1ZWFjcGp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzU3MDE2NDMsImV4cCI6MTk5MTI3NzY0M30.VEQS66WUTUxMf9gTsxxMXMIDCGQc07gy6qZNvCDMV9Q",
           ]
       },
       {
@@ -21,9 +21,9 @@
           ],
           "toolArgs": [
               "--dart-define",
-              "BASE_URL=http://elinfo2.jelastic.saveincloud.net/AppColetaLeite",
+              "BASE_URL=https://lrpviyzrhbxscueacpjv.supabase.co",
               "--dart-define",
-              "API_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ldXF0dXhhYmt6ZW93cXdqd25sIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzQ5NTA1MjEsImV4cCI6MTk5MDUyNjUyMX0.U1M9ohWN4G0Abhb14Ct-8qAsdaLSmrjK8dnAvTMqhdA",
+              "API_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxycHZpeXpyaGJ4c2N1ZWFjcGp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzU3MDE2NDMsImV4cCI6MTk5MTI3NzY0M30.VEQS66WUTUxMf9gTsxxMXMIDCGQc07gy6qZNvCDMV9Q",
           ]            
       },
   ]

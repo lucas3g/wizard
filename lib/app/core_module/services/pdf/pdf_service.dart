@@ -180,7 +180,7 @@ class PDFService implements IPDF {
                           ),
                           pw.Text(
                             PDFController.returnsMissing(
-                              report.presences[i].presenceCheck!,
+                              report.presences[i].presenceCheck,
                               report.students,
                             ),
                             textAlign: pw.TextAlign.center,

@@ -32,7 +32,7 @@ class ClassDataSource implements IClassDataSource {
   Future<List> getClassesByTeacher(ClassIDTeacher idTeacher) async {
     final params = SupaBaseGetDataByFieldParams(
       table: Tables.classes,
-      field: 'idTeacher',
+      field: 'id_teacher',
       value: idTeacher.value,
       orderBy: 'name',
     );

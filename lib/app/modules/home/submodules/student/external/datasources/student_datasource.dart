@@ -29,7 +29,7 @@ class StudentDataSource implements IStudentDataSource {
   Future<List> getStudentByClass(int classID) async {
     final params = SupaBaseGetDataByFieldParams(
       table: Tables.students,
-      field: 'class',
+      field: 'id_class',
       value: classID,
       orderBy: 'name',
     );
@@ -43,7 +43,7 @@ class StudentDataSource implements IStudentDataSource {
   Future<List> getStudentByTeacher(IdAccountGoogleVO teacherID) async {
     final params = SupaBaseGetDataByFieldParams(
       table: Tables.students,
-      field: 'idTeacher',
+      field: 'id_teacher',
       value: teacherID.value,
       orderBy: 'name',
     );

@@ -6,9 +6,9 @@ class ClassAdapter {
   static Map<String, dynamic> toMap(Class pClass) {
     return {
       'name': pClass.name.value,
-      'dayweek': pClass.dayWeek.value,
+      'day_week': pClass.dayWeek.value,
       'schedule': pClass.schedule.value,
-      'idTeacher': pClass.idTeacher.value,
+      'id_teacher': pClass.idTeacher.value,
     };
   }
 
@@ -16,9 +16,9 @@ class ClassAdapter {
     return Class(
       id: IdVO(map['id']),
       name: map['name'],
-      dayWeek: map['dayweek'],
+      dayWeek: map['day_week'],
       schedule: map['schedule'],
-      idTeacher: map['idTeacher'],
+      idTeacher: map['id_teacher'],
     );
   }
 

@@ -16,13 +16,13 @@ class ReviewAdapter {
   static Review fromMap(dynamic map) {
     return Review(
       id: IdVO(map['id']),
-      reviewClass: map['class'],
+      reviewClass: map['id_class'],
       reviewName: map['name'],
       reviewDate: map['date'].replaceAll('.', '/'),
       reviewNote: List.from(map['notes'])
           .map(
             (e) => ReviewNote(
-              studentID: e['studentID'],
+              studentID: e['id_student'],
               score: e['score'],
             ),
           )
@@ -32,7 +32,7 @@ class ReviewAdapter {
 
   static Map<String, dynamic> toMap(Review review) {
     return {
-      'class': review.reviewClass.value,
+      'id_class': review.reviewClass.value,
       'name': review.reviewName.value,
       'date': review.reviewDate.value.replaceAll('/', '.'),
     };
@@ -43,9 +43,9 @@ class ReviewAdapter {
         .map(
           (e) => {
             'id_review': review.id.value,
-            'studentID': e.studentID,
+            'id_student': e.studentID,
             'score': e.score.value,
-            'class': review.reviewClass.value,
+            'id_class': review.reviewClass.value,
           },
         )
         .toList();

@@ -17,8 +17,8 @@ class StudentAdapter {
     return Student(
       id: IdVO(map['id']),
       studentName: map['name'],
-      studentClass: map['class'],
-      studentPhoneNumber: map['phoneNumber'],
+      studentClass: map['id_class'],
+      studentPhoneNumber: map['phone_number'],
       studentParents: map['parents'],
     );
   }
@@ -26,10 +26,10 @@ class StudentAdapter {
   static Map<String, dynamic> toMap(Student student) {
     return {
       'name': student.studentName.value,
-      'class': student.studentClass.value,
-      'phoneNumber': student.studentPhoneNumber.value,
+      'id_class': student.studentClass.value,
+      'phone_number': student.studentPhoneNumber.value,
       'parents': student.studentParents.value,
-      'idTeacher': GlobalUser.instance.user.id.value,
+      'id_teacher': GlobalUser.instance.user.id.value,
     };
   }
 }

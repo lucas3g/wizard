@@ -42,7 +42,7 @@ class PresenceDatasource implements IPresenceDatasource {
   Future<List> getPresenceByClass(int pClass) async {
     final params = SupaBaseGetDataByFieldParams(
         table: Tables.presences,
-        field: 'class',
+        field: 'id_class',
         value: pClass,
         orderBy: 'class');
 
@@ -50,7 +50,7 @@ class PresenceDatasource implements IPresenceDatasource {
 
     final paramsCheck = SupaBaseGetDataByFieldParams(
       table: Tables.presences_check,
-      field: 'class',
+      field: 'id_class',
       value: pClass,
       orderBy: 'class',
     );
