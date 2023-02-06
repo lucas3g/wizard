@@ -2,14 +2,14 @@ import 'package:wizard/app/modules/home/submodules/student/domain/vos/student_na
 
 class ReportStudent {
   int _codStudent;
-  String _idStudent;
+  int _idStudent;
   StudentName _studentName;
 
   int get codStudent => _codStudent;
   void setCodStudent(int value) => _codStudent = value;
 
-  String get idStudent => _idStudent;
-  void setIdStudent(String value) => _idStudent = value;
+  int get idStudent => _idStudent;
+  void setIdStudent(int value) => _idStudent = value;
 
   StudentName get studentName => _studentName;
   void setStudentName(String value) => _studentName = StudentName(value);

@@ -57,7 +57,12 @@ class PresenceDatasource implements IPresenceDatasource {
 
     final resultChecks = await supa.getDataByField(params: paramsCheck);
 
-    result[0]['presence'] = resultChecks;
+    for (var review in result) {
+      for (var presence
+          in resultChecks.where((e) => e['id_presence'] == review['id'])) {
+        review['presence'] = presence;
+      }
+    }
 
     if (result.isEmpty) {
       throw const PresenceException(message: 'Presences is empty!');

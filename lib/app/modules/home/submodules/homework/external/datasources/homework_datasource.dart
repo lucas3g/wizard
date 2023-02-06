@@ -60,11 +60,16 @@ class HomeworkDatasource implements IHomeworkDatasource {
 
     final resultNotes = await supa.getDataByField(params: paramsNotes);
 
+    for (var homework in resultHomework) {
+      for (var notes
+          in resultNotes.where((e) => e['id_homework'] == homework['id'])) {
+        homework['notes'] = List.from(notes);
+      }
+    }
+
     if (resultHomework.isEmpty) {
       throw const HomeWorkException(message: 'Homeworks is empty!');
     }
-
-    resultHomework[0]['notes'] = resultNotes;
 
     return resultHomework;
   }

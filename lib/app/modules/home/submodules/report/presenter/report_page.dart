@@ -216,7 +216,7 @@ class _ReportPageState extends State<ReportPage> {
                     final pClass = classes.firstWhere((v) => v.id.value == e);
 
                     report.reportClass = Class(
-                      id: IdVO(e!),
+                      id: IdVO(e),
                       name: pClass.name.value,
                       dayWeek: pClass.dayWeek.value,
                       schedule: pClass.schedule.value,

@@ -62,7 +62,7 @@ class ReviewDatasource implements IReviewDatasource {
 
     for (var review in result) {
       for (var notes
-          in resultNotes.where((e) => e['id_homework'] == review['id'])) {
+          in resultNotes.where((e) => e['id_review'] == review['id'])) {
         review['notes'] = notes;
       }
     }
