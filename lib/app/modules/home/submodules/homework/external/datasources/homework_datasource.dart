@@ -44,7 +44,7 @@ class HomeworkDatasource implements IHomeworkDatasource {
   Future<List> getHomeworksByClass(int classID) async {
     final paramsHomework = SupaBaseGetDataByFieldParams(
       table: Tables.homeworks,
-      field: 'class',
+      field: 'id_class',
       value: classID,
       orderBy: 'name',
     );
@@ -53,18 +53,16 @@ class HomeworkDatasource implements IHomeworkDatasource {
 
     final paramsNotes = SupaBaseGetDataByFieldParams(
       table: Tables.homeworks_notes,
-      field: 'class',
+      field: 'id_class',
       value: classID,
-      orderBy: 'class',
+      orderBy: 'id_class',
     );
 
     final resultNotes = await supa.getDataByField(params: paramsNotes);
 
     for (var homework in resultHomework) {
-      for (var notes
-          in resultNotes.where((e) => e['id_homework'] == homework['id'])) {
-        homework['notes'] = List.from(notes);
-      }
+      homework['notes'] =
+          resultNotes.where((e) => e['id_homework'] == homework['id']).toList();
     }
 
     if (resultHomework.isEmpty) {

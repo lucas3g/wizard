@@ -44,7 +44,7 @@ class PresenceDatasource implements IPresenceDatasource {
         table: Tables.presences,
         field: 'id_class',
         value: pClass,
-        orderBy: 'class');
+        orderBy: 'id_class');
 
     final result = await supa.getDataByField(params: params);
 
@@ -52,16 +52,14 @@ class PresenceDatasource implements IPresenceDatasource {
       table: Tables.presences_check,
       field: 'id_class',
       value: pClass,
-      orderBy: 'class',
+      orderBy: 'id_class',
     );
 
     final resultChecks = await supa.getDataByField(params: paramsCheck);
 
     for (var review in result) {
-      for (var presence
-          in resultChecks.where((e) => e['id_presence'] == review['id'])) {
-        review['presence'] = presence;
-      }
+      review['presence'] =
+          resultChecks.where((e) => e['id_presence'] == review['id']).toList();
     }
 
     if (result.isEmpty) {

@@ -46,7 +46,7 @@ class ReviewDatasource implements IReviewDatasource {
       table: Tables.reviews,
       field: 'id_class',
       value: classID,
-      orderBy: 'class',
+      orderBy: 'id_class',
     );
 
     final result = await supa.getDataByField(params: params);
@@ -55,16 +55,14 @@ class ReviewDatasource implements IReviewDatasource {
       table: Tables.reviews_notes,
       field: 'id_class',
       value: classID,
-      orderBy: 'class',
+      orderBy: 'id_class',
     );
 
     final resultNotes = await supa.getDataByField(params: paramsNotes);
 
     for (var review in result) {
-      for (var notes
-          in resultNotes.where((e) => e['id_review'] == review['id'])) {
-        review['notes'] = notes;
-      }
+      review['notes'] =
+          resultNotes.where((e) => e['id_review'] == review['id']).toList();
     }
 
     if (result.isEmpty) {

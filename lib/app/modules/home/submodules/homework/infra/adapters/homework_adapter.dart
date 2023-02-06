@@ -16,14 +16,14 @@ class HomeworkAdapter {
   static Homework fromMap(dynamic map) {
     return Homework(
       id: IdVO(map['id']),
-      homeworkClass: map['class'],
+      homeworkClass: map['id_class'],
       homeworkName: map['name'],
       homeworkData: map['date'].replaceAll('.', '/'),
       homeworkNote: List.from(map['notes'])
           .map(
             (e) => HomeworkNote(
               score: e['score'],
-              studentID: e['studentID'],
+              studentID: e['id_student'],
             ),
           )
           .toList(),
@@ -32,7 +32,7 @@ class HomeworkAdapter {
 
   static Map<String, dynamic> toMap(Homework homework) {
     return {
-      'class': homework.homeworkClass.value,
+      'id_class': homework.homeworkClass.value,
       'name': homework.homeworkName.value,
       'date': homework.homeworkData.value.replaceAll('/', '.'),
     };
@@ -42,9 +42,9 @@ class HomeworkAdapter {
     return homework.homeworkNote
         .map((e) => {
               'id_homework': homework.id.value,
-              'studentID': e.studentID,
+              'id_student': e.studentID,
               'score': e.score.value,
-              'class': homework.homeworkClass.value,
+              'id_class': homework.homeworkClass.value,
             })
         .toList();
   }
