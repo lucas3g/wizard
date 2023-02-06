@@ -3,9 +3,11 @@ import 'package:result_dart/result_dart.dart';
 import 'package:wizard/app/core_module/vos/id_vo.dart';
 
 abstract class Entity {
-  final IdVO id;
+  IdVO id;
 
-  const Entity({required this.id});
+  void setId(int value) => id = IdVO(value);
+
+  Entity({required this.id});
 
   Result<Entity, String> validate([Object? object]) {
     return id.validate().pure(this);

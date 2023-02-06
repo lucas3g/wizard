@@ -2,7 +2,6 @@
 
 import 'dart:async';
 
-import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,6 +48,8 @@ class PresencePage extends StatefulWidget {
 }
 
 class _PresencePageState extends State<PresencePage> {
+  final dataController = TextEditingController();
+
   final fClass = FocusNode();
   final fObs = FocusNode();
   final fHomework = FocusNode();
@@ -65,28 +66,17 @@ class _PresencePageState extends State<PresencePage> {
   void initState() {
     super.initState();
 
-    widget.classBloc.add(
-      GetClassesByIdTeacher(
-        idTeacher: ClassIDTeacher(
-          GlobalUser.instance.user.id.value,
-        ),
-      ),
-    );
+    _fetchClasses();
 
     presence = PresenceAdapter.empty();
 
+    _subscribeToStreams();
+  }
+
+  void _subscribeToStreams() {
     sub = widget.studentBloc.stream.listen((state) {
       if (state is SuccessGetStudentByClass) {
-        presence.presenceCheck!.clear();
-
-        for (var student in state.students) {
-          presence.presenceCheck!.add(
-            PresenceCheck(
-              studentID: student.id.value,
-              presencePresent: 'Absent',
-            ),
-          );
-        }
+        _initializePresenceList(state.students);
       }
     });
 
@@ -106,25 +96,48 @@ class _PresencePageState extends State<PresencePage> {
     });
   }
 
+  void _fetchClasses() {
+    widget.classBloc.add(
+      GetClassesByIdTeacher(
+        idTeacher: ClassIDTeacher(
+          GlobalUser.instance.user.id.value,
+        ),
+      ),
+    );
+  }
+
   void setPresence(Student student) {
-    if (presence.presenceCheck!
-            .where((e) => e.studentID.value == student.id.value)
-            .first
-            .presencePresent
-            .value ==
-        'Present') {
-      presence.presenceCheck!
-          .where((e) => e.studentID.value == student.id.value)
-          .first
-          .setPresencePresent('Absent');
+    final presenceCheck = presence.presenceCheck
+        .firstWhere((check) => check.studentID.value == student.id.value);
+
+    if (presenceCheck.presencePresent.value == 'Present') {
+      presenceCheck.setPresencePresent('Absent');
     } else {
-      presence.presenceCheck!
-          .where((e) => e.studentID.value == student.id.value)
-          .first
-          .setPresencePresent('Present');
+      presenceCheck.setPresencePresent('Present');
     }
 
     setState(() {});
+  }
+
+  void _initializePresenceList(List<Student> students) {
+    presence.presenceCheck.clear();
+
+    for (var student in students) {
+      presence.presenceCheck.add(
+        PresenceCheck(
+          studentID: student.id.value,
+          presencePresent: 'Absent',
+        ),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    sub.cancel();
+    subPresence.cancel();
+
+    super.dispose();
   }
 
   @override
@@ -210,18 +223,29 @@ class _PresencePageState extends State<PresencePage> {
             Visibility(
               visible: visibleList,
               child: MyInputWidget(
+                controller: dataController,
+                onTap: () async {
+                  final selectedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime.now().add(
+                      const Duration(days: 365),
+                    ),
+                  );
+
+                  if (selectedDate != null) {
+                    presence.setPresenceDate(selectedDate.DiaMesAnoTextField());
+
+                    dataController.text = presence.presenceDate.value;
+                  }
+                },
                 focusNode: fDate,
                 hintText: 'Enter the date of presence',
                 label: 'Date',
-                onChanged: presence.setPresenceDate,
                 validator: (v) =>
                     presence.presenceDate.validate().exceptionOrNull(),
-                value: presence.presenceDate.value,
-                keyboardType: TextInputType.number,
-                inputFormaters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  DataInputFormatter(),
-                ],
+                readOnly: true,
               ),
             ),
             Visibility(visible: visibleList, child: const SizedBox(height: 10)),
@@ -269,11 +293,10 @@ class _PresencePageState extends State<PresencePage> {
 
                               return Container(
                                 decoration: BoxDecoration(
-                                    color: presence.presenceCheck!
-                                                .where((e) =>
+                                    color: presence.presenceCheck
+                                                .firstWhere((e) =>
                                                     e.studentID.value ==
                                                     student.id.value)
-                                                .first
                                                 .presencePresent
                                                 .value ==
                                             'Absent'

@@ -24,6 +24,8 @@ class ReviewDatasource implements IReviewDatasource {
 
     final result = await supa.saveData(params: params);
 
+    review.setId(result[0]['id']);
+
     final paramsNotes = SupaBaseSaveParams(
       table: Tables.reviews_notes,
       data: ReviewAdapter.toMapNotes(review),
@@ -31,11 +33,11 @@ class ReviewDatasource implements IReviewDatasource {
 
     final resultNotes = await supa.saveData(params: paramsNotes);
 
-    if (!result || !resultNotes) {
+    if (result.isEmpty || resultNotes.isEmpty) {
       throw const ReviewException(message: 'Error saving review');
     }
 
-    return result && resultNotes;
+    return result.isNotEmpty && resultNotes.isNotEmpty;
   }
 
   @override

@@ -44,9 +44,10 @@ class PresenceAdapter {
   }
 
   static List<Map<String, dynamic>> toMapCheck(Presence presence) {
-    return presence.presenceCheck!
+    return presence.presenceCheck
         .map(
           (e) => {
+            'id_presence': presence.id.value,
             'studentID': e.studentID.value,
             'type': e.presencePresent.value,
             'class': presence.presenceClass.value,

@@ -22,6 +22,8 @@ class PresenceDatasource implements IPresenceDatasource {
 
     final resultPresence = await supa.saveData(params: paramsPresence);
 
+    presence.setId(resultPresence[0]['id']);
+
     final paramsCheck = SupaBaseSaveParams(
       table: Tables.presences_check,
       data: PresenceAdapter.toMapCheck(presence),
@@ -29,11 +31,11 @@ class PresenceDatasource implements IPresenceDatasource {
 
     final resultCheck = await supa.saveData(params: paramsCheck);
 
-    if (!resultPresence || !resultCheck) {
+    if (resultPresence.isEmpty || resultCheck.isEmpty) {
       throw const PresenceException(message: 'Error saving presence');
     }
 
-    return resultPresence && resultCheck;
+    return resultPresence.isNotEmpty && resultCheck.isNotEmpty;
   }
 
   @override

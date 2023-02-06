@@ -21,11 +21,11 @@ class ClassDataSource implements IClassDataSource {
 
     final result = await supa.saveData(params: params);
 
-    if (!result) {
+    if (result.isEmpty) {
       throw const ClassException(message: 'Error saving class');
     }
 
-    return result;
+    return result.isNotEmpty;
   }
 
   @override

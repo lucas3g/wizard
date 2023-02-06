@@ -24,23 +24,12 @@ class SupaBaseService implements ISupaBase {
   }
 
   @override
-  Future<bool> saveData({required SupaBaseSaveParams params}) async {
-    late bool create = false;
+  Future<List> saveData({required SupaBaseSaveParams params}) async {
+    final result = await supa
+        .from(params.table.name)
+        .upsert(params.data, ignoreDuplicates: true)
+        .execute();
 
-    if (params.data is List) {
-      for (var data in params.data) {
-        final result =
-            await supa.from(params.table.name).insert(data).execute();
-
-        create = result.data != null;
-      }
-
-      return create;
-    }
-
-    final result =
-        await supa.from(params.table.name).insert(params.data).execute();
-
-    return result.data != null;
+    return result.data as List;
   }
 }

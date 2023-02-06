@@ -11,7 +11,7 @@ class Presence extends Entity {
   PresenceObs _presenceObs;
   PresenceHomeWork _presenceHomeWork;
   PresenceDate _presenceDate;
-  late List<PresenceCheck>? presenceCheck;
+  List<PresenceCheck> presenceCheck;
 
   PresenceClass get presenceClass => _presenceClass;
   void setPresenceClass(int value) => _presenceClass = PresenceClass(value);
@@ -32,7 +32,7 @@ class Presence extends Entity {
     required presenceObs,
     required presenceHomeWork,
     required presenceDate,
-    this.presenceCheck,
+    required this.presenceCheck,
   })  : _presenceClass = PresenceClass(presenceClass),
         _presenceObs = PresenceObs(presenceObs),
         _presenceDate = PresenceDate(presenceDate),
@@ -50,6 +50,6 @@ class Presence extends Entity {
 
   @override
   String toString() {
-    return '${presenceCheck!.map((e) => e)}';
+    return '${presenceCheck.map((e) => e)}';
   }
 }

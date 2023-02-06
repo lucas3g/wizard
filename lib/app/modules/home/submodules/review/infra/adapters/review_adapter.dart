@@ -6,7 +6,7 @@ class ReviewAdapter {
   static Review empty() {
     return Review(
       id: const IdVO(1),
-      reviewClass: '',
+      reviewClass: -1,
       reviewName: '',
       reviewDate: '',
       reviewNote: [],
@@ -16,7 +16,7 @@ class ReviewAdapter {
   static Review fromMap(dynamic map) {
     return Review(
       id: IdVO(map['id']),
-      reviewClass: map['class'].toString(),
+      reviewClass: map['class'],
       reviewName: map['name'],
       reviewDate: map['date'].replaceAll('.', '/'),
       reviewNote: List.from(map['notes'])
@@ -42,6 +42,7 @@ class ReviewAdapter {
     return review.reviewNote
         .map(
           (e) => {
+            'id_review': review.id.value,
             'studentID': e.studentID,
             'score': e.score.value,
             'class': review.reviewClass.value,

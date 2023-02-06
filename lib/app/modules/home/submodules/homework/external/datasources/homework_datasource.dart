@@ -24,6 +24,8 @@ class HomeworkDatasource implements IHomeworkDatasource {
 
     final resultHomeworks = await supa.saveData(params: paramsHome);
 
+    homework.setId(resultHomeworks[0]['id']);
+
     final paramsNotes = SupaBaseSaveParams(
       table: Tables.homeworks_notes,
       data: HomeworkAdapter.toMapNotes(homework),
@@ -31,11 +33,11 @@ class HomeworkDatasource implements IHomeworkDatasource {
 
     final resultNotes = await supa.saveData(params: paramsNotes);
 
-    if (!resultHomeworks || !resultNotes) {
+    if (resultHomeworks.isEmpty || resultNotes.isEmpty) {
       throw const HomeWorkException(message: 'Error saving homework');
     }
 
-    return resultHomeworks && resultNotes;
+    return resultHomeworks.isNotEmpty && resultNotes.isNotEmpty;
   }
 
   @override

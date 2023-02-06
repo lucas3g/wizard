@@ -22,7 +22,7 @@ class StudentDataSource implements IStudentDataSource {
 
     final result = await supa.saveData(params: params);
 
-    return result;
+    return result.isNotEmpty;
   }
 
   @override

@@ -1,9 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
-import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -27,6 +25,7 @@ import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/states
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/student_bloc.dart';
 import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
+import 'package:wizard/app/utils/formatters.dart';
 import 'package:wizard/app/utils/my_snackbar.dart';
 
 class ReviewPage extends StatefulWidget {
@@ -46,6 +45,8 @@ class ReviewPage extends StatefulWidget {
 }
 
 class _ReviewPageState extends State<ReviewPage> {
+  final dataController = TextEditingController();
+
   final fClass = FocusNode();
   final fName = FocusNode();
   final fDate = FocusNode();
@@ -219,18 +220,30 @@ class _ReviewPageState extends State<ReviewPage> {
                         Visibility(
                           visible: visibleList,
                           child: MyInputWidget(
+                            controller: dataController,
+                            onTap: () async {
+                              final selectedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime.now().add(
+                                  const Duration(days: 365),
+                                ),
+                              );
+
+                              if (selectedDate != null) {
+                                review.setReviewDate(
+                                    selectedDate.DiaMesAnoTextField());
+
+                                dataController.text = review.reviewDate.value;
+                              }
+                            },
                             focusNode: fDate,
                             hintText: 'Enter the date of presence',
                             label: 'Date',
-                            onChanged: review.setReviewDate,
                             validator: (v) =>
                                 review.reviewDate.validate().exceptionOrNull(),
-                            value: review.reviewDate.value,
-                            keyboardType: TextInputType.number,
-                            inputFormaters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              DataInputFormatter(),
-                            ],
+                            readOnly: true,
                           ),
                         ),
                         const SizedBox(height: 10),
