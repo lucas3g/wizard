@@ -25,6 +25,25 @@ class SupaBaseService implements ISupaBase {
 
   @override
   Future<List> saveData({required SupaBaseSaveParams params}) async {
+    if (params.data is List<Map<String, dynamic>>) {
+      Map<String, dynamic> firstData =
+          (params.data as List<Map<String, dynamic>>).first;
+
+      List<String> keys = ['id_homework', 'id_presence', 'id_review'];
+      for (String key in keys) {
+        if (firstData.containsKey(key)) {
+          await supa.from(params.table.name).delete().eq(key, firstData[key]);
+          break;
+        }
+      }
+    }
+
+    await supa
+        .from(params.table.name)
+        .delete()
+        .eq('date', params.data['date'])
+        .eq('id_class', params.data['id_class']);
+
     final result =
         await supa.from(params.table.name).insert(params.data).select();
 
