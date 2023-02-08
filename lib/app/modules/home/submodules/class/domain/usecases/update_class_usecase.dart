@@ -5,14 +5,14 @@ import 'package:wizard/app/modules/home/submodules/class/domain/entities/class.d
 import 'package:wizard/app/modules/home/submodules/class/domain/exceptions/class_exception.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/repositories/class_repository.dart';
 
-abstract class ISaveClassUseCase {
+abstract class IUpdateClassUseCase {
   AsyncResult<bool, IClassException> call(Class pClass);
 }
 
-class SaveClassUseCase implements ISaveClassUseCase {
+class UpdateClassUseCase implements IUpdateClassUseCase {
   final IClassRepository repository;
 
-  SaveClassUseCase({required this.repository});
+  UpdateClassUseCase({required this.repository});
 
   @override
   AsyncResult<bool, IClassException> call(Class pClass) {
@@ -20,6 +20,6 @@ class SaveClassUseCase implements ISaveClassUseCase {
         .validate()
         .mapError<IClassException>((error) => ClassException(message: error))
         .toAsyncResult()
-        .flatMap(repository.saveClass);
+        .flatMap(repository.updateClass);
   }
 }

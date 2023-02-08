@@ -4,10 +4,18 @@ import 'package:wizard/app/modules/home/submodules/student/domain/entity/student
 
 abstract class StudentEvents {}
 
-class SaveStudentEvent extends StudentEvents {
+class CreateStudentEvent extends StudentEvents {
   final Student student;
 
-  SaveStudentEvent({
+  CreateStudentEvent({
+    required this.student,
+  });
+}
+
+class UpdateStudentEvent extends StudentEvents {
+  final Student student;
+
+  UpdateStudentEvent({
     required this.student,
   });
 }

@@ -2,6 +2,7 @@ import 'package:wizard/app/modules/home/submodules/class/domain/entities/class.d
 import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_teacher.dart';
 
 abstract class IClassDataSource {
-  Future<bool> saveClass(Class pClass);
+  Future<bool> createClass(Class pClass);
+  Future<bool> updateClass(Class pClass);
   Future<List> getClassesByTeacher(ClassIDTeacher idTeacher);
 }

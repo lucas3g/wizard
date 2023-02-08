@@ -13,7 +13,7 @@ class ClassDataSource implements IClassDataSource {
   ClassDataSource({required this.supa});
 
   @override
-  Future<bool> saveClass(Class pClass) async {
+  Future<bool> createClass(Class pClass) async {
     final params = SupaBaseSaveParams(
       table: Tables.classes,
       data: ClassAdapter.toMap(pClass),
@@ -22,7 +22,8 @@ class ClassDataSource implements IClassDataSource {
     final result = await supa.saveData(params: params);
 
     if (result.isEmpty) {
-      throw const ClassException(message: 'Error saving class');
+      throw const ClassException(
+          message: 'Error when trying to create a class');
     }
 
     return result.isNotEmpty;
@@ -44,5 +45,22 @@ class ClassDataSource implements IClassDataSource {
     }
 
     return result;
+  }
+
+  @override
+  Future<bool> updateClass(Class pClass) async {
+    final params = SupaBaseUpdateParams(
+      table: Tables.classes,
+      data: ClassAdapter.toMap(pClass),
+    );
+
+    final result = await supa.updateData(params: params);
+
+    if (result.isEmpty) {
+      throw const ClassException(
+          message: 'Error when trying to update a class');
+    }
+
+    return result.isNotEmpty;
   }
 }

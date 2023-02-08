@@ -24,6 +24,7 @@ class PresenceAdapter {
       presenceCheck: List.from(map['presence'])
           .map(
             (e) => PresenceCheck(
+              id: IdVO(map['id']),
               studentID: e['id_student'],
               presencePresent: e['type'],
             ),

@@ -22,6 +22,7 @@ class HomeworkAdapter {
       homeworkNote: List.from(map['notes'])
           .map(
             (e) => HomeworkNote(
+              id: IdVO(map['id']),
               score: e['score'],
               studentID: e['id_student'],
             ),

@@ -10,6 +10,7 @@ import 'package:wizard/app/components/my_drop_down_button_widget.dart';
 import 'package:wizard/app/components/my_elevated_button_widget.dart';
 import 'package:wizard/app/components/my_input_widget.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
+import 'package:wizard/app/core_module/vos/id_vo.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_teacher.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/events/class_events.dart';
@@ -79,7 +80,11 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
 
         for (var student in state.students) {
           homework.homeworkNote.add(
-            HomeworkNote(studentID: student.id.value, score: ''),
+            HomeworkNote(
+              id: const IdVO(-1),
+              studentID: student.id.value,
+              score: '',
+            ),
           );
         }
       }

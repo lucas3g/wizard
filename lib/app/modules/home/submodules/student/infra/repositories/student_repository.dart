@@ -14,9 +14,9 @@ class StudentRepository implements IStudentRepository {
   StudentRepository({required this.dataSource});
 
   @override
-  Future<Result<bool, IStudentException>> saveStudent(Student student) async {
+  Future<Result<bool, IStudentException>> createStudent(Student student) async {
     try {
-      final result = await dataSource.saveStudent(student);
+      final result = await dataSource.createStudent(student);
 
       return result.toSuccess();
     } on IStudentException catch (e) {
@@ -59,6 +59,19 @@ class StudentRepository implements IStudentRepository {
       }
 
       return students.toSuccess();
+    } on IStudentException catch (e) {
+      return StudentException(message: e.message).toFailure();
+    } catch (e) {
+      return StudentException(message: e.toString()).toFailure();
+    }
+  }
+
+  @override
+  Future<Result<bool, IStudentException>> updateStudent(Student student) async {
+    try {
+      final result = await dataSource.updateStudent(student);
+
+      return result.toSuccess();
     } on IStudentException catch (e) {
       return StudentException(message: e.message).toFailure();
     } catch (e) {

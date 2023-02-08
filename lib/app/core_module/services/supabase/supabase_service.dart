@@ -30,4 +30,15 @@ class SupaBaseService implements ISupaBase {
 
     return result;
   }
+
+  @override
+  Future<List> updateData({required SupaBaseUpdateParams params}) async {
+    final result = await supa
+        .from(params.table.name)
+        .update(params.data)
+        .eq('id', params.data['id'])
+        .select();
+
+    return result;
+  }
 }

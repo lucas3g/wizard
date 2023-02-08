@@ -103,7 +103,10 @@ class _StudentPageState extends State<StudentPage> {
                           onTap: (CompletionHandler handler) async {
                             await Modular.to.pushNamed(
                               '/home/student/edit',
-                              arguments: student,
+                              arguments: {
+                                'student': student,
+                                'editing': true,
+                              },
                             );
 
                             widget.studentBloc.add(

@@ -14,9 +14,9 @@ class ClassRepository implements IClassRepository {
   ClassRepository({required this.dataSource});
 
   @override
-  Future<Result<bool, IClassException>> saveClass(Class pClass) async {
+  Future<Result<bool, IClassException>> createClass(Class pClass) async {
     try {
-      final result = await dataSource.saveClass(pClass);
+      final result = await dataSource.createClass(pClass);
 
       return result.toSuccess();
     } on IClassException catch (e) {
@@ -38,6 +38,19 @@ class ClassRepository implements IClassRepository {
       }
 
       return list.toSuccess();
+    } on IClassException catch (e) {
+      return ClassException(message: e.message).toFailure();
+    } catch (e) {
+      return ClassException(message: e.toString()).toFailure();
+    }
+  }
+
+  @override
+  Future<Result<bool, IClassException>> updateClass(Class pClass) async {
+    try {
+      final result = await dataSource.updateClass(pClass);
+
+      return result.toSuccess();
     } on IClassException catch (e) {
       return ClassException(message: e.message).toFailure();
     } catch (e) {

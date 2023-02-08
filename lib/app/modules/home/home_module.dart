@@ -5,7 +5,7 @@ import 'package:wizard/app/modules/home/presenter/home_page.dart';
 import 'package:wizard/app/modules/home/submodules/class/class_module.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/repositories/class_repository.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/usecases/get_classes_by_teacher_usecase.dart';
-import 'package:wizard/app/modules/home/submodules/class/domain/usecases/save_class_usecase.dart';
+import 'package:wizard/app/modules/home/submodules/class/domain/usecases/create_class_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/class/external/datasources/class_datasource.dart';
 import 'package:wizard/app/modules/home/submodules/class/infra/datasources/class_datasource.dart';
 import 'package:wizard/app/modules/home/submodules/class/infra/repositories/class_repository.dart';
@@ -38,7 +38,7 @@ import 'package:wizard/app/modules/home/submodules/review/review_module.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/repositories/student_repository.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/usecases/get_student_by_class_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/usecases/get_students_by_teacher.dart';
-import 'package:wizard/app/modules/home/submodules/student/domain/usecases/save_student_usecase.dart';
+import 'package:wizard/app/modules/home/submodules/student/domain/usecases/create_student_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/student/external/datasources/student_datasource.dart';
 import 'package:wizard/app/modules/home/submodules/student/infra/datasources/student_datasource.dart';
 import 'package:wizard/app/modules/home/submodules/student/infra/repositories/student_repository.dart';
@@ -66,30 +66,29 @@ class HomeModule extends Module {
 
     //REPOSITORIES
     Bind.factory<IClassRepository>(
-        (i) => ClassRepository(
-              dataSource: i(),
-            ),
-        export: true),
+      (i) => ClassRepository(dataSource: i()),
+      export: true,
+    ),
 
     //USECASES
-    Bind.factory<ISaveClassUseCase>(
-        (i) => SaveClassUseCase(
-              repository: i(),
-            ),
-        export: true),
+    Bind.factory<ICreateClassUseCase>(
+      (i) => CreateClassUseCase(repository: i()),
+      export: true,
+    ),
     Bind.factory<IGetClassesByTeacherUseCase>(
-        (i) => GetClassesByTeacherUseCase(
-              repository: i(),
-            ),
-        export: true),
+      (i) => GetClassesByTeacherUseCase(repository: i()),
+      export: true,
+    ),
 
     //BLOCS
     BlocBind.factory<ClassBloc>(
-        (i) => ClassBloc(
-              saveClassUseCase: i(),
-              getClassesByTeacherUseCase: i(),
-            ),
-        export: true),
+      (i) => ClassBloc(
+        createClassUseCase: i(),
+        updateClassUseCase: i(),
+        getClassesByTeacherUseCase: i(),
+      ),
+      export: true,
+    ),
 
     //DATASOURCES
     Bind.factory<IStudentDataSource>(
@@ -104,8 +103,8 @@ class HomeModule extends Module {
     ),
 
     //USECASES
-    Bind.factory<ISaveStudentUseCase>(
-      (i) => SaveStudentUseCase(repository: i()),
+    Bind.factory<ICreateStudentUseCase>(
+      (i) => CreateStudentUseCase(repository: i()),
       export: true,
     ),
     Bind.factory<IGetStudentByClassUseCase>(
@@ -120,7 +119,8 @@ class HomeModule extends Module {
     //BLOCS
     BlocBind.factory<StudentBloc>(
       (i) => StudentBloc(
-        saveStudentUseCase: i(),
+        createStudentUseCase: i(),
+        updateStudentUseCase: i(),
         getStudentByClassUseCase: i(),
         getStudentsByTeacherUseCase: i(),
       ),

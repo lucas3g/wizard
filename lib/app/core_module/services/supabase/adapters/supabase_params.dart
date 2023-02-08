@@ -11,6 +11,16 @@ class SupaBaseSaveParams {
   });
 }
 
+class SupaBaseUpdateParams {
+  final Tables table;
+  final dynamic data;
+
+  SupaBaseUpdateParams({
+    required this.table,
+    required this.data,
+  });
+}
+
 class SupaBaseGetDataByFieldParams {
   final Tables table;
   final String field;

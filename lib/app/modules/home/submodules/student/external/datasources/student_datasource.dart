@@ -5,6 +5,7 @@ import 'package:wizard/app/core_module/services/supabase/helpers/tables.dart';
 import 'package:wizard/app/core_module/services/supabase/supabase_interface.dart';
 import 'package:wizard/app/core_module/vos/id_account_google.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/entity/student.dart';
+import 'package:wizard/app/modules/home/submodules/student/domain/exceptions/student_exception.dart';
 import 'package:wizard/app/modules/home/submodules/student/infra/adapters/student_adapter.dart';
 import 'package:wizard/app/modules/home/submodules/student/infra/datasources/student_datasource.dart';
 
@@ -14,13 +15,18 @@ class StudentDataSource implements IStudentDataSource {
   StudentDataSource({required this.supa});
 
   @override
-  Future<bool> saveStudent(Student student) async {
+  Future<bool> createStudent(Student student) async {
     final params = SupaBaseSaveParams(
       table: Tables.students,
       data: StudentAdapter.toMap(student),
     );
 
     final result = await supa.saveData(params: params);
+
+    if (result.isEmpty) {
+      throw const StudentException(
+          message: 'Error when trying to create a student');
+    }
 
     return result.isNotEmpty;
   }
@@ -51,5 +57,22 @@ class StudentDataSource implements IStudentDataSource {
     final result = await supa.getDataByField(params: params);
 
     return result;
+  }
+
+  @override
+  Future<bool> updateStudent(Student student) async {
+    final params = SupaBaseUpdateParams(
+      table: Tables.students,
+      data: StudentAdapter.toMap(student),
+    );
+
+    final result = await supa.updateData(params: params);
+
+    if (result.isEmpty) {
+      throw const StudentException(
+          message: 'Error when trying to update a student');
+    }
+
+    return result.isNotEmpty;
   }
 }

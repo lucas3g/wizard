@@ -3,14 +3,14 @@ import 'package:wizard/app/modules/home/submodules/student/domain/entity/student
 import 'package:wizard/app/modules/home/submodules/student/domain/exceptions/student_exception.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/repositories/student_repository.dart';
 
-abstract class ISaveStudentUseCase {
+abstract class IUpdateStudentUseCase {
   AsyncResult<bool, IStudentException> call(Student student);
 }
 
-class SaveStudentUseCase implements ISaveStudentUseCase {
+class UpdateStudentUseCase implements IUpdateStudentUseCase {
   final IStudentRepository repository;
 
-  SaveStudentUseCase({required this.repository});
+  UpdateStudentUseCase({required this.repository});
 
   @override
   AsyncResult<bool, IStudentException> call(Student student) {
@@ -19,6 +19,6 @@ class SaveStudentUseCase implements ISaveStudentUseCase {
         .mapError<IStudentException>(
             (error) => StudentException(message: error))
         .toAsyncResult()
-        .flatMap(repository.saveStudent);
+        .flatMap(repository.updateStudent);
   }
 }

@@ -7,7 +7,9 @@ class InitialStudent extends StudentStates {}
 
 class LoadingStudent extends StudentStates {}
 
-class SuccessSaveStudent extends StudentStates {}
+class SuccessCreateStudent extends StudentStates {}
+
+class SuccessUpdateStudent extends StudentStates {}
 
 class SuccessGetStudentByClass extends StudentStates {
   final List<Student> students;

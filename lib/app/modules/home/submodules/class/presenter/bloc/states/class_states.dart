@@ -7,7 +7,9 @@ class InitialClass extends ClassStates {}
 
 class LoadingClass extends ClassStates {}
 
-class SuccessClass extends ClassStates {}
+class SuccessCreateClass extends ClassStates {}
+
+class SuccessUpdateClass extends ClassStates {}
 
 class SuccessGetListClass extends ClassStates {
   final List<Class> classes;

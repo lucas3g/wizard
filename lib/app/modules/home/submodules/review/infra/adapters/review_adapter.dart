@@ -22,6 +22,7 @@ class ReviewAdapter {
       reviewNote: List.from(map['notes'])
           .map(
             (e) => ReviewNote(
+              id: IdVO(map['id']),
               studentID: e['id_student'],
               score: e['score'],
             ),

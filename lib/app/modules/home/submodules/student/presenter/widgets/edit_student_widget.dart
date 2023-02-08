@@ -61,7 +61,7 @@ class _EditStudentWidgetState extends State<EditStudentWidget> {
     if (args.data == null) {
       student = StudentAdapter.empty();
     } else {
-      student = args.data as Student;
+      student = args.data['student'] as Student;
     }
 
     widget.classBloc.add(
@@ -73,13 +73,26 @@ class _EditStudentWidgetState extends State<EditStudentWidget> {
     );
 
     sub = widget.studentBloc.stream.listen((state) async {
-      if (state is SuccessSaveStudent) {
+      if (state is SuccessCreateStudent) {
         MySnackBar(
-          message: 'Student save with success',
+          message: 'Student created successfully',
           type: TypeSnackBar.success,
         );
         await Future.delayed(const Duration(milliseconds: 300));
         Modular.to.pop();
+      }
+
+      if (state is SuccessUpdateStudent) {
+        MySnackBar(
+          message: 'Student updated successfully',
+          type: TypeSnackBar.success,
+        );
+        await Future.delayed(const Duration(milliseconds: 300));
+        Modular.to.pop();
+      }
+
+      if (state is ErrorStudent) {
+        MySnackBar(message: state.message, type: TypeSnackBar.error);
       }
     });
   }
@@ -197,8 +210,16 @@ class _EditStudentWidgetState extends State<EditStudentWidget> {
                                 : const Text('Save'),
                             icon: Icons.save_rounded,
                             onPressed: () {
+                              if (args.data['editing'] as bool) {
+                                widget.studentBloc.add(
+                                  UpdateStudentEvent(student: student),
+                                );
+
+                                return;
+                              }
+
                               widget.studentBloc.add(
-                                SaveStudentEvent(student: student),
+                                CreateStudentEvent(student: student),
                               );
                             },
                           );

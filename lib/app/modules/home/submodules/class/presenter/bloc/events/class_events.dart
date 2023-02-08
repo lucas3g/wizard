@@ -4,10 +4,16 @@ import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_tea
 
 abstract class ClassEvents {}
 
-class SaveClassEvent extends ClassEvents {
+class CreateClassEvent extends ClassEvents {
   final Class pClass;
 
-  SaveClassEvent({required this.pClass});
+  CreateClassEvent({required this.pClass});
+}
+
+class UpdateClassEvent extends ClassEvents {
+  final Class pClass;
+
+  UpdateClassEvent({required this.pClass});
 }
 
 class GetClassesByIdTeacher extends ClassEvents {

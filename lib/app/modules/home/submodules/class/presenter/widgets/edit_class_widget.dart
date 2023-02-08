@@ -59,13 +59,22 @@ class _EditClassWidgetState extends State<EditClassWidget> {
     if (args.data == null) {
       pClass = ClassAdapter.empty();
     } else {
-      pClass = args.data as Class;
+      pClass = args.data['class'] as Class;
     }
 
     sub = widget.classBloc.stream.listen((state) async {
-      if (state is SuccessClass) {
+      if (state is SuccessCreateClass) {
         MySnackBar(
-          message: 'Class save with success',
+          message: 'Class created successfully',
+          type: TypeSnackBar.success,
+        );
+        await Future.delayed(const Duration(milliseconds: 300));
+        Modular.to.pop();
+      }
+
+      if (state is SuccessUpdateClass) {
+        MySnackBar(
+          message: 'Class updated successfully',
           type: TypeSnackBar.success,
         );
         await Future.delayed(const Duration(milliseconds: 300));
@@ -151,8 +160,16 @@ class _EditClassWidgetState extends State<EditClassWidget> {
                               : const Text('Save'),
                           icon: Icons.save,
                           onPressed: () {
+                            if (args.data['editing'] as bool) {
+                              widget.classBloc.add(
+                                UpdateClassEvent(pClass: pClass),
+                              );
+
+                              return;
+                            }
+
                             widget.classBloc.add(
-                              SaveClassEvent(pClass: pClass),
+                              CreateClassEvent(pClass: pClass),
                             );
                           },
                         );

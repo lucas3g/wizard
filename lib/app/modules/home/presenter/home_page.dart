@@ -154,14 +154,20 @@ class _HomePageState extends State<HomePage> {
                 label: const Text('New Student'),
                 icon: Icons.person_add_rounded,
                 onPressed: () {
-                  Modular.to.pushNamed('/home/student/edit');
+                  Modular.to.pushNamed(
+                    '/home/student/edit',
+                    arguments: {'editing': false},
+                  );
                 },
               ),
               MyElevatedButtonWidget(
                 label: const Text('New Class'),
                 icon: Icons.class_rounded,
                 onPressed: () {
-                  Modular.to.pushNamed('/home/class/edit');
+                  Modular.to.pushNamed(
+                    '/home/class/edit',
+                    arguments: {'editing': false},
+                  );
                 },
               ),
               MyElevatedButtonWidget(

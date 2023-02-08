@@ -147,7 +147,10 @@ class _ClassPageState extends State<ClassPage> {
                           onTap: (CompletionHandler handler) async {
                             await Modular.to.pushNamed(
                               '/home/class/edit',
-                              arguments: pClass,
+                              arguments: {
+                                'class': pClass,
+                                'editing': true,
+                              },
                             );
 
                             widget.classBloc.add(

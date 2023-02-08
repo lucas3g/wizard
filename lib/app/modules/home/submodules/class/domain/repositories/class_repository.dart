@@ -4,7 +4,8 @@ import 'package:wizard/app/modules/home/submodules/class/domain/exceptions/class
 import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_teacher.dart';
 
 abstract class IClassRepository {
-  Future<Result<bool, IClassException>> saveClass(Class pClass);
+  Future<Result<bool, IClassException>> createClass(Class pClass);
+  Future<Result<bool, IClassException>> updateClass(Class pClass);
   Future<Result<List<Class>, IClassException>> getClassesByTeacher(
       ClassIDTeacher idTeacher);
 }
