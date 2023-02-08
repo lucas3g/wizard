@@ -6,12 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'package:wizard/app/components/my_elevated_button_widget.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
 import 'package:wizard/app/modules/auth/domain/entities/user_entity.dart';
 import 'package:wizard/app/modules/auth/presenter/bloc/auth_bloc.dart';
 import 'package:wizard/app/modules/auth/presenter/bloc/events/auth_events.dart';
 import 'package:wizard/app/modules/auth/presenter/bloc/states/auth_states.dart';
+import 'package:wizard/app/modules/home/presenter/widgets/card_menu_widget.dart';
+import 'package:wizard/app/modules/home/presenter/widgets/list_card_meu_widget.dart';
 import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
 
@@ -137,84 +138,9 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: AppTheme.colors.primary,
-          ),
-          child: GridView.count(
-            padding: const EdgeInsets.all(20),
-            crossAxisCount: 2,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20,
-            children: [
-              MyElevatedButtonWidget(
-                label: const Text('New Student'),
-                icon: Icons.person_add_rounded,
-                onPressed: () {
-                  Modular.to.pushNamed(
-                    '/home/student/edit',
-                    arguments: {'editing': false},
-                  );
-                },
-              ),
-              MyElevatedButtonWidget(
-                label: const Text('New Class'),
-                icon: Icons.class_rounded,
-                onPressed: () {
-                  Modular.to.pushNamed(
-                    '/home/class/edit',
-                    arguments: {'editing': false},
-                  );
-                },
-              ),
-              MyElevatedButtonWidget(
-                label: const Text('Mark Presence'),
-                icon: Icons.mark_chat_read_rounded,
-                onPressed: () {
-                  Modular.to.pushNamed('/home/presence/');
-                },
-              ),
-              MyElevatedButtonWidget(
-                label: const Text('Note by Homework '),
-                icon: Icons.note_alt_rounded,
-                onPressed: () {
-                  Modular.to.pushNamed('/home/homeWork/');
-                },
-              ),
-              MyElevatedButtonWidget(
-                label: const Text('Note by Review'),
-                icon: Icons.reviews_rounded,
-                onPressed: () {
-                  Modular.to.pushNamed('/home/review/');
-                },
-              ),
-              MyElevatedButtonWidget(
-                label: const Text('General Report'),
-                icon: Icons.newspaper_rounded,
-                onPressed: () {
-                  Modular.to.pushNamed('/home/report');
-                },
-              ),
-              MyElevatedButtonWidget(
-                label: const Text('Student List'),
-                icon: Icons.list_rounded,
-                onPressed: () {
-                  Modular.to.pushNamed('/home/student/');
-                },
-              ),
-              MyElevatedButtonWidget(
-                label: const Text('Class List'),
-                icon: Icons.list_rounded,
-                onPressed: () {
-                  Modular.to.pushNamed('/home/class');
-                },
-              ),
-            ],
-          ),
-        ),
+      body: const Padding(
+        padding: EdgeInsets.all(10),
+        child: ListCardMenuWidget(),
       ),
     );
   }

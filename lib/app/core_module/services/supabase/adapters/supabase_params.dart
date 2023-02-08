@@ -34,3 +34,25 @@ class SupaBaseGetDataByFieldParams {
     required this.orderBy,
   });
 }
+
+class SupaBaseGetDataByFiltersParams {
+  final Tables table;
+  final Set<SupaBaseFilters> filters;
+  final String orderBy;
+
+  SupaBaseGetDataByFiltersParams({
+    required this.table,
+    required this.filters,
+    required this.orderBy,
+  });
+}
+
+class SupaBaseFilters {
+  final String field;
+  final dynamic value;
+
+  SupaBaseFilters({
+    required this.field,
+    required this.value,
+  });
+}

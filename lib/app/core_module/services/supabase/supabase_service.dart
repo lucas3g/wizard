@@ -41,4 +41,16 @@ class SupaBaseService implements ISupaBase {
 
     return result;
   }
+
+  @override
+  Future<List> getDataByFilters(
+      {required SupaBaseGetDataByFiltersParams params}) async {
+    final Map<String, dynamic> match = {};
+
+    params.filters.map((e) => match.addAll({e.field: e.value}));
+
+    final result = await supa.from(params.table.name).select().match(match);
+
+    return result;
+  }
 }
