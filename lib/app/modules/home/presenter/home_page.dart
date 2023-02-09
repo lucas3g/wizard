@@ -11,7 +11,6 @@ import 'package:wizard/app/modules/auth/domain/entities/user_entity.dart';
 import 'package:wizard/app/modules/auth/presenter/bloc/auth_bloc.dart';
 import 'package:wizard/app/modules/auth/presenter/bloc/events/auth_events.dart';
 import 'package:wizard/app/modules/auth/presenter/bloc/states/auth_states.dart';
-import 'package:wizard/app/modules/home/presenter/widgets/card_menu_widget.dart';
 import 'package:wizard/app/modules/home/presenter/widgets/list_card_meu_widget.dart';
 import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';

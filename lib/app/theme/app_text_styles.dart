@@ -29,6 +29,7 @@ abstract class AppTextStyles {
   TextStyle get titleTotalGeralCRCP;
   TextStyle get titleResumoFp;
   TextStyle get labelButtonLogin;
+  TextStyle get titleCards;
 }
 
 class AppTextStylesDefault implements AppTextStyles {
@@ -197,5 +198,12 @@ class AppTextStylesDefault implements AppTextStyles {
         fontSize: 14,
         color: AppTheme.colors.primary,
         fontWeight: FontWeight.bold,
+      );
+
+  @override
+  TextStyle get titleCards => GoogleFonts.roboto(
+        fontSize: 20,
+        color: Colors.black,
+        fontWeight: FontWeight.w500,
       );
 }

@@ -58,7 +58,7 @@ class _EditStudentWidgetState extends State<EditStudentWidget> {
   void initState() {
     super.initState();
 
-    if (args.data == null) {
+    if (!(args.data['editing'] as bool)) {
       student = StudentAdapter.empty();
     } else {
       student = args.data['student'] as Student;

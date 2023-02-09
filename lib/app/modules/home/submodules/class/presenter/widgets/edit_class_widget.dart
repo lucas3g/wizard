@@ -56,7 +56,7 @@ class _EditClassWidgetState extends State<EditClassWidget> {
   void initState() {
     super.initState();
 
-    if (args.data == null) {
+    if (!(args.data['editing'] as bool)) {
       pClass = ClassAdapter.empty();
     } else {
       pClass = args.data['class'] as Class;

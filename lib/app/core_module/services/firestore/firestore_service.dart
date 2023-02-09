@@ -1,102 +1,102 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:wizard/app/core_module/services/firestore/adapters/firestore_params.dart';
+// // ignore_for_file: public_member_api_docs, sort_constructors_first
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:wizard/app/core_module/services/firestore/adapters/firestore_params.dart';
 
-import 'package:wizard/app/core_module/services/firestore/online_storage_interface.dart';
-import 'package:wizard/app/utils/my_snackbar.dart';
+// import 'package:wizard/app/core_module/services/firestore/online_storage_interface.dart';
+// import 'package:wizard/app/utils/my_snackbar.dart';
 
-class FireStoreService implements IOnlineStorage {
-  final FirebaseFirestore firestore;
+// class FireStoreService implements IOnlineStorage {
+//   final FirebaseFirestore firestore;
 
-  FireStoreService({
-    required this.firestore,
-  });
+//   FireStoreService({
+//     required this.firestore,
+//   });
 
-  @override
-  Future<bool> saveData({required FireStoreParams params}) async {
-    try {
-      await firestore.collection(params.collection).add(params.data);
-      return true;
-    } catch (e) {
-      MySnackBar(message: e.toString(), type: TypeSnackBar.error);
-      return false;
-    }
-  }
+//   @override
+//   Future<bool> saveData({required FireStoreParams params}) async {
+//     try {
+//       await firestore.collection(params.collection).add(params.data);
+//       return true;
+//     } catch (e) {
+//       MySnackBar(message: e.toString(), type: TypeSnackBar.error);
+//       return false;
+//     }
+//   }
 
-  @override
-  Future<QuerySnapshot<Map<String, dynamic>>> getDataById(
-      {required FireStoreGetDataParams params}) async {
-    try {
-      late QuerySnapshot<Map<String, dynamic>> result;
+//   @override
+//   Future<QuerySnapshot<Map<String, dynamic>>> getDataById(
+//       {required FireStoreGetDataParams params}) async {
+//     try {
+//       late QuerySnapshot<Map<String, dynamic>> result;
 
-      final orderBy = params.orderBy;
+//       final orderBy = params.orderBy;
 
-      if (orderBy != null) {
-        result = await firestore
-            .collection(params.collection)
-            .where(params.field, isEqualTo: params.value)
-            .orderBy(orderBy)
-            .get();
+//       if (orderBy != null) {
+//         result = await firestore
+//             .collection(params.collection)
+//             .where(params.field, isEqualTo: params.value)
+//             .orderBy(orderBy)
+//             .get();
 
-        return result;
-      }
+//         return result;
+//       }
 
-      result = await firestore
-          .collection(params.collection)
-          .where(params.field, isEqualTo: params.value)
-          .get();
+//       result = await firestore
+//           .collection(params.collection)
+//           .where(params.field, isEqualTo: params.value)
+//           .get();
 
-      return result;
-    } catch (e) {
-      MySnackBar(message: e.toString(), type: TypeSnackBar.error);
-      rethrow;
-    }
-  }
+//       return result;
+//     } catch (e) {
+//       MySnackBar(message: e.toString(), type: TypeSnackBar.error);
+//       rethrow;
+//     }
+//   }
 
-  @override
-  Future<bool> saveOrUpdateData(
-      {required FireStoreSaveOrUpdateParams params}) async {
-    try {
-      await firestore
-          .collection(params.collection)
-          .doc(params.doc)
-          .set(params.data);
-      return true;
-    } catch (e) {
-      MySnackBar(message: e.toString(), type: TypeSnackBar.error);
-      return false;
-    }
-  }
+//   @override
+//   Future<bool> saveOrUpdateData(
+//       {required FireStoreSaveOrUpdateParams params}) async {
+//     try {
+//       await firestore
+//           .collection(params.collection)
+//           .doc(params.doc)
+//           .set(params.data);
+//       return true;
+//     } catch (e) {
+//       MySnackBar(message: e.toString(), type: TypeSnackBar.error);
+//       return false;
+//     }
+//   }
 
-  @override
-  Future<QuerySnapshot<Map<String, dynamic>>> getDataByCollection(
-      {required FireStoreGetDataByCollectionParams params}) async {
-    try {
-      late QuerySnapshot<Map<String, dynamic>> result;
+//   @override
+//   Future<QuerySnapshot<Map<String, dynamic>>> getDataByCollection(
+//       {required FireStoreGetDataByCollectionParams params}) async {
+//     try {
+//       late QuerySnapshot<Map<String, dynamic>> result;
 
-      final orderBy = params.orderBy;
+//       final orderBy = params.orderBy;
 
-      if (orderBy != null) {
-        result = await firestore
-            .collection(params.collection)
-            .doc(params.doc)
-            .collection(params.field)
-            .orderBy(orderBy)
-            .get();
+//       if (orderBy != null) {
+//         result = await firestore
+//             .collection(params.collection)
+//             .doc(params.doc)
+//             .collection(params.field)
+//             .orderBy(orderBy)
+//             .get();
 
-        return result;
-      }
+//         return result;
+//       }
 
-      result = await firestore
-          .collection(params.collection)
-          .doc(params.doc)
-          .collection(params.field)
-          .get();
+//       result = await firestore
+//           .collection(params.collection)
+//           .doc(params.doc)
+//           .collection(params.field)
+//           .get();
 
-      return result;
-    } catch (e) {
-      MySnackBar(message: e.toString(), type: TypeSnackBar.error);
-      rethrow;
-    }
-  }
-}
+//       return result;
+//     } catch (e) {
+//       MySnackBar(message: e.toString(), type: TypeSnackBar.error);
+//       rethrow;
+//     }
+//   }
+// }

@@ -6,103 +6,101 @@ class ListCardMenuWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView(
-        children: [
-          CardMenuWidget(
-            title: 'Studens',
-            myButtons: [
-              MyButtons(
-                label: 'New Student',
-                icon: Icons.person_add_rounded,
-                route: '/home/student/edit',
-                args: {'editing': false},
-              ),
-              MyButtons(
-                label: 'Student List',
-                icon: Icons.list_rounded,
-                route: '/home/student/',
-              ),
-            ],
-          ),
-          const SizedBox(height: 15),
-          CardMenuWidget(
-            title: 'Class',
-            myButtons: [
-              MyButtons(
-                label: 'New Class',
-                icon: Icons.class_rounded,
-                route: '/home/class/edit',
-                args: {'editing': false},
-              ),
-              MyButtons(
-                label: 'Classes List',
-                icon: Icons.list_rounded,
-                route: '/home/class/',
-              ),
-            ],
-          ),
-          const SizedBox(height: 15),
-          CardMenuWidget(
-            title: 'Presence',
-            myButtons: [
-              MyButtons(
-                label: 'Mark Presence',
-                icon: Icons.mark_chat_read_rounded,
-                route: '/home/presence/',
-              ),
-              MyButtons(
-                label: 'Presences List',
-                icon: Icons.list_rounded,
-                route: '/home/presence/list',
-              ),
-            ],
-          ),
-          const SizedBox(height: 15),
-          CardMenuWidget(
-            title: 'Homework',
-            myButtons: [
-              MyButtons(
-                label: 'Note by Homework',
-                icon: Icons.note_alt_rounded,
-                route: '/home/homeWork/',
-              ),
-              MyButtons(
-                label: 'Homework List',
-                icon: Icons.list_rounded,
-                route: '/home/homeWork/list',
-              ),
-            ],
-          ),
-          const SizedBox(height: 15),
-          CardMenuWidget(
-            title: 'Review',
-            myButtons: [
-              MyButtons(
-                label: 'Note by Review',
-                icon: Icons.note_alt_rounded,
-                route: '/home/review/',
-              ),
-              MyButtons(
-                label: 'Review List',
-                icon: Icons.list_rounded,
-                route: '/home/review/list',
-              ),
-            ],
-          ),
-          const SizedBox(height: 15),
-          CardMenuWidget(
-            title: 'Action',
-            myButtons: [
-              MyButtons(
-                label: 'General Report',
-                icon: Icons.newspaper_rounded,
-                route: '/home/report/',
-              ),
-            ],
-          ),
-        ],
-      ),
+    return ListView(
+      children: [
+        CardMenuWidget(
+          title: 'Studens',
+          myButtons: [
+            MyButtons(
+              label: 'New Student',
+              icon: Icons.person_add_rounded,
+              route: '/home/student/edit',
+              args: {'editing': false},
+            ),
+            MyButtons(
+              label: 'Student List',
+              icon: Icons.list_rounded,
+              route: '/home/student/',
+            ),
+          ],
+        ),
+        const SizedBox(height: 15),
+        CardMenuWidget(
+          title: 'Class',
+          myButtons: [
+            MyButtons(
+              label: 'New Class',
+              icon: Icons.class_rounded,
+              route: '/home/class/edit',
+              args: {'editing': false},
+            ),
+            MyButtons(
+              label: 'Classes List',
+              icon: Icons.list_rounded,
+              route: '/home/class/',
+            ),
+          ],
+        ),
+        const SizedBox(height: 15),
+        CardMenuWidget(
+          title: 'Presence',
+          myButtons: [
+            MyButtons(
+              label: 'Mark Presence',
+              icon: Icons.mark_chat_read_rounded,
+              route: '/home/presence/',
+            ),
+            MyButtons(
+              label: 'Presences List',
+              icon: Icons.list_rounded,
+              route: '/home/presence/list',
+            ),
+          ],
+        ),
+        const SizedBox(height: 15),
+        CardMenuWidget(
+          title: 'Homework',
+          myButtons: [
+            MyButtons(
+              label: 'Note by Homework',
+              icon: Icons.note_alt_rounded,
+              route: '/home/homeWork/',
+            ),
+            MyButtons(
+              label: 'Homework List',
+              icon: Icons.list_rounded,
+              route: '/home/homeWork/list',
+            ),
+          ],
+        ),
+        const SizedBox(height: 15),
+        CardMenuWidget(
+          title: 'Review',
+          myButtons: [
+            MyButtons(
+              label: 'Note by Review',
+              icon: Icons.note_alt_rounded,
+              route: '/home/review/',
+            ),
+            MyButtons(
+              label: 'Review List',
+              icon: Icons.list_rounded,
+              route: '/home/review/list',
+            ),
+          ],
+        ),
+        const SizedBox(height: 15),
+        CardMenuWidget(
+          title: 'Action',
+          myButtons: [
+            MyButtons(
+              label: 'General Report',
+              icon: Icons.newspaper_rounded,
+              route: '/home/report/',
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:wizard/app/modules/home/submodules/class/class_module.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/repositories/class_repository.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/usecases/get_classes_by_teacher_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/usecases/create_class_usecase.dart';
+import 'package:wizard/app/modules/home/submodules/class/domain/usecases/update_class_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/class/external/datasources/class_datasource.dart';
 import 'package:wizard/app/modules/home/submodules/class/infra/datasources/class_datasource.dart';
 import 'package:wizard/app/modules/home/submodules/class/infra/repositories/class_repository.dart';
@@ -39,6 +40,7 @@ import 'package:wizard/app/modules/home/submodules/student/domain/repositories/s
 import 'package:wizard/app/modules/home/submodules/student/domain/usecases/get_student_by_class_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/usecases/get_students_by_teacher.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/usecases/create_student_usecase.dart';
+import 'package:wizard/app/modules/home/submodules/student/domain/usecases/update_student_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/student/external/datasources/student_datasource.dart';
 import 'package:wizard/app/modules/home/submodules/student/infra/datasources/student_datasource.dart';
 import 'package:wizard/app/modules/home/submodules/student/infra/repositories/student_repository.dart';
@@ -75,6 +77,10 @@ class HomeModule extends Module {
       (i) => CreateClassUseCase(repository: i()),
       export: true,
     ),
+    Bind.factory<IUpdateClassUseCase>(
+      (i) => UpdateClassUseCase(repository: i()),
+      export: true,
+    ),
     Bind.factory<IGetClassesByTeacherUseCase>(
       (i) => GetClassesByTeacherUseCase(repository: i()),
       export: true,
@@ -105,6 +111,10 @@ class HomeModule extends Module {
     //USECASES
     Bind.factory<ICreateStudentUseCase>(
       (i) => CreateStudentUseCase(repository: i()),
+      export: true,
+    ),
+    Bind.factory<IUpdateStudentUseCase>(
+      (i) => UpdateStudentUseCase(repository: i()),
       export: true,
     ),
     Bind.factory<IGetStudentByClassUseCase>(

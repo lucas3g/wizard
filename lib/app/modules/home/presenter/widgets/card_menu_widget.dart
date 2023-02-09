@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'package:wizard/app/theme/app_theme.dart';
+import 'package:wizard/app/utils/constants.dart';
 
 import '../../../../components/my_elevated_button_widget.dart';
 
@@ -33,18 +34,58 @@ class CardMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(title),
-        const SizedBox(height: 15),
+        Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: kPadding / 4),
+              child: Text(
+                title,
+                style: AppTheme.textStyles.titleCards,
+              ),
+            ),
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 4,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Container(
+                  margin: const EdgeInsets.only(right: kPadding / 4),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: AppTheme.colors.primary.withOpacity(0.4),
+                        width: 5,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+        const SizedBox(height: 10),
         Container(
+          width: double.maxFinite,
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: AppTheme.colors.primary,
           ),
           child: Wrap(
+            alignment: myButtons.length > 1
+                ? WrapAlignment.center
+                : WrapAlignment.start,
+            spacing: 10,
+            runSpacing: 10,
             children: myButtons
                 .map(
                   (button) => MyElevatedButtonWidget(
+                    height: 70,
                     label: Text(button.label),
                     icon: button.icon,
                     onPressed: () {
