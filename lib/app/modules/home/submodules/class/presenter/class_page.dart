@@ -128,17 +128,17 @@ class _ClassPageState extends State<ClassPage> {
                     child: SwipeActionCell(
                       key: ObjectKey(pClass),
                       trailingActions: <SwipeAction>[
-                        SwipeAction(
-                          widthSpace: 90,
-                          backgroundRadius: 10,
-                          style: AppTheme.textStyles.labelRemoveSwipeAction,
-                          title: "Remove",
-                          onTap: (CompletionHandler handler) async {
-                            classes.removeAt(index);
-                            setState(() {});
-                          },
-                          color: Colors.red,
-                        ),
+                        // SwipeAction(
+                        //   widthSpace: 90,
+                        //   backgroundRadius: 10,
+                        //   style: AppTheme.textStyles.labelRemoveSwipeAction,
+                        //   title: "Remove",
+                        //   onTap: (CompletionHandler handler) async {
+                        //     classes.removeAt(index);
+                        //     setState(() {});
+                        //   },
+                        //   color: Colors.red,
+                        // ),
                         SwipeAction(
                           widthSpace: 90,
                           backgroundRadius: 10,

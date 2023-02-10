@@ -264,7 +264,7 @@ class _ReportPageState extends State<ReportPage> {
                 );
               },
             ),
-            const Divider(),
+            Visibility(visible: visibleButton, child: const Divider()),
             Visibility(
               visible: visibleButton,
               child: MyInputWidget(
@@ -274,7 +274,7 @@ class _ReportPageState extends State<ReportPage> {
                 onChanged: (e) => report.setObs(e),
               ),
             ),
-            const Divider(),
+            Visibility(visible: visibleButton, child: const Divider()),
             Visibility(
               visible: visibleButton,
               child: Row(

@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:wizard/app/core_module/services/shared_preferences/adapters/shared_params.dart';
 import 'package:wizard/app/core_module/services/shared_preferences/local_storage_interface.dart';
@@ -101,40 +102,57 @@ class _AuthPageState extends State<AuthPage> {
                   Row(
                     children: [
                       Expanded(
-                        child: SizedBox(
-                          height: 45,
-                          child: InkWell(
-                            onTap: () async {
-                              await initLogin();
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Row(
-                                  children: [
-                                    Image.asset('assets/images/google.png'),
-                                    const VerticalDivider(
-                                      color: Colors.grey,
+                        child: BlocBuilder<AuthBloc, AuthStates>(
+                            bloc: widget.authBloc,
+                            builder: (context, state) {
+                              return SizedBox(
+                                height: 45,
+                                child: InkWell(
+                                  onTap: () async {
+                                    await initLogin();
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                    Expanded(
-                                      child: Text(
-                                        'Login with google',
-                                        style: AppTheme
-                                            .textStyles.labelButtonGoogle,
-                                        textAlign: TextAlign.center,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: Row(
+                                        children: [
+                                          Image.asset(
+                                              'assets/images/google.png'),
+                                          const VerticalDivider(
+                                            color: Colors.grey,
+                                          ),
+                                          Expanded(
+                                            child: state is LoadignAuth
+                                                ? Center(
+                                                    child: SizedBox(
+                                                      width: 25,
+                                                      height: 25,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        color: AppTheme
+                                                            .colors.primary,
+                                                      ),
+                                                    ),
+                                                  )
+                                                : Text(
+                                                    'Login with google',
+                                                    style: AppTheme.textStyles
+                                                        .labelButtonGoogle,
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        ),
+                              );
+                            }),
                       ),
                     ],
                   ),

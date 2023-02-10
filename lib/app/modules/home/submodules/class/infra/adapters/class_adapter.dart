@@ -12,6 +12,16 @@ class ClassAdapter {
     };
   }
 
+  static Map<String, dynamic> toMapUpdate(Class pClass) {
+    return {
+      'id': pClass.id.value,
+      'name': pClass.name.value,
+      'day_week': pClass.dayWeek.value,
+      'schedule': pClass.schedule.value,
+      'id_teacher': pClass.idTeacher.value,
+    };
+  }
+
   static Class fromMap(dynamic map) {
     return Class(
       id: IdVO(map['id']),

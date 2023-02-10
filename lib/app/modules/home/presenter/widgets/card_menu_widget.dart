@@ -68,10 +68,10 @@ class CardMenuWidget extends StatelessWidget {
             )
           ],
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 5),
         Container(
-          width: double.maxFinite,
-          padding: const EdgeInsets.all(20),
+          width: myButtons.length > 1 ? context.screenWidth : null,
+          padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: AppTheme.colors.primary,
@@ -80,12 +80,12 @@ class CardMenuWidget extends StatelessWidget {
             alignment: myButtons.length > 1
                 ? WrapAlignment.center
                 : WrapAlignment.start,
-            spacing: 10,
+            spacing: 20,
             runSpacing: 10,
             children: myButtons
                 .map(
                   (button) => MyElevatedButtonWidget(
-                    height: 70,
+                    height: 80,
                     label: Text(button.label),
                     icon: button.icon,
                     onPressed: () {

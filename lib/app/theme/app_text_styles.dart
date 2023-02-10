@@ -34,7 +34,7 @@ abstract class AppTextStyles {
 
 class AppTextStylesDefault implements AppTextStyles {
   @override
-  TextStyle get button => GoogleFonts.roboto(
+  TextStyle get button => GoogleFonts.montserrat(
       fontSize: 14, fontWeight: FontWeight.w700, color: AppTheme.colors.button);
 
   @override
@@ -166,7 +166,7 @@ class AppTextStylesDefault implements AppTextStyles {
       );
 
   @override
-  TextStyle get titleTotalGeralCRCP => GoogleFonts.roboto(
+  TextStyle get titleTotalGeralCRCP => GoogleFonts.montserrat(
         fontSize: 16,
         color: Colors.black,
         fontWeight: FontWeight.w700,
@@ -194,14 +194,14 @@ class AppTextStylesDefault implements AppTextStyles {
       );
 
   @override
-  TextStyle get labelButtonLogin => GoogleFonts.roboto(
+  TextStyle get labelButtonLogin => GoogleFonts.montserrat(
         fontSize: 14,
         color: AppTheme.colors.primary,
         fontWeight: FontWeight.bold,
       );
 
   @override
-  TextStyle get titleCards => GoogleFonts.roboto(
+  TextStyle get titleCards => GoogleFonts.montserrat(
         fontSize: 20,
         color: Colors.black,
         fontWeight: FontWeight.w500,

@@ -9,7 +9,7 @@ class ListCardMenuWidget extends StatelessWidget {
     return ListView(
       children: [
         CardMenuWidget(
-          title: 'Studens',
+          title: 'Students',
           myButtons: [
             MyButtons(
               label: 'New Student',
@@ -24,7 +24,7 @@ class ListCardMenuWidget extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 10),
         CardMenuWidget(
           title: 'Class',
           myButtons: [
@@ -35,13 +35,13 @@ class ListCardMenuWidget extends StatelessWidget {
               args: {'editing': false},
             ),
             MyButtons(
-              label: 'Classes List',
+              label: 'Class List',
               icon: Icons.list_rounded,
               route: '/home/class/',
             ),
           ],
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 10),
         CardMenuWidget(
           title: 'Presence',
           myButtons: [
@@ -57,7 +57,7 @@ class ListCardMenuWidget extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 10),
         CardMenuWidget(
           title: 'Homework',
           myButtons: [
@@ -73,7 +73,7 @@ class ListCardMenuWidget extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 10),
         CardMenuWidget(
           title: 'Review',
           myButtons: [
@@ -89,7 +89,7 @@ class ListCardMenuWidget extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 10),
         CardMenuWidget(
           title: 'Action',
           myButtons: [

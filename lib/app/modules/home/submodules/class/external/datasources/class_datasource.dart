@@ -51,7 +51,7 @@ class ClassDataSource implements IClassDataSource {
   Future<bool> updateClass(Class pClass) async {
     final params = SupaBaseUpdateParams(
       table: Tables.classes,
-      data: ClassAdapter.toMap(pClass),
+      data: ClassAdapter.toMapUpdate(pClass),
     );
 
     final result = await supa.updateData(params: params);

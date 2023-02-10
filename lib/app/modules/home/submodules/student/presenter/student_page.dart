@@ -84,17 +84,17 @@ class _StudentPageState extends State<StudentPage> {
                     child: SwipeActionCell(
                       key: ObjectKey(student),
                       trailingActions: <SwipeAction>[
-                        SwipeAction(
-                          widthSpace: 90,
-                          backgroundRadius: 10,
-                          style: AppTheme.textStyles.labelRemoveSwipeAction,
-                          title: "Remove",
-                          onTap: (CompletionHandler handler) async {
-                            students.removeAt(index);
-                            setState(() {});
-                          },
-                          color: Colors.red,
-                        ),
+                        // SwipeAction(
+                        //   widthSpace: 90,
+                        //   backgroundRadius: 10,
+                        //   style: AppTheme.textStyles.labelRemoveSwipeAction,
+                        //   title: "Remove",
+                        //   onTap: (CompletionHandler handler) async {
+                        //     students.removeAt(index);
+                        //     setState(() {});
+                        //   },
+                        //   color: Colors.red,
+                        // ),
                         SwipeAction(
                           widthSpace: 90,
                           backgroundRadius: 10,
