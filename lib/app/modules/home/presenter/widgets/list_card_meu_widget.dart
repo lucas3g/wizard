@@ -9,7 +9,7 @@ class ListCardMenuWidget extends StatelessWidget {
     return ListView(
       children: [
         CardMenuWidget(
-          title: 'Students',
+          title: 'Student',
           myButtons: [
             MyButtons(
               label: 'New Student',
