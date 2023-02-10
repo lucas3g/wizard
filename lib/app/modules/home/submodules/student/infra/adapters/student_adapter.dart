@@ -32,4 +32,15 @@ class StudentAdapter {
       'id_teacher': GlobalUser.instance.user.id.value,
     };
   }
+
+  static Map<String, dynamic> toMapUpdate(Student student) {
+    return {
+      'id': student.id.value,
+      'name': student.studentName.value,
+      'id_class': student.studentClass.value,
+      'phone_number': student.studentPhoneNumber.value,
+      'parents': student.studentParents.value,
+      'id_teacher': GlobalUser.instance.user.id.value,
+    };
+  }
 }

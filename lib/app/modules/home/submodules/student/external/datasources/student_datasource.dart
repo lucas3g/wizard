@@ -63,7 +63,7 @@ class StudentDataSource implements IStudentDataSource {
   Future<bool> updateStudent(Student student) async {
     final params = SupaBaseUpdateParams(
       table: Tables.students,
-      data: StudentAdapter.toMap(student),
+      data: StudentAdapter.toMapUpdate(student),
     );
 
     final result = await supa.updateData(params: params);

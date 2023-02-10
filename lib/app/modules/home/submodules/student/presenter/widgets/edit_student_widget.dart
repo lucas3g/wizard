@@ -160,7 +160,9 @@ class _EditStudentWidgetState extends State<EditStudentWidget> {
                         .map(
                           (e) => DropdownMenuItem(
                             value: e.id.value,
-                            child: Text(e.name.value),
+                            child: Text(
+                              '${e.name.value} / ${e.dayWeek.value} / ${e.schedule.value}',
+                            ),
                           ),
                         )
                         .toList(),
