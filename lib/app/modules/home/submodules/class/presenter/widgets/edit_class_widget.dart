@@ -137,6 +137,7 @@ class _EditClassWidgetState extends State<EditClassWidget> {
               onChanged: pClass.setSchedule,
               validator: (v) => pClass.schedule.validate().exceptionOrNull(),
               value: pClass.schedule.value,
+              keyboardType: TextInputType.number,
               inputFormaters: [
                 TextInputMask(
                   mask: '99:99 às 99:99',

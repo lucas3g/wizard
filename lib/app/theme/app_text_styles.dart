@@ -30,6 +30,7 @@ abstract class AppTextStyles {
   TextStyle get titleResumoFp;
   TextStyle get labelButtonLogin;
   TextStyle get titleCards;
+  TextStyle get labelMakTub;
 }
 
 class AppTextStylesDefault implements AppTextStyles {
@@ -205,5 +206,11 @@ class AppTextStylesDefault implements AppTextStyles {
         fontSize: 20,
         color: Colors.black,
         fontWeight: FontWeight.w500,
+      );
+
+  @override
+  TextStyle get labelMakTub => GoogleFonts.montserrat(
+        fontSize: 10,
+        color: Colors.black,
       );
 }
