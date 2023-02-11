@@ -10,6 +10,7 @@ import 'package:wizard/app/modules/auth/presenter/bloc/auth_bloc.dart';
 import 'package:wizard/app/modules/auth/presenter/bloc/states/auth_states.dart';
 import 'package:wizard/app/modules/home/presenter/widgets/list_card_meu_widget.dart';
 import 'package:wizard/app/modules/home/presenter/widgets/my_drawer_widget.dart';
+import 'package:wizard/app/utils/constants.dart';
 
 class HomePage extends StatefulWidget {
   final AuthBloc authBloc;
@@ -52,7 +53,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         title: const Text('WizUp'),
-        centerTitle: true,
         leading: Builder(builder: (context) {
           return IconButton(
             onPressed: () {
@@ -60,7 +60,6 @@ class _HomePageState extends State<HomePage> {
             },
             icon: const Icon(
               Icons.menu,
-              color: Colors.white,
             ),
             tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
           );

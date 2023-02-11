@@ -7,7 +7,6 @@ import 'package:wizard/app/modules/auth/domain/entities/user_entity.dart';
 import 'package:wizard/app/modules/auth/presenter/bloc/auth_bloc.dart';
 import 'package:wizard/app/modules/auth/presenter/bloc/events/auth_events.dart';
 import 'package:wizard/app/modules/auth/presenter/bloc/states/auth_states.dart';
-import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
 
 class MyDrawerWidget extends StatelessWidget {
@@ -29,7 +28,7 @@ class MyDrawerWidget extends StatelessWidget {
           SizedBox(
             height: context.screenHeight * .30,
             child: DrawerHeader(
-              decoration: BoxDecoration(color: AppTheme.colors.primary),
+              decoration: BoxDecoration(color: context.myTheme.onPrimary),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -46,7 +45,7 @@ class MyDrawerWidget extends StatelessWidget {
                   const SizedBox(height: 10),
                   Text(
                     'Teacher: ${user.name.value}',
-                    style: AppTheme.textStyles.subTitleAppBar,
+                    style: context.textTheme.titleSmall,
                   )
                 ],
               ),
@@ -60,23 +59,11 @@ class MyDrawerWidget extends StatelessWidget {
                 BlocBuilder<AuthBloc, AuthStates>(
                     bloc: authBloc,
                     builder: (context, state) {
-                      // if (state is LoadignAuth) {
-                      //   return Center(
-                      //     child: SizedBox(
-                      //       width: 30,
-                      //       height: 30,
-                      //       child: CircularProgressIndicator(
-                      //         color: AppTheme.colors.primary,
-                      //       ),
-                      //     ),
-                      //   );
-                      // }
-
                       return ListTile(
                         minLeadingWidth: 2,
                         leading: Icon(
                           Icons.exit_to_app_rounded,
-                          color: AppTheme.colors.primary,
+                          color: context.myTheme.onBackground,
                         ),
                         title: state is LoadignAuth
                             ? Row(
@@ -85,7 +72,7 @@ class MyDrawerWidget extends StatelessWidget {
                                     width: 20,
                                     height: 20,
                                     child: CircularProgressIndicator(
-                                      color: AppTheme.colors.primary,
+                                      color: context.myTheme.onBackground,
                                     ),
                                   ),
                                 ],
@@ -100,12 +87,12 @@ class MyDrawerWidget extends StatelessWidget {
                   title: Text(
                     'Versão 1.0.0',
                     textAlign: TextAlign.end,
-                    style: AppTheme.textStyles.labelMakTub,
+                    style: context.textTheme.labelSmall,
                   ),
                   subtitle: Text(
                     'MakTub Company - 2023',
                     textAlign: TextAlign.center,
-                    style: AppTheme.textStyles.labelMakTub,
+                    style: context.textTheme.labelSmall,
                   ),
                 ),
               ],

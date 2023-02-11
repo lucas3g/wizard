@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:wizard/app/theme/app_theme.dart';
+import 'package:wizard/app/shared/themes/themes.dart';
 import 'package:wizard/app/utils/navigation_service.dart';
 
 class AppWidget extends StatelessWidget {
@@ -11,18 +11,9 @@ class AppWidget extends StatelessWidget {
     Modular.setNavigatorKey(NavigationService.navigatorKey);
 
     return MaterialApp.router(
-      theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: Colors.white,
-        colorSchemeSeed: AppTheme.colors.primary,
-        dialogTheme: const DialogTheme(
-          surfaceTintColor: Colors.white,
-        ),
-        appBarTheme: AppBarTheme(
-          color: AppTheme.colors.primary,
-          titleTextStyle: AppTheme.textStyles.titleAppBar,
-        ),
-      ),
+      themeMode: ThemeMode.dark,
+      theme: lightTheme,
+      darkTheme: darkTheme,
       debugShowCheckedModeBanner: false,
       routeInformationParser: Modular.routeInformationParser,
       routerDelegate: Modular.routerDelegate,

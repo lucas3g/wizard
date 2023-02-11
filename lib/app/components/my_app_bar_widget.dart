@@ -30,7 +30,6 @@ class _MyAppBarWidgetState extends State<MyAppBarWidget> {
           Modular.to.pop();
         },
         icon: const Icon(Icons.arrow_back),
-        color: Colors.white,
       ),
     );
   }

@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
 
 import '../../../../components/my_elevated_button_widget.dart';
@@ -43,7 +42,7 @@ class CardMenuWidget extends StatelessWidget {
               padding: const EdgeInsets.only(left: kPadding / 4),
               child: Text(
                 title,
-                style: AppTheme.textStyles.titleCards,
+                style: context.textTheme.headlineSmall,
               ),
             ),
             Positioned(
@@ -58,7 +57,7 @@ class CardMenuWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border(
                       bottom: BorderSide(
-                        color: AppTheme.colors.primary.withOpacity(0.4),
+                        color: context.myTheme.secondaryContainer,
                         width: 5,
                       ),
                     ),
@@ -74,7 +73,7 @@ class CardMenuWidget extends StatelessWidget {
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: AppTheme.colors.primary,
+            color: context.myTheme.secondaryContainer,
           ),
           child: Wrap(
             alignment: myButtons.length > 1

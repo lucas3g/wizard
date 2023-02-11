@@ -14,7 +14,6 @@ import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_tea
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/events/class_events.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/states/class_states.dart';
-import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
 import 'package:wizard/app/utils/my_snackbar.dart';
 
@@ -115,7 +114,7 @@ class _ClassPageState extends State<ClassPage> {
                     height: 50,
                     clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: context.myTheme.secondaryContainer,
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: const [
                         BoxShadow(
@@ -126,6 +125,7 @@ class _ClassPageState extends State<ClassPage> {
                       ],
                     ),
                     child: SwipeActionCell(
+                      backgroundColor: context.myTheme.secondaryContainer,
                       key: ObjectKey(pClass),
                       trailingActions: <SwipeAction>[
                         // SwipeAction(
@@ -142,7 +142,8 @@ class _ClassPageState extends State<ClassPage> {
                         SwipeAction(
                           widthSpace: 90,
                           backgroundRadius: 10,
-                          style: AppTheme.textStyles.labelRemoveSwipeAction,
+                          style: context.textTheme.labelLarge!
+                              .copyWith(fontWeight: FontWeight.bold),
                           title: "Edit",
                           onTap: (CompletionHandler handler) async {
                             await Modular.to.pushNamed(
@@ -167,7 +168,7 @@ class _ClassPageState extends State<ClassPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           pClass.name.value,
-                          style: AppTheme.textStyles.titleSwipeAction,
+                          style: context.textTheme.titleMedium,
                         ),
                       ),
                     ),

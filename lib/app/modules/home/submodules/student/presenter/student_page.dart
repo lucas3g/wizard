@@ -10,7 +10,6 @@ import 'package:wizard/app/core_module/constants/constants.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/events/student_events.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/states/student_states.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/student_bloc.dart';
-import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
 
 class StudentPage extends StatefulWidget {
@@ -71,17 +70,11 @@ class _StudentPageState extends State<StudentPage> {
                     height: 50,
                     clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: context.myTheme.secondaryContainer,
                       borderRadius: BorderRadius.circular(10),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 10,
-                          offset: Offset(0, 5),
-                        ),
-                      ],
                     ),
                     child: SwipeActionCell(
+                      backgroundColor: context.myTheme.secondaryContainer,
                       key: ObjectKey(student),
                       trailingActions: <SwipeAction>[
                         // SwipeAction(
@@ -98,7 +91,8 @@ class _StudentPageState extends State<StudentPage> {
                         SwipeAction(
                           widthSpace: 90,
                           backgroundRadius: 10,
-                          style: AppTheme.textStyles.labelRemoveSwipeAction,
+                          style: context.textTheme.labelLarge!
+                              .copyWith(fontWeight: FontWeight.bold),
                           title: "Edit",
                           onTap: (CompletionHandler handler) async {
                             await Modular.to.pushNamed(
@@ -122,7 +116,7 @@ class _StudentPageState extends State<StudentPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           student.studentName.value,
-                          style: AppTheme.textStyles.titleSwipeAction,
+                          style: context.textTheme.titleMedium,
                         ),
                       ),
                     ),
