@@ -38,13 +38,6 @@ class CardMenuWidget extends StatelessWidget {
       children: [
         Stack(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: kPadding / 4),
-              child: Text(
-                title,
-                style: context.textTheme.headlineSmall,
-              ),
-            ),
             Positioned(
               top: 0,
               left: 0,
@@ -64,7 +57,14 @@ class CardMenuWidget extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: kPadding / 4),
+              child: Text(
+                title,
+                style: context.textTheme.titleLarge,
+              ),
+            ),
           ],
         ),
         const SizedBox(height: 5),
