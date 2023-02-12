@@ -66,8 +66,7 @@ class _StudentPageState extends State<StudentPage> {
                   final student = students[index];
 
                   return Container(
-                    padding: const EdgeInsets.only(left: 10),
-                    height: 50,
+                    padding: const EdgeInsets.only(left: 10, top: 5, bottom: 5),
                     clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
                       color: context.myTheme.secondaryContainer,
@@ -115,7 +114,7 @@ class _StudentPageState extends State<StudentPage> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          student.studentName.value,
+                          '${student.studentName.value} / ${student.studentParents.value}',
                           style: context.textTheme.titleMedium,
                         ),
                       ),

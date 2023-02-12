@@ -42,7 +42,7 @@ class CardMenuWidget extends StatelessWidget {
               top: 0,
               left: 0,
               right: 0,
-              bottom: 4,
+              bottom: 1,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),
                 child: Container(
@@ -62,7 +62,10 @@ class CardMenuWidget extends StatelessWidget {
               padding: const EdgeInsets.only(left: kPadding / 4),
               child: Text(
                 title,
-                style: context.textTheme.titleLarge,
+                style: context.textTheme.titleLarge!.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
             ),
           ],
