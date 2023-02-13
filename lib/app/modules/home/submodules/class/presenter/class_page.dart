@@ -7,8 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
 
-import 'package:wizard/app/components/my_app_bar_widget.dart';
-import 'package:wizard/app/components/my_elevated_button_widget.dart';
+import 'package:wizard/app/shared/components/my_app_bar_widget.dart';
+import 'package:wizard/app/shared/components/my_elevated_button_widget.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_teacher.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';

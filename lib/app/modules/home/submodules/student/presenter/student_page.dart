@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
 
-import 'package:wizard/app/components/my_app_bar_widget.dart';
+import 'package:wizard/app/shared/components/my_app_bar_widget.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/events/student_events.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/states/student_states.dart';

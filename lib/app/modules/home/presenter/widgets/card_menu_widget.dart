@@ -4,7 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import 'package:wizard/app/utils/constants.dart';
 
-import '../../../../components/my_elevated_button_widget.dart';
+import '../../../../shared/components/my_elevated_button_widget.dart';
 
 class MyButtons {
   final String label;
