@@ -11,7 +11,6 @@ import 'package:wizard/app/modules/auth/infra/adapters/user_adapter.dart';
 import 'package:wizard/app/modules/auth/presenter/bloc/auth_bloc.dart';
 import 'package:wizard/app/modules/auth/presenter/bloc/events/auth_events.dart';
 import 'package:wizard/app/modules/auth/presenter/bloc/states/auth_states.dart';
-import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
 
 class AuthPage extends StatefulWidget {
@@ -75,11 +74,13 @@ class _AuthPageState extends State<AuthPage> {
                       children: [
                         TextSpan(
                           text: 'Wizard',
-                          style: AppTheme.textStyles.titleSplash,
+                          style: context.textTheme.displayMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         TextSpan(
                           text: '\n  by pearson',
-                          style: AppTheme.textStyles.subtitleSplash,
+                          style: context.textTheme.titleMedium,
                         ),
                       ],
                     ),
@@ -88,7 +89,9 @@ class _AuthPageState extends State<AuthPage> {
               ),
               Text(
                 'Welcome to the Teacher Control Wizup',
-                style: AppTheme.textStyles.titleAuthPage,
+                style: context.textTheme.headlineLarge!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
                 textAlign: TextAlign.center,
               ),
               Column(
@@ -96,7 +99,7 @@ class _AuthPageState extends State<AuthPage> {
                 children: [
                   Text(
                     'Log in with a google account :)',
-                    style: AppTheme.textStyles.subTitleAuthPage,
+                    style: context.textTheme.titleMedium,
                   ),
                   const SizedBox(height: 10),
                   Row(
@@ -128,21 +131,18 @@ class _AuthPageState extends State<AuthPage> {
                                           ),
                                           Expanded(
                                             child: state is LoadignAuth
-                                                ? Center(
+                                                ? const Center(
                                                     child: SizedBox(
                                                       width: 25,
                                                       height: 25,
                                                       child:
-                                                          CircularProgressIndicator(
-                                                        color: AppTheme
-                                                            .colors.primary,
-                                                      ),
+                                                          CircularProgressIndicator(),
                                                     ),
                                                   )
                                                 : Text(
                                                     'Login with google',
-                                                    style: AppTheme.textStyles
-                                                        .labelButtonGoogle,
+                                                    style: context
+                                                        .textTheme.titleSmall,
                                                     textAlign: TextAlign.center,
                                                   ),
                                           ),
@@ -160,8 +160,8 @@ class _AuthPageState extends State<AuthPage> {
               ),
               const SizedBox(),
               Text(
-                'Wizard 2022',
-                style: AppTheme.textStyles.subtitleSplash,
+                'Wizard ${DateTime.now().year}',
+                style: context.textTheme.titleSmall,
               ),
             ],
           ),
