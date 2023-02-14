@@ -233,6 +233,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                               lastDate: DateTime.now().add(
                                 const Duration(days: 365),
                               ),
+                              selectableDayPredicate: (day) => true,
                             );
 
                             if (selectedDate != null) {

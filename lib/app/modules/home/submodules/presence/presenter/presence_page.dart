@@ -234,6 +234,7 @@ class _PresencePageState extends State<PresencePage> {
                     lastDate: DateTime.now().add(
                       const Duration(days: 365),
                     ),
+                    selectableDayPredicate: (day) => true,
                   );
 
                   if (selectedDate != null) {

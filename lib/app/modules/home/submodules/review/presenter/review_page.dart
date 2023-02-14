@@ -234,6 +234,7 @@ class _ReviewPageState extends State<ReviewPage> {
                                 lastDate: DateTime.now().add(
                                   const Duration(days: 365),
                                 ),
+                                selectableDayPredicate: (day) => true,
                               );
 
                               if (selectedDate != null) {
