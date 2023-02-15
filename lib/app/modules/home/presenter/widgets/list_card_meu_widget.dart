@@ -64,12 +64,12 @@ class ListCardMenuWidget extends StatelessWidget {
             MyButtons(
               label: 'Note by Homework',
               icon: Icons.note_alt_rounded,
-              route: '/home/homeWork/',
+              route: '/home/homework/',
             ),
             MyButtons(
               label: 'Homework List',
               icon: Icons.list_rounded,
-              route: '/home/homeWork/list',
+              route: '/home/homework/list',
             ),
           ],
         ),

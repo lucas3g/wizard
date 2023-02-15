@@ -242,7 +242,7 @@ class HomeModule extends Module {
     ModuleRoute('/student', module: StudentModule()),
     ModuleRoute('/class', module: ClassModule()),
     ModuleRoute('/presence', module: PresenceModule()),
-    ModuleRoute('/homeWork', module: HomeWorkModule()),
+    ModuleRoute('/homework', module: HomeWorkModule()),
     ModuleRoute('/review', module: ReviewModule()),
     ModuleRoute('/report', module: ReportModule()),
   ];
