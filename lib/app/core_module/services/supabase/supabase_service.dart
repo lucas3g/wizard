@@ -58,7 +58,7 @@ class SupaBaseService implements IClientDataBase {
     final result = await supa
         .from(params.table.name)
         .select(
-            '${params.colummns}, ${params.foreignTable.name}(${params.foreignKey})')
+            '${params.colummns}, ${params.foreignTable.name} (${params.foreignKey})')
         .order(params.orderBy, ascending: true);
 
     return result;
