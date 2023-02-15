@@ -53,4 +53,16 @@ class SupaBaseService implements ISupaBase {
 
     return result;
   }
+
+  @override
+  Future<List> getDataWithForeignTables(
+      {required SupaBaseGetDataWithForeignTablesParams params}) async {
+    final result = await supa
+        .from(params.table.name)
+        .select(
+            '${params.colummns}, ${params.foreignTable.name}(${params.foreignKey})')
+        .order(params.orderBy, ascending: true);
+
+    return result;
+  }
 }

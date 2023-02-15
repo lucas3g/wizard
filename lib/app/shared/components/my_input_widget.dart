@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wizard/app/utils/constants.dart';
 
 class MyInputWidget extends StatelessWidget {
   final FocusNode? focusNode;
@@ -84,9 +85,21 @@ class MyInputWidget extends StatelessWidget {
         fillColor: Colors.transparent,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: context.myTheme.onPrimary,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: context.myTheme.primary,
+          ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: context.myTheme.onPrimary,
+          ),
         ),
       ),
     );

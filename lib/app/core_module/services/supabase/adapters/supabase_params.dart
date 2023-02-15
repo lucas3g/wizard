@@ -47,6 +47,22 @@ class SupaBaseGetDataByFiltersParams {
   });
 }
 
+class SupaBaseGetDataWithForeignTablesParams {
+  final Tables table;
+  final Tables foreignTable;
+  final String foreignKey;
+  final String colummns;
+  final String orderBy;
+
+  SupaBaseGetDataWithForeignTablesParams({
+    required this.table,
+    required this.foreignTable,
+    required this.foreignKey,
+    required this.colummns,
+    required this.orderBy,
+  });
+}
+
 class SupaBaseFilters {
   final String field;
   final dynamic value;

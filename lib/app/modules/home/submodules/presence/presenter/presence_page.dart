@@ -198,7 +198,8 @@ class _PresencePageState extends State<PresencePage> {
                       .map(
                         (e) => DropdownMenuItem(
                           value: e.id.value,
-                          child: Text(e.name.value),
+                          child: Text(
+                              '${e.name.value} / ${e.dayWeek.value} / ${e.schedule.value}'),
                         ),
                       )
                       .toList(),
@@ -230,11 +231,10 @@ class _PresencePageState extends State<PresencePage> {
                   final selectedDate = await showDatePicker(
                     context: context,
                     initialDate: DateTime.now(),
-                    firstDate: DateTime.now(),
+                    firstDate: DateTime(2000),
                     lastDate: DateTime.now().add(
                       const Duration(days: 365),
                     ),
-                    selectableDayPredicate: (day) => true,
                   );
 
                   if (selectedDate != null) {

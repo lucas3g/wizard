@@ -16,3 +16,13 @@ class GetPresenceByClassEvent extends PresenceEvents {
     required this.pClass,
   });
 }
+
+class GetPresenceByClassAndDateEvent extends PresenceEvents {
+  final int pClass;
+  final String date;
+
+  GetPresenceByClassAndDateEvent({
+    required this.pClass,
+    required this.date,
+  });
+}

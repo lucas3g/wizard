@@ -45,4 +45,24 @@ class PresenceRepository implements IPresenceRepository {
       return PresenceException(message: e.toString()).toFailure();
     }
   }
+
+  @override
+  Future<Result<List<Presence>, IPresenceException>> getPresenceByClassAndDate(
+      int pClass, String date) async {
+    try {
+      final result = await datasource.getPresenceByClassAndDate(pClass, date);
+
+      final List<Presence> list = [];
+
+      for (var presence in result) {
+        list.add(PresenceAdapter.fromMap(presence));
+      }
+
+      return list.toSuccess();
+    } on IPresenceException catch (e) {
+      return PresenceException(message: e.message).toFailure();
+    } catch (e) {
+      return PresenceException(message: e.toString()).toFailure();
+    }
+  }
 }

@@ -174,7 +174,8 @@ class _ReviewPageState extends State<ReviewPage> {
                         .map(
                           (e) => DropdownMenuItem(
                             value: e.id.value,
-                            child: Text(e.name.value),
+                            child: Text(
+                                '${e.name.value} / ${e.dayWeek.value} / ${e.schedule.value}'),
                           ),
                         )
                         .toList(),
@@ -230,11 +231,10 @@ class _ReviewPageState extends State<ReviewPage> {
                               final selectedDate = await showDatePicker(
                                 context: context,
                                 initialDate: DateTime.now(),
-                                firstDate: DateTime.now(),
+                                firstDate: DateTime(2000),
                                 lastDate: DateTime.now().add(
                                   const Duration(days: 365),
                                 ),
-                                selectableDayPredicate: (day) => true,
                               );
 
                               if (selectedDate != null) {
@@ -260,16 +260,21 @@ class _ReviewPageState extends State<ReviewPage> {
 
                             return Container(
                               decoration: BoxDecoration(
-                                  color: makeBackGroundColorListTile(
-                                      review.reviewNote[index].score.value),
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.black26,
-                                      blurRadius: 10,
-                                      offset: Offset(0, 8),
-                                    )
-                                  ]),
+                                color: makeBackGroundColorListTile(
+                                  review.reviewNote[index].score.value,
+                                  context,
+                                ),
+                                border: Border.all(
+                                  color: review.reviewNote[index].score.value
+                                          .isNotEmpty
+                                      ? makeBackGroundColorListTile(
+                                          review.reviewNote[index].score.value,
+                                          context,
+                                        )
+                                      : context.myTheme.onPrimary,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                               child: ListTile(
                                 title: Text(student.studentName.value),
                                 trailing: SizedBox(

@@ -6,4 +6,8 @@ abstract class IPresenceRepository {
   Future<Result<bool, IPresenceException>> savePresence(Presence presence);
   Future<Result<List<Presence>, IPresenceException>> getPresenceByClass(
       int pClass);
+  Future<Result<List<Presence>, IPresenceException>> getPresenceByClassAndDate(
+    int pClass,
+    String date,
+  );
 }

@@ -178,7 +178,8 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                         .map(
                           (e) => DropdownMenuItem(
                             value: e.id.value,
-                            child: Text(e.name.value),
+                            child: Text(
+                                '${e.name.value} / ${e.dayWeek.value} / ${e.schedule.value}'),
                           ),
                         )
                         .toList(),
@@ -229,11 +230,10 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                             final selectedDate = await showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
-                              firstDate: DateTime.now(),
+                              firstDate: DateTime(2000),
                               lastDate: DateTime.now().add(
                                 const Duration(days: 365),
                               ),
-                              selectableDayPredicate: (day) => true,
                             );
 
                             if (selectedDate != null) {
@@ -259,16 +259,22 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
 
                             return Container(
                               decoration: BoxDecoration(
-                                  color: makeBackGroundColorListTile(
-                                      homework.homeworkNote[index].score.value),
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.black26,
-                                      blurRadius: 10,
-                                      offset: Offset(0, 8),
-                                    )
-                                  ]),
+                                color: makeBackGroundColorListTile(
+                                  homework.homeworkNote[index].score.value,
+                                  context,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: homework.homeworkNote[index].score
+                                          .value.isNotEmpty
+                                      ? makeBackGroundColorListTile(
+                                          homework
+                                              .homeworkNote[index].score.value,
+                                          context,
+                                        )
+                                      : context.myTheme.onPrimary,
+                                ),
+                              ),
                               child: ListTile(
                                 title: Text(student.studentName.value),
                                 trailing: SizedBox(

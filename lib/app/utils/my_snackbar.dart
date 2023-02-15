@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wizard/app/utils/constants.dart';
 import 'package:wizard/app/utils/navigation_service.dart';
 
 enum TypeSnackBar {
@@ -21,7 +22,14 @@ class MySnackBar {
 
   _showSnackBar() {
     late SnackBar snackBar = SnackBar(
-      content: Text(message),
+      content: Text(
+        message,
+        style: NavigationService
+            .navigatorKey.currentContext!.textTheme.bodyLarge!
+            .copyWith(
+          color: Colors.white,
+        ),
+      ),
       backgroundColor: type == TypeSnackBar.success ? Colors.green : Colors.red,
       margin: const EdgeInsets.all(20),
       behavior: SnackBarBehavior.floating,

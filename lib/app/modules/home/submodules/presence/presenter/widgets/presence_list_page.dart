@@ -1,0 +1,195 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wizard/app/core_module/constants/constants.dart';
+import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_teacher.dart';
+
+import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
+import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/events/class_events.dart';
+import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/states/class_states.dart';
+import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/events/presence_events.dart';
+import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/presence_bloc.dart';
+import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/events/student_events.dart';
+import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/student_bloc.dart';
+import 'package:wizard/app/shared/components/my_app_bar_widget.dart';
+import 'package:wizard/app/shared/components/my_drop_down_button_widget.dart';
+import 'package:wizard/app/shared/components/my_elevated_button_widget.dart';
+import 'package:wizard/app/shared/components/my_input_widget.dart';
+import 'package:wizard/app/theme/app_theme.dart';
+import 'package:wizard/app/utils/constants.dart';
+import 'package:wizard/app/utils/formatters.dart';
+
+class PresenceListPage extends StatefulWidget {
+  final ClassBloc classBloc;
+  final StudentBloc studentBloc;
+  final PresenceBloc presenceBloc;
+
+  const PresenceListPage({
+    Key? key,
+    required this.classBloc,
+    required this.studentBloc,
+    required this.presenceBloc,
+  }) : super(key: key);
+
+  @override
+  State<PresenceListPage> createState() => _PresenceListPageState();
+}
+
+class _PresenceListPageState extends State<PresenceListPage> {
+  final dateController = TextEditingController();
+
+  final fClass = FocusNode();
+  final fDate = FocusNode();
+
+  late bool visibleList = false;
+
+  late int selectedValue = -1;
+
+  final gkForm = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _fetchClasses();
+  }
+
+  void _fetchClasses() {
+    widget.classBloc.add(
+      GetClassesByIdTeacher(
+        idTeacher: ClassIDTeacher(
+          GlobalUser.instance.user.id.value,
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size(double.infinity, AppBar().preferredSize.height),
+        child: const MyAppBarWidget(titleAppbar: 'Presence List'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(kPadding),
+        child: Form(
+          key: gkForm,
+          child: Column(
+            children: [
+              BlocBuilder<ClassBloc, ClassStates>(
+                bloc: widget.classBloc,
+                builder: (context, state) {
+                  if (state is! SuccessGetListClass) {
+                    return Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppTheme.colors.primary),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Center(
+                        child: SizedBox(
+                          height: 30,
+                          width: 30,
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    );
+                  }
+
+                  final classes = state.classes;
+
+                  return MyDropDownButtonWidget(
+                    focusNode: fClass,
+                    hint: 'Select a class',
+                    validator: (v) {
+                      if (v == null) {
+                        return 'Select a class';
+                      }
+
+                      return null;
+                    },
+                    onChanged: (dynamic e) {
+                      widget.studentBloc.add(
+                        GetStudentByClassEvent(
+                          classID: e,
+                        ),
+                      );
+
+                      setState(() {
+                        visibleList = true;
+                        selectedValue = e;
+                      });
+                    },
+                    value: selectedValue,
+                    items: classes
+                        .map(
+                          (e) => DropdownMenuItem(
+                            value: e.id.value,
+                            child: Text(
+                                '${e.name.value} / ${e.dayWeek.value} / ${e.schedule.value}'),
+                          ),
+                        )
+                        .toList(),
+                  );
+                },
+              ),
+              const SizedBox(height: 15),
+              MyInputWidget(
+                controller: dateController,
+                onTap: () async {
+                  final selectedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime.now().add(
+                      const Duration(days: 365),
+                    ),
+                  );
+
+                  if (selectedDate != null) {
+                    dateController.text = selectedDate.DiaMesAnoTextField();
+                  }
+                },
+                focusNode: fDate,
+                hintText: 'Enter the date of presence',
+                label: 'Date',
+                validator: (v) {
+                  if (v!.isEmpty) {
+                    return 'Date cannot be blank';
+                  }
+
+                  return null;
+                },
+                readOnly: true,
+              ),
+              const SizedBox(height: 15),
+              Row(
+                children: [
+                  Expanded(
+                    child: MyElevatedButtonWidget(
+                      label: const Text('Search'),
+                      icon: Icons.search,
+                      onPressed: () {
+                        if (!gkForm.currentState!.validate()) {
+                          return;
+                        }
+
+                        widget.presenceBloc.add(
+                          GetPresenceByClassAndDateEvent(
+                            pClass: selectedValue,
+                            date: dateController.text,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

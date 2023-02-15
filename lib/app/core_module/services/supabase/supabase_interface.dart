@@ -4,7 +4,8 @@ abstract class ISupaBase {
   Future<List> saveData({required SupaBaseSaveParams params});
   Future<List> updateData({required SupaBaseUpdateParams params});
   Future<List> getDataByField({required SupaBaseGetDataByFieldParams params});
-  Future<List> getDataByFilters({
-    required SupaBaseGetDataByFiltersParams params,
-  });
+  Future<List> getDataByFilters(
+      {required SupaBaseGetDataByFiltersParams params});
+  Future<List> getDataWithForeignTables(
+      {required SupaBaseGetDataWithForeignTablesParams params});
 }

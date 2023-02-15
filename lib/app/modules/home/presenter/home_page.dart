@@ -52,7 +52,12 @@ class _HomePageState extends State<HomePage> {
             bottomRight: Radius.circular(10),
           ),
         ),
-        title: const Text('WizUp'),
+        title: Text(
+          'WizUp',
+          style: context.textTheme.titleLarge!.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         leading: Builder(builder: (context) {
           return IconButton(
             onPressed: () {

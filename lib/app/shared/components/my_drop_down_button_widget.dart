@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-import 'package:wizard/app/theme/app_theme.dart';
+import 'package:wizard/app/utils/constants.dart';
 
 class MyDropDownButtonWidget<T> extends StatefulWidget {
   final FocusNode? focusNode;
@@ -49,7 +49,7 @@ class _MyDropDownButtonWidgetState<T> extends State<MyDropDownButtonWidget> {
         borderRadius: BorderRadius.circular(10),
         border: widget.border!
             ? Border.all(
-                color: AppTheme.colors.primary,
+                color: context.myTheme.onPrimary,
               )
             : null,
       ),
@@ -59,7 +59,7 @@ class _MyDropDownButtonWidgetState<T> extends State<MyDropDownButtonWidget> {
         decoration: const InputDecoration(
           border: InputBorder.none,
         ),
-        iconEnabledColor: AppTheme.colors.primary,
+        iconEnabledColor: context.myTheme.onPrimary,
         borderRadius: BorderRadius.circular(10),
         isDense: true,
         validator: widget.validator,

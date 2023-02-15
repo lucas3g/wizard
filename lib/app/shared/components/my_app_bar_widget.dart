@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:wizard/app/utils/constants.dart';
 
 class MyAppBarWidget extends StatefulWidget {
   final String titleAppbar;
@@ -24,7 +25,12 @@ class _MyAppBarWidgetState extends State<MyAppBarWidget> {
           bottomRight: Radius.circular(10),
         ),
       ),
-      title: Text(widget.titleAppbar),
+      title: Text(
+        widget.titleAppbar,
+        style: context.textTheme.titleLarge!.copyWith(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       leading: IconButton(
         onPressed: () {
           Modular.to.pop();

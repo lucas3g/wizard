@@ -68,4 +68,41 @@ class PresenceDatasource implements IPresenceDatasource {
 
     return result;
   }
+
+  @override
+  Future<List> getPresenceByClassAndDate(int pClass, String date) async {
+    final classFilter = SupaBaseFilters(field: 'id_class', value: pClass);
+    final dateFilter = SupaBaseFilters(field: 'date', value: date);
+
+    final params = SupaBaseGetDataByFiltersParams(
+      table: Tables.presences,
+      filters: {classFilter, dateFilter},
+      orderBy: 'id_class',
+    );
+
+    final result = await supa.getDataByFilters(params: params);
+
+    final paramsCheck = SupaBaseGetDataWithForeignTablesParams(
+      table: Tables.presences_check,
+      foreignTable: Tables.students,
+      foreignKey: 'id_student',
+      colummns: 'id,id_presence,id_student,id_class,type,name',
+      orderBy: 'id_class',
+    );
+
+    final resultChecks =
+        await supa.getDataWithForeignTables(params: paramsCheck);
+
+    for (var presence in result) {
+      presence['presence'] = resultChecks
+          .where((e) => e['id_presence'] == presence['id'])
+          .toList();
+    }
+
+    if (result.isEmpty) {
+      throw const PresenceException(message: 'Presences is empty!');
+    }
+
+    return result;
+  }
 }

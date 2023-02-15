@@ -7,6 +7,7 @@ import 'package:wizard/app/core_module/services/shared_preferences/local_storage
 import 'package:wizard/app/core_module/vos/id_account_google.dart';
 import 'package:wizard/app/modules/auth/domain/entities/user_entity.dart';
 import 'package:wizard/app/modules/auth/infra/adapters/user_adapter.dart';
+import 'package:wizard/app/utils/constants.dart';
 
 const baseUrl = String.fromEnvironment('BASE_URL');
 const apiKey = String.fromEnvironment('API_KEY');
@@ -18,7 +19,7 @@ final notes = [
   {'type': 'R', 'name': 'Regular'},
 ];
 
-Color makeBackGroundColorListTile(String score) {
+Color makeBackGroundColorListTile(String score, BuildContext context) {
   switch (score) {
     case 'O':
       return Colors.green.shade400;
@@ -29,7 +30,7 @@ Color makeBackGroundColorListTile(String score) {
     case 'R':
       return Colors.red.shade400;
     default:
-      return Colors.white;
+      return context.myTheme.background;
   }
 }
 
