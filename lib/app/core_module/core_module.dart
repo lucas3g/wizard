@@ -1,8 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:wizard/app/core_module/services/client_database/client_database_interface.dart';
 import 'package:wizard/app/core_module/services/pdf/pdf_interface.dart';
 import 'package:wizard/app/core_module/services/pdf/pdf_service.dart';
-import 'package:wizard/app/core_module/services/supabase/supabase_interface.dart';
 import 'package:wizard/app/core_module/services/supabase/supabase_service.dart';
 
 import 'services/shared_preferences/local_storage_interface.dart';
@@ -31,7 +31,7 @@ class CoreModule extends Module {
     ),
 
     //ONLINE STORAGE
-    Bind<ISupaBase>(
+    Bind<IClientDataBase>(
       ((i) => SupaBaseService(supa: i())),
       export: true,
     ),

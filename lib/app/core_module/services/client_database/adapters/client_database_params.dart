@@ -1,33 +1,32 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:wizard/app/core_module/services/supabase/helpers/tables.dart';
+import 'package:wizard/app/core_module/services/client_database/helpers/tables.dart';
 
-class SupaBaseSaveParams {
+class ClientDataBaseSaveParams {
   final Tables table;
   final dynamic data;
 
-  SupaBaseSaveParams({
+  ClientDataBaseSaveParams({
     required this.table,
     required this.data,
   });
 }
 
-class SupaBaseUpdateParams {
+class ClientDataBaseUpdateParams {
   final Tables table;
   final dynamic data;
 
-  SupaBaseUpdateParams({
+  ClientDataBaseUpdateParams({
     required this.table,
     required this.data,
   });
 }
 
-class SupaBaseGetDataByFieldParams {
+class ClientDataBaseGetDataByFieldParams {
   final Tables table;
   final String field;
   final dynamic value;
   final String orderBy;
 
-  SupaBaseGetDataByFieldParams({
+  ClientDataBaseGetDataByFieldParams({
     required this.table,
     required this.field,
     required this.value,
@@ -35,40 +34,40 @@ class SupaBaseGetDataByFieldParams {
   });
 }
 
-class SupaBaseGetDataByFiltersParams {
+class ClientDataBaseGetDataByFiltersParams {
   final Tables table;
-  final Set<SupaBaseFilters> filters;
+  final Set<ClientDataBaseFilters> filters;
   final String orderBy;
 
-  SupaBaseGetDataByFiltersParams({
+  ClientDataBaseGetDataByFiltersParams({
     required this.table,
     required this.filters,
     required this.orderBy,
   });
 }
 
-class SupaBaseGetDataWithForeignTablesParams {
+class ClientDataBaseFilters {
+  final String field;
+  final dynamic value;
+
+  ClientDataBaseFilters({
+    required this.field,
+    required this.value,
+  });
+}
+
+class ClientDataBaseGetDataWithForeignTablesParams {
   final Tables table;
   final Tables foreignTable;
   final String foreignKey;
   final String colummns;
   final String orderBy;
 
-  SupaBaseGetDataWithForeignTablesParams({
+  ClientDataBaseGetDataWithForeignTablesParams({
     required this.table,
     required this.foreignTable,
     required this.foreignKey,
     required this.colummns,
     required this.orderBy,
-  });
-}
-
-class SupaBaseFilters {
-  final String field;
-  final dynamic value;
-
-  SupaBaseFilters({
-    required this.field,
-    required this.value,
   });
 }

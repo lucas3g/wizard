@@ -62,7 +62,7 @@ class HomeModule extends Module {
   final List<Bind<Object>> binds = [
     //DATASOURCES
     Bind.factory<IClassDataSource>(
-      (i) => ClassDataSource(supa: i()),
+      (i) => ClassDataSource(client: i()),
       export: true,
     ),
 
@@ -98,7 +98,7 @@ class HomeModule extends Module {
 
     //DATASOURCES
     Bind.factory<IStudentDataSource>(
-      (i) => StudentDataSource(supa: i()),
+      (i) => StudentDataSource(client: i()),
       export: true,
     ),
 
@@ -139,7 +139,7 @@ class HomeModule extends Module {
 
     //DATASOURCES
     Bind.factory<IPresenceDatasource>(
-      (i) => PresenceDatasource(supa: i()),
+      (i) => PresenceDatasource(client: i()),
       export: true,
     ),
 
@@ -170,7 +170,7 @@ class HomeModule extends Module {
 
     //DATASOURCES
     Bind.factory<IHomeworkDatasource>(
-      (i) => HomeworkDatasource(supa: i()),
+      (i) => HomeworkDatasource(client: i()),
       export: true,
     ),
 
@@ -201,7 +201,7 @@ class HomeModule extends Module {
 
     //DATASOURCES
     Bind.factory<IReviewDatasource>(
-      (i) => ReviewDatasource(supa: i()),
+      (i) => ReviewDatasource(client: i()),
       export: true,
     ),
 

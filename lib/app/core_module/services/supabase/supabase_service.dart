@@ -1,10 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:wizard/app/core_module/services/client_database/adapters/client_database_params.dart';
+import 'package:wizard/app/core_module/services/client_database/client_database_interface.dart';
 
-import 'package:wizard/app/core_module/services/supabase/adapters/supabase_params.dart';
-import 'package:wizard/app/core_module/services/supabase/supabase_interface.dart';
-
-class SupaBaseService implements ISupaBase {
+class SupaBaseService implements IClientDataBase {
   final SupabaseClient supa;
 
   SupaBaseService({
@@ -13,7 +11,7 @@ class SupaBaseService implements ISupaBase {
 
   @override
   Future<List> getDataByField(
-      {required SupaBaseGetDataByFieldParams params}) async {
+      {required ClientDataBaseGetDataByFieldParams params}) async {
     final result = await supa
         .from(params.table.name)
         .select()
@@ -24,7 +22,7 @@ class SupaBaseService implements ISupaBase {
   }
 
   @override
-  Future<List> saveData({required SupaBaseSaveParams params}) async {
+  Future<List> saveData({required ClientDataBaseSaveParams params}) async {
     final result =
         await supa.from(params.table.name).insert(params.data).select();
 
@@ -32,7 +30,7 @@ class SupaBaseService implements ISupaBase {
   }
 
   @override
-  Future<List> updateData({required SupaBaseUpdateParams params}) async {
+  Future<List> updateData({required ClientDataBaseUpdateParams params}) async {
     final result = await supa
         .from(params.table.name)
         .update(params.data)
@@ -44,7 +42,7 @@ class SupaBaseService implements ISupaBase {
 
   @override
   Future<List> getDataByFilters(
-      {required SupaBaseGetDataByFiltersParams params}) async {
+      {required ClientDataBaseGetDataByFiltersParams params}) async {
     final Map<String, dynamic> match = {};
 
     params.filters.map((e) => match.addAll({e.field: e.value}));
@@ -56,7 +54,7 @@ class SupaBaseService implements ISupaBase {
 
   @override
   Future<List> getDataWithForeignTables(
-      {required SupaBaseGetDataWithForeignTablesParams params}) async {
+      {required ClientDataBaseGetDataWithForeignTablesParams params}) async {
     final result = await supa
         .from(params.table.name)
         .select(

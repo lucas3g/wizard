@@ -1,8 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
-import 'package:wizard/app/core_module/services/supabase/adapters/supabase_params.dart';
-import 'package:wizard/app/core_module/services/supabase/helpers/tables.dart';
-import 'package:wizard/app/core_module/services/supabase/supabase_interface.dart';
+import 'package:wizard/app/core_module/services/client_database/adapters/client_database_params.dart';
+import 'package:wizard/app/core_module/services/client_database/client_database_interface.dart';
+import 'package:wizard/app/core_module/services/client_database/helpers/tables.dart';
 import 'package:wizard/app/core_module/vos/id_account_google.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/entity/student.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/exceptions/student_exception.dart';
@@ -10,18 +8,18 @@ import 'package:wizard/app/modules/home/submodules/student/infra/adapters/studen
 import 'package:wizard/app/modules/home/submodules/student/infra/datasources/student_datasource.dart';
 
 class StudentDataSource implements IStudentDataSource {
-  final ISupaBase supa;
+  final IClientDataBase client;
 
-  StudentDataSource({required this.supa});
+  StudentDataSource({required this.client});
 
   @override
   Future<bool> createStudent(Student student) async {
-    final params = SupaBaseSaveParams(
+    final params = ClientDataBaseSaveParams(
       table: Tables.students,
       data: StudentAdapter.toMap(student),
     );
 
-    final result = await supa.saveData(params: params);
+    final result = await client.saveData(params: params);
 
     if (result.isEmpty) {
       throw const StudentException(
@@ -33,40 +31,40 @@ class StudentDataSource implements IStudentDataSource {
 
   @override
   Future<List> getStudentByClass(int classID) async {
-    final params = SupaBaseGetDataByFieldParams(
+    final params = ClientDataBaseGetDataByFieldParams(
       table: Tables.students,
       field: 'id_class',
       value: classID,
       orderBy: 'name',
     );
 
-    final result = await supa.getDataByField(params: params);
+    final result = await client.getDataByField(params: params);
 
     return result;
   }
 
   @override
   Future<List> getStudentByTeacher(IdAccountGoogleVO teacherID) async {
-    final params = SupaBaseGetDataByFieldParams(
+    final params = ClientDataBaseGetDataByFieldParams(
       table: Tables.students,
       field: 'id_teacher',
       value: teacherID.value,
       orderBy: 'name',
     );
 
-    final result = await supa.getDataByField(params: params);
+    final result = await client.getDataByField(params: params);
 
     return result;
   }
 
   @override
   Future<bool> updateStudent(Student student) async {
-    final params = SupaBaseUpdateParams(
+    final params = ClientDataBaseUpdateParams(
       table: Tables.students,
       data: StudentAdapter.toMapUpdate(student),
     );
 
-    final result = await supa.updateData(params: params);
+    final result = await client.updateData(params: params);
 
     if (result.isEmpty) {
       throw const StudentException(
