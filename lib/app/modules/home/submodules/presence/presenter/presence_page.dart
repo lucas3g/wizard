@@ -109,7 +109,7 @@ class _PresencePageState extends State<PresencePage> {
 
   void setPresence(Student student) {
     final presenceCheck = presence.presenceCheck
-        .firstWhere((check) => check.studentID.value == student.id.value);
+        .firstWhere((check) => check.student.id.value == student.id.value);
 
     if (presenceCheck.presencePresent.value == 'Present') {
       presenceCheck.setPresencePresent('Absent');
@@ -127,7 +127,7 @@ class _PresencePageState extends State<PresencePage> {
       presence.presenceCheck.add(
         PresenceCheck(
           id: const IdVO(-1),
-          studentID: student.id.value,
+          student: student,
           presencePresent: 'Absent',
         ),
       );
@@ -298,7 +298,7 @@ class _PresencePageState extends State<PresencePage> {
                                 decoration: BoxDecoration(
                                     color: presence.presenceCheck
                                                 .firstWhere((e) =>
-                                                    e.studentID.value ==
+                                                    e.student.id.value ==
                                                     student.id.value)
                                                 .presencePresent
                                                 .value ==

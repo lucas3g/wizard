@@ -1,13 +1,19 @@
 import 'package:wizard/app/core_module/types/entity.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/vos/presence_present.dart';
-import 'package:wizard/app/modules/home/submodules/presence/domain/vos/presence_student_id.dart';
+import 'package:wizard/app/modules/home/submodules/student/domain/entity/student.dart';
 
 class PresenceCheck extends Entity {
-  PresenceStudentID _studentID;
+  Student _student;
   PresencePresent _presencePresent;
 
-  PresenceStudentID get studentID => _studentID;
-  void setStudentID(int value) => _studentID = PresenceStudentID(value);
+  Student get student => _student;
+  void setStudentID(Student student) => _student = Student(
+        id: student.id,
+        studentName: student.studentName.value,
+        studentClass: student.studentClass.value,
+        studentPhoneNumber: student.studentPhoneNumber.value,
+        studentParents: student.studentParents.value,
+      );
 
   PresencePresent get presencePresent => _presencePresent;
   void setPresencePresent(String value) =>
@@ -15,8 +21,14 @@ class PresenceCheck extends Entity {
 
   PresenceCheck({
     required super.id,
-    required studentID,
+    required Student student,
     required presencePresent,
-  })  : _studentID = PresenceStudentID(studentID),
+  })  : _student = Student(
+          id: student.id,
+          studentName: student.studentName.value,
+          studentClass: student.studentClass.value,
+          studentPhoneNumber: student.studentPhoneNumber.value,
+          studentParents: student.studentParents.value,
+        ),
         _presencePresent = PresencePresent(presencePresent);
 }

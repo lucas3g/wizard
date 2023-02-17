@@ -1,6 +1,9 @@
+import 'package:intl/intl.dart';
 import 'package:wizard/app/core_module/vos/id_vo.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/entites/presence.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/vos/presence_check.dart';
+import 'package:wizard/app/modules/home/submodules/student/infra/adapters/student_adapter.dart';
+import 'package:wizard/app/utils/formatters.dart';
 
 class PresenceAdapter {
   static Presence empty() {
@@ -19,13 +22,34 @@ class PresenceAdapter {
       id: IdVO(map['id']),
       presenceClass: map['id_class'],
       presenceObs: map['obs'] ?? '',
-      presenceDate: map['date'].replaceAll('.', '/'),
+      presenceDate:
+          DateFormat('yyyy-MM-dd').parse(map['date']).DiaMesAnoTextField(),
       presenceHomeWork: map['homework'],
       presenceCheck: List.from(map['presence'])
           .map(
             (e) => PresenceCheck(
               id: IdVO(map['id']),
-              studentID: e['id_student'],
+              student: StudentAdapter.fromMap(e['students']),
+              presencePresent: e['type'],
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  static Presence fromMapSearch(dynamic map) {
+    return Presence(
+      id: IdVO(map['id']),
+      presenceClass: map['id_class'],
+      presenceObs: map['obs'] ?? '',
+      presenceDate:
+          DateFormat('yyyy-MM-dd').parse(map['date']).DiaMesAnoTextField(),
+      presenceHomeWork: map['homework'],
+      presenceCheck: List.from(map['presence'])
+          .map(
+            (e) => PresenceCheck(
+              id: IdVO(e['id']),
+              student: StudentAdapter.fromMap(e['students']),
               presencePresent: e['type'],
             ),
           )
@@ -36,7 +60,9 @@ class PresenceAdapter {
   static Map<String, dynamic> toMap(Presence presence) {
     return {
       'id_class': presence.presenceClass.value,
-      'date': presence.presenceDate.value.replaceAll('/', '.'),
+      'date': DateFormat('dd/MM/yyyy')
+          .parse(presence.presenceDate.value)
+          .AnoMesDiaSupaBase(),
       'obs': presence.presenceObs.value,
       'homework': presence.presenceHomeWork.value,
     };
@@ -47,7 +73,7 @@ class PresenceAdapter {
         .map(
           (e) => {
             'id_presence': presence.id.value,
-            'id_student': e.studentID.value,
+            'id_student': e.student.id.value,
             'type': e.presencePresent.value,
             'id_class': presence.presenceClass.value,
           },

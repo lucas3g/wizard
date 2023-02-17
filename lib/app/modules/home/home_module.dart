@@ -20,6 +20,7 @@ import 'package:wizard/app/modules/home/submodules/homework/infra/datasources/ho
 import 'package:wizard/app/modules/home/submodules/homework/infra/repositories/homework_repository.dart';
 import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/homework_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/repositories/presence_repository.dart';
+import 'package:wizard/app/modules/home/submodules/presence/domain/usecases/get_presences_by_class_and_date.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/usecases/get_presences_by_class_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/usecases/save_presence_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/presence/external/datasources/presence_datasource.dart';
@@ -158,12 +159,17 @@ class HomeModule extends Module {
       (i) => GetPresencesByClassUseCase(repository: i()),
       export: true,
     ),
+    Bind.factory<IGetPresencesByClassAndDateUseCase>(
+      (i) => GetPresencesByClassAndDateUseCase(repository: i()),
+      export: true,
+    ),
 
     //BLOCS
     BlocBind.factory<PresenceBloc>(
       (i) => PresenceBloc(
         savePresenceUseCase: i(),
         getPresencesByClassUseCase: i(),
+        getPresencesByClassAndDateUseCase: i(),
       ),
       export: true,
     ),

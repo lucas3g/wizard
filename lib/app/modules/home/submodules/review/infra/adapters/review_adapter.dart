@@ -1,6 +1,8 @@
+import 'package:intl/intl.dart';
 import 'package:wizard/app/core_module/vos/id_vo.dart';
 import 'package:wizard/app/modules/home/submodules/review/domain/entities/review.dart';
 import 'package:wizard/app/modules/home/submodules/review/domain/vos/review_note.dart';
+import 'package:wizard/app/utils/formatters.dart';
 
 class ReviewAdapter {
   static Review empty() {
@@ -18,7 +20,8 @@ class ReviewAdapter {
       id: IdVO(map['id']),
       reviewClass: map['id_class'],
       reviewName: map['name'],
-      reviewDate: map['date'].replaceAll('.', '/'),
+      reviewDate:
+          DateFormat('yyyy-MM-dd').parse(map['date']).DiaMesAnoTextField(),
       reviewNote: List.from(map['notes'])
           .map(
             (e) => ReviewNote(
@@ -35,7 +38,9 @@ class ReviewAdapter {
     return {
       'id_class': review.reviewClass.value,
       'name': review.reviewName.value,
-      'date': review.reviewDate.value.replaceAll('/', '.'),
+      'date': DateFormat('dd/MM/yyyy')
+          .parse(review.reviewDate.value)
+          .AnoMesDiaSupaBase(),
     };
   }
 

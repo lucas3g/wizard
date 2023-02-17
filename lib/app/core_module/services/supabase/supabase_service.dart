@@ -45,7 +45,9 @@ class SupaBaseService implements IClientDataBase {
       {required ClientDataBaseGetDataByFiltersParams params}) async {
     final Map<String, dynamic> match = {};
 
-    params.filters.map((e) => match.addAll({e.field: e.value}));
+    for (var filter in params.filters) {
+      match.addAll({filter.field: filter.value});
+    }
 
     final result = await supa.from(params.table.name).select().match(match);
 
@@ -57,8 +59,7 @@ class SupaBaseService implements IClientDataBase {
       {required ClientDataBaseGetDataWithForeignTablesParams params}) async {
     final result = await supa
         .from(params.table.name)
-        .select(
-            '${params.colummns}, ${params.foreignTable.name} (${params.foreignKey})')
+        .select('*, ${params.foreignTable.name}!inner(*)')
         .order(params.orderBy, ascending: true);
 
     return result;

@@ -1,6 +1,8 @@
+import 'package:intl/intl.dart';
 import 'package:wizard/app/core_module/vos/id_vo.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/entities/homework.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/vos/homework_note.dart';
+import 'package:wizard/app/utils/formatters.dart';
 
 class HomeworkAdapter {
   static Homework empty() {
@@ -18,7 +20,8 @@ class HomeworkAdapter {
       id: IdVO(map['id']),
       homeworkClass: map['id_class'],
       homeworkName: map['name'],
-      homeworkData: map['date'].replaceAll('.', '/'),
+      homeworkData:
+          DateFormat('yyyy-MM-dd').parse(map['date']).DiaMesAnoTextField(),
       homeworkNote: List.from(map['notes'])
           .map(
             (e) => HomeworkNote(
@@ -35,7 +38,9 @@ class HomeworkAdapter {
     return {
       'id_class': homework.homeworkClass.value,
       'name': homework.homeworkName.value,
-      'date': homework.homeworkData.value.replaceAll('/', '.'),
+      'date': DateFormat('dd/MM/yyyy')
+          .parse(homework.homeworkData.value)
+          .AnoMesDiaSupaBase(),
     };
   }
 

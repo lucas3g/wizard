@@ -13,7 +13,7 @@ class PDFController {
     for (var check in checks) {
       if (check.presencePresent.value == 'Absent') {
         final codStudent = students
-            .where((student) => student.idStudent == check.studentID.value)
+            .where((student) => student.idStudent == check.student.id.value)
             .first
             .codStudent;
         missing += '$codStudent, ';

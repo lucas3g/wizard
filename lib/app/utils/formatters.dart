@@ -99,6 +99,13 @@ extension DiasMesAnoDB on DateTime {
   }
 }
 
+extension AnoMesDiaSB on DateTime {
+  String AnoMesDiaSupaBase() {
+    final format = DateFormat('yyyy-MM-dd');
+    return format.format(this);
+  }
+}
+
 extension DiaString on DateTime {
   String Dia() {
     final format = DateFormat('dd');

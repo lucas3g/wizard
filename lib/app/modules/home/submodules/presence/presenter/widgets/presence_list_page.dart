@@ -7,8 +7,10 @@ import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_tea
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/events/class_events.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/states/class_states.dart';
+import 'package:wizard/app/modules/home/submodules/presence/domain/vos/presence_check.dart';
 import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/events/presence_events.dart';
 import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/presence_bloc.dart';
+import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/states/presence_states.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/events/student_events.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/student_bloc.dart';
 import 'package:wizard/app/shared/components/my_app_bar_widget.dart';
@@ -64,6 +66,16 @@ class _PresenceListPageState extends State<PresenceListPage> {
     );
   }
 
+  void setPresence(PresenceCheck check) {
+    if (check.presencePresent.value == 'Present') {
+      check.setPresencePresent('Absent');
+    } else {
+      check.setPresencePresent('Present');
+    }
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,121 +85,215 @@ class _PresenceListPageState extends State<PresenceListPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(kPadding),
-        child: Form(
-          key: gkForm,
-          child: Column(
-            children: [
-              BlocBuilder<ClassBloc, ClassStates>(
-                bloc: widget.classBloc,
-                builder: (context, state) {
-                  if (state is! SuccessGetListClass) {
-                    return Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: AppTheme.colors.primary),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Center(
-                        child: SizedBox(
-                          height: 30,
-                          width: 30,
-                          child: CircularProgressIndicator(),
+        child: Column(
+          children: [
+            Form(
+              key: gkForm,
+              child: Column(
+                children: [
+                  BlocBuilder<ClassBloc, ClassStates>(
+                    bloc: widget.classBloc,
+                    builder: (context, state) {
+                      if (state is! SuccessGetListClass) {
+                        return Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: AppTheme.colors.primary),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Center(
+                            child: SizedBox(
+                              height: 30,
+                              width: 30,
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
+                        );
+                      }
+
+                      final classes = state.classes;
+
+                      return MyDropDownButtonWidget(
+                        focusNode: fClass,
+                        hint: 'Select a class',
+                        validator: (v) {
+                          if (v == null) {
+                            return 'Select a class';
+                          }
+
+                          return null;
+                        },
+                        onChanged: (dynamic e) {
+                          widget.studentBloc.add(
+                            GetStudentByClassEvent(
+                              classID: e,
+                            ),
+                          );
+
+                          setState(() {
+                            selectedValue = e;
+                          });
+                        },
+                        value: selectedValue,
+                        items: classes
+                            .map(
+                              (e) => DropdownMenuItem(
+                                value: e.id.value,
+                                child: Text(
+                                    '${e.name.value} / ${e.dayWeek.value} / ${e.schedule.value}'),
+                              ),
+                            )
+                            .toList(),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 15),
+                  MyInputWidget(
+                    controller: dateController,
+                    onTap: () async {
+                      final selectedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime.now().add(
+                          const Duration(days: 365),
                         ),
-                      ),
-                    );
-                  }
+                      );
 
-                  final classes = state.classes;
-
-                  return MyDropDownButtonWidget(
-                    focusNode: fClass,
-                    hint: 'Select a class',
+                      if (selectedDate != null) {
+                        dateController.text = selectedDate.DiaMesAnoTextField();
+                      }
+                    },
+                    focusNode: fDate,
+                    hintText: 'Enter the date of presence',
+                    label: 'Date',
                     validator: (v) {
-                      if (v == null) {
-                        return 'Select a class';
+                      if (v!.isEmpty) {
+                        return 'Date cannot be blank';
                       }
 
                       return null;
                     },
-                    onChanged: (dynamic e) {
-                      widget.studentBloc.add(
-                        GetStudentByClassEvent(
-                          classID: e,
+                    readOnly: true,
+                  ),
+                  const SizedBox(height: 15),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: MyElevatedButtonWidget(
+                          label: const Text('Search'),
+                          icon: Icons.search,
+                          onPressed: () {
+                            if (!gkForm.currentState!.validate()) {
+                              return;
+                            }
+
+                            setState(() {
+                              visibleList = true;
+                            });
+
+                            widget.presenceBloc.add(
+                              GetPresenceByClassAndDateEvent(
+                                pClass: selectedValue,
+                                date: dateController.text,
+                              ),
+                            );
+                          },
                         ),
-                      );
-
-                      setState(() {
-                        visibleList = true;
-                        selectedValue = e;
-                      });
-                    },
-                    value: selectedValue,
-                    items: classes
-                        .map(
-                          (e) => DropdownMenuItem(
-                            value: e.id.value,
-                            child: Text(
-                                '${e.name.value} / ${e.dayWeek.value} / ${e.schedule.value}'),
-                          ),
-                        )
-                        .toList(),
-                  );
-                },
-              ),
-              const SizedBox(height: 15),
-              MyInputWidget(
-                controller: dateController,
-                onTap: () async {
-                  final selectedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime.now().add(
-                      const Duration(days: 365),
-                    ),
-                  );
-
-                  if (selectedDate != null) {
-                    dateController.text = selectedDate.DiaMesAnoTextField();
-                  }
-                },
-                focusNode: fDate,
-                hintText: 'Enter the date of presence',
-                label: 'Date',
-                validator: (v) {
-                  if (v!.isEmpty) {
-                    return 'Date cannot be blank';
-                  }
-
-                  return null;
-                },
-                readOnly: true,
-              ),
-              const SizedBox(height: 15),
-              Row(
-                children: [
-                  Expanded(
-                    child: MyElevatedButtonWidget(
-                      label: const Text('Search'),
-                      icon: Icons.search,
-                      onPressed: () {
-                        if (!gkForm.currentState!.validate()) {
-                          return;
-                        }
-
-                        widget.presenceBloc.add(
-                          GetPresenceByClassAndDateEvent(
-                            pClass: selectedValue,
-                            date: dateController.text,
-                          ),
-                        );
-                      },
-                    ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 15),
+            Visibility(
+              visible: visibleList,
+              child: BlocBuilder<PresenceBloc, PresenceStates>(
+                bloc: widget.presenceBloc,
+                builder: (context, state) {
+                  if (state is ErrorPresence) {
+                    return const Center(
+                      child: Text('Presence List is empty :('),
+                    );
+                  }
+
+                  if (state is! SuccessGetPresenceByClass) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  final presences = state.presences[0];
+                  final checks = presences.presenceCheck;
+
+                  return Expanded(
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ListView.separated(
+                            itemBuilder: (context, index) {
+                              final check = checks[index];
+
+                              return Container(
+                                decoration: BoxDecoration(
+                                    color:
+                                        check.presencePresent.value == 'Absent'
+                                            ? Colors.red.shade400
+                                            : Colors.green.shade400,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Colors.black26,
+                                        blurRadius: 10,
+                                        offset: Offset(0, 8),
+                                      )
+                                    ]),
+                                child: ListTile(
+                                  title: Text(check.student.studentName.value),
+                                  onTap: () {
+                                    setPresence(check);
+                                  },
+                                ),
+                              );
+                            },
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(height: 15),
+                            itemCount: checks.length,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: BlocBuilder<PresenceBloc, PresenceStates>(
+                                bloc: widget.presenceBloc,
+                                builder: (context, state) {
+                                  return MyElevatedButtonWidget(
+                                    label: state is LoadingPresence
+                                        ? const SizedBox(
+                                            width: 20,
+                                            height: 20,
+                                            child: CircularProgressIndicator(),
+                                          )
+                                        : const Text('Save'),
+                                    icon: Icons.save_rounded,
+                                    onPressed: () {
+                                      // widget.presenceBloc.add(event)
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
         ),
       ),
     );

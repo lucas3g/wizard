@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:wizard/app/core_module/services/client_database/adapters/client_database_params.dart';
 import 'package:wizard/app/core_module/services/client_database/client_database_interface.dart';
 import 'package:wizard/app/core_module/services/client_database/helpers/tables.dart';
@@ -5,6 +6,7 @@ import 'package:wizard/app/modules/home/submodules/presence/domain/entites/prese
 import 'package:wizard/app/modules/home/submodules/presence/domain/exceptions/presence_exception.dart';
 import 'package:wizard/app/modules/home/submodules/presence/infra/adapters/presence_adapter.dart';
 import 'package:wizard/app/modules/home/submodules/presence/infra/datasources/presence_datasource.dart';
+import 'package:wizard/app/utils/formatters.dart';
 
 class PresenceDatasource implements IPresenceDatasource {
   final IClientDataBase client;
@@ -70,7 +72,10 @@ class PresenceDatasource implements IPresenceDatasource {
   @override
   Future<List> getPresenceByClassAndDate(int pClass, String date) async {
     final classFilter = ClientDataBaseFilters(field: 'id_class', value: pClass);
-    final dateFilter = ClientDataBaseFilters(field: 'date', value: date);
+    final dateFilter = ClientDataBaseFilters(
+      field: 'date',
+      value: DateFormat('dd/MM/yyyy').parse(date).AnoMesDiaSupaBase(),
+    );
 
     final params = ClientDataBaseGetDataByFiltersParams(
       table: Tables.presences,
@@ -79,6 +84,10 @@ class PresenceDatasource implements IPresenceDatasource {
     );
 
     final result = await client.getDataByFilters(params: params);
+
+    if (result.isEmpty) {
+      throw const PresenceException(message: 'Presence List is empty');
+    }
 
     final paramsCheck = ClientDataBaseGetDataWithForeignTablesParams(
       table: Tables.presences_check,

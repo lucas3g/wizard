@@ -92,7 +92,7 @@ class MyInputWidget extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: context.myTheme.primary,
+            color: context.myTheme.onPrimary,
           ),
         ),
         enabledBorder: OutlineInputBorder(

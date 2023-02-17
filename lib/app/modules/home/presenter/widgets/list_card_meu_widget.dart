@@ -9,23 +9,6 @@ class ListCardMenuWidget extends StatelessWidget {
     return ListView(
       children: [
         CardMenuWidget(
-          title: 'Student',
-          myButtons: [
-            MyButtons(
-              label: 'New Student',
-              icon: Icons.person_add_rounded,
-              route: '/home/student/edit',
-              args: {'editing': false},
-            ),
-            MyButtons(
-              label: 'Student List',
-              icon: Icons.list_rounded,
-              route: '/home/student/',
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        CardMenuWidget(
           title: 'Class',
           myButtons: [
             MyButtons(
@@ -38,6 +21,23 @@ class ListCardMenuWidget extends StatelessWidget {
               label: 'Class List',
               icon: Icons.list_rounded,
               route: '/home/class/',
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        CardMenuWidget(
+          title: 'Student',
+          myButtons: [
+            MyButtons(
+              label: 'New Student',
+              icon: Icons.person_add_rounded,
+              route: '/home/student/edit',
+              args: {'editing': false},
+            ),
+            MyButtons(
+              label: 'Student List',
+              icon: Icons.list_rounded,
+              route: '/home/student/',
             ),
           ],
         ),

@@ -55,7 +55,7 @@ class PresenceRepository implements IPresenceRepository {
       final List<Presence> list = [];
 
       for (var presence in result) {
-        list.add(PresenceAdapter.fromMap(presence));
+        list.add(PresenceAdapter.fromMapSearch(presence));
       }
 
       return list.toSuccess();
