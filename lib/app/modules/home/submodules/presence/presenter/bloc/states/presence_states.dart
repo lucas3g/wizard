@@ -9,6 +9,8 @@ class LoadingPresence extends PresenceStates {}
 
 class SuccessSavePresence extends PresenceStates {}
 
+class SuccessUpdatePresence extends PresenceStates {}
+
 class SuccessGetPresenceByClass extends PresenceStates {
   final List<Presence> presences;
 

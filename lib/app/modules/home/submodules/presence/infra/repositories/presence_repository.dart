@@ -65,4 +65,18 @@ class PresenceRepository implements IPresenceRepository {
       return PresenceException(message: e.toString()).toFailure();
     }
   }
+
+  @override
+  Future<Result<bool, IPresenceException>> updatePresence(
+      Presence presence) async {
+    try {
+      final result = await datasource.updatePresence(presence);
+
+      return result.toSuccess();
+    } on IPresenceException catch (e) {
+      return PresenceException(message: e.message).toFailure();
+    } catch (e) {
+      return PresenceException(message: e.toString()).toFailure();
+    }
+  }
 }

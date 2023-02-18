@@ -112,4 +112,28 @@ class PresenceDatasource implements IPresenceDatasource {
 
     return result;
   }
+
+  @override
+  Future<bool> updatePresence(Presence presence) async {
+    final params = ClientDataBaseUpdateParams(
+      table: Tables.presences,
+      data: PresenceAdapter.toMapUpdate(presence),
+    );
+
+    final result = await client.updateData(params: params);
+
+    final paramsCheck = ClientDataBaseUpdateParams(
+      table: Tables.presences_check,
+      data: PresenceAdapter.toMapCheckUpdate(presence),
+    );
+
+    final resultCheck = await client.updateData(params: paramsCheck);
+
+    if (result.isEmpty || resultCheck.isEmpty) {
+      throw const PresenceException(
+          message: 'Error when trying to update a presences');
+    }
+
+    return result.isNotEmpty && resultCheck.isEmpty;
+  }
 }

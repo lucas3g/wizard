@@ -31,13 +31,27 @@ class SupaBaseService implements IClientDataBase {
 
   @override
   Future<List> updateData({required ClientDataBaseUpdateParams params}) async {
-    final result = await supa
-        .from(params.table.name)
-        .update(params.data)
-        .eq('id', params.data['id'])
-        .select();
+    if (params.data is List) {
+      late List result = [];
 
-    return result;
+      for (var data in params.data) {
+        result = await supa
+            .from(params.table.name)
+            .update(data)
+            .eq('id', data['id'])
+            .select();
+      }
+
+      return result;
+    } else {
+      final result = await supa
+          .from(params.table.name)
+          .update(params.data)
+          .eq('id', params.data['id'])
+          .select();
+
+      return result;
+    }
   }
 
   @override

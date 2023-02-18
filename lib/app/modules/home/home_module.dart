@@ -23,6 +23,7 @@ import 'package:wizard/app/modules/home/submodules/presence/domain/repositories/
 import 'package:wizard/app/modules/home/submodules/presence/domain/usecases/get_presences_by_class_and_date.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/usecases/get_presences_by_class_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/usecases/save_presence_usecase.dart';
+import 'package:wizard/app/modules/home/submodules/presence/domain/usecases/update_presences_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/presence/external/datasources/presence_datasource.dart';
 import 'package:wizard/app/modules/home/submodules/presence/infra/datasources/presence_datasource.dart';
 import 'package:wizard/app/modules/home/submodules/presence/infra/repositories/presence_repository.dart';
@@ -155,6 +156,10 @@ class HomeModule extends Module {
       (i) => SavePresenceUseCase(repository: i()),
       export: true,
     ),
+    Bind.factory<IUpdatePresencesUseCase>(
+      (i) => UpdatePresencesUseCase(repository: i()),
+      export: true,
+    ),
     Bind.factory<IGetPresencesByClassUseCase>(
       (i) => GetPresencesByClassUseCase(repository: i()),
       export: true,
@@ -170,6 +175,7 @@ class HomeModule extends Module {
         savePresenceUseCase: i(),
         getPresencesByClassUseCase: i(),
         getPresencesByClassAndDateUseCase: i(),
+        updatePresencesUseCase: i(),
       ),
       export: true,
     ),

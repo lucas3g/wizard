@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_teacher.dart';
 
@@ -11,7 +14,6 @@ import 'package:wizard/app/modules/home/submodules/presence/domain/vos/presence_
 import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/events/presence_events.dart';
 import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/presence_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/states/presence_states.dart';
-import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/events/student_events.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/student_bloc.dart';
 import 'package:wizard/app/shared/components/my_app_bar_widget.dart';
 import 'package:wizard/app/shared/components/my_drop_down_button_widget.dart';
@@ -20,6 +22,7 @@ import 'package:wizard/app/shared/components/my_input_widget.dart';
 import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
 import 'package:wizard/app/utils/formatters.dart';
+import 'package:wizard/app/utils/my_snackbar.dart';
 
 class PresenceListPage extends StatefulWidget {
   final ClassBloc classBloc;
@@ -49,11 +52,38 @@ class _PresenceListPageState extends State<PresenceListPage> {
 
   final gkForm = GlobalKey<FormState>();
 
+  late StreamSubscription sub;
+
   @override
   void initState() {
     super.initState();
 
     _fetchClasses();
+
+    sub = widget.presenceBloc.stream.listen((state) {
+      if (state is SuccessUpdatePresence) {
+        MySnackBar(
+          message: 'Presence list updated successfully',
+          type: TypeSnackBar.success,
+        );
+
+        Modular.to.pop();
+      }
+
+      if (state is ErrorPresence) {
+        MySnackBar(
+          message: state.message,
+          type: TypeSnackBar.error,
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    sub.cancel();
+
+    super.dispose();
   }
 
   void _fetchClasses() {
@@ -124,12 +154,6 @@ class _PresenceListPageState extends State<PresenceListPage> {
                           return null;
                         },
                         onChanged: (dynamic e) {
-                          widget.studentBloc.add(
-                            GetStudentByClassEvent(
-                              classID: e,
-                            ),
-                          );
-
                           setState(() {
                             selectedValue = e;
                           });
@@ -210,11 +234,16 @@ class _PresenceListPageState extends State<PresenceListPage> {
             Visibility(
               visible: visibleList,
               child: BlocBuilder<PresenceBloc, PresenceStates>(
+                buildWhen: (previous, current) {
+                  return current is SuccessUpdatePresence ||
+                      current is SuccessSavePresence ||
+                      current is SuccessGetPresenceByClass;
+                },
                 bloc: widget.presenceBloc,
                 builder: (context, state) {
                   if (state is ErrorPresence) {
-                    return const Center(
-                      child: Text('Presence List is empty :('),
+                    return Center(
+                      child: Text(state.message),
                     );
                   }
 
@@ -224,8 +253,8 @@ class _PresenceListPageState extends State<PresenceListPage> {
                     );
                   }
 
-                  final presences = state.presences[0];
-                  final checks = presences.presenceCheck;
+                  final presence = state.presences[0];
+                  final checks = presence.presenceCheck;
 
                   return Expanded(
                     child: Column(
@@ -279,7 +308,9 @@ class _PresenceListPageState extends State<PresenceListPage> {
                                         : const Text('Save'),
                                     icon: Icons.save_rounded,
                                     onPressed: () {
-                                      // widget.presenceBloc.add(event)
+                                      widget.presenceBloc.add(
+                                        UpdatePresenceEvent(presence: presence),
+                                      );
                                     },
                                   );
                                 },

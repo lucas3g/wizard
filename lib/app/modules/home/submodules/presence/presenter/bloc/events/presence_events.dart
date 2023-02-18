@@ -26,3 +26,9 @@ class GetPresenceByClassAndDateEvent extends PresenceEvents {
     required this.date,
   });
 }
+
+class UpdatePresenceEvent extends PresenceEvents {
+  final Presence presence;
+
+  UpdatePresenceEvent({required this.presence});
+}

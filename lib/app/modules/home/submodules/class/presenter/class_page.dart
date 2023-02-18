@@ -73,6 +73,7 @@ class _ClassPageState extends State<ClassPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Center(child: Text('Try fetching the data again.')),
+                    const SizedBox(height: 10),
                     SizedBox(
                       width: 150,
                       child: MyElevatedButtonWidget(
