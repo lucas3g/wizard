@@ -10,10 +10,8 @@ import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_tea
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/events/class_events.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/states/class_states.dart';
-import 'package:wizard/app/modules/home/submodules/presence/domain/vos/presence_check.dart';
-import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/events/presence_events.dart';
-import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/presence_bloc.dart';
-import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/states/presence_states.dart';
+import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/homework_bloc.dart';
+import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/states/homework_states.dart';
 import 'package:wizard/app/shared/components/my_app_bar_widget.dart';
 import 'package:wizard/app/shared/components/my_drop_down_button_widget.dart';
 import 'package:wizard/app/shared/components/my_elevated_button_widget.dart';
@@ -23,26 +21,26 @@ import 'package:wizard/app/utils/constants.dart';
 import 'package:wizard/app/utils/formatters.dart';
 import 'package:wizard/app/utils/my_snackbar.dart';
 
-class PresenceListPage extends StatefulWidget {
+class HomeworkListPage extends StatefulWidget {
   final ClassBloc classBloc;
-  final PresenceBloc presenceBloc;
+  final HomeworkBloc homeworkBloc;
 
-  const PresenceListPage({
+  const HomeworkListPage({
     Key? key,
     required this.classBloc,
-    required this.presenceBloc,
+    required this.homeworkBloc,
   }) : super(key: key);
 
   @override
-  State<PresenceListPage> createState() => _PresenceListPageState();
+  State<HomeworkListPage> createState() => _HomeworkListPageState();
 }
 
-class _PresenceListPageState extends State<PresenceListPage> {
+class _HomeworkListPageState extends State<HomeworkListPage> {
   final dateController = TextEditingController();
 
   final fClass = FocusNode();
   final fDate = FocusNode();
-  final fObs = FocusNode();
+  final fNumber = FocusNode();
 
   late bool visibleList = false;
 
@@ -58,8 +56,8 @@ class _PresenceListPageState extends State<PresenceListPage> {
 
     _fetchClasses();
 
-    sub = widget.presenceBloc.stream.listen((state) {
-      if (state is SuccessUpdatePresence) {
+    sub = widget.homeworkBloc.stream.listen((state) {
+      if (state is SuccessUpdateHomework) {
         MySnackBar(
           message: 'Presence list updated successfully',
           type: TypeSnackBar.success,
@@ -68,7 +66,7 @@ class _PresenceListPageState extends State<PresenceListPage> {
         Modular.to.pop();
       }
 
-      if (state is ErrorPresence) {
+      if (state is ErrorSaveHomework) {
         MySnackBar(
           message: state.message,
           type: TypeSnackBar.error,
@@ -94,22 +92,12 @@ class _PresenceListPageState extends State<PresenceListPage> {
     );
   }
 
-  void setPresence(PresenceCheck check) {
-    if (check.presencePresent.value == 'Present') {
-      check.setPresencePresent('Absent');
-    } else {
-      check.setPresencePresent('Present');
-    }
-
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(double.infinity, AppBar().preferredSize.height),
-        child: const MyAppBarWidget(titleAppbar: 'Presence List'),
+        child: const MyAppBarWidget(titleAppbar: 'Homework List'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(kPadding),
@@ -187,7 +175,7 @@ class _PresenceListPageState extends State<PresenceListPage> {
                       }
                     },
                     focusNode: fDate,
-                    hintText: 'Enter the date of presence',
+                    hintText: 'Enter the date of homework',
                     label: 'Date',
                     validator: (v) {
                       if (v!.isEmpty) {
@@ -214,12 +202,7 @@ class _PresenceListPageState extends State<PresenceListPage> {
                               visibleList = true;
                             });
 
-                            widget.presenceBloc.add(
-                              GetPresenceByClassAndDateEvent(
-                                pClass: selectedValue,
-                                date: dateController.text,
-                              ),
-                            );
+                            // widget.homeworkBloc.add();
                           },
                         ),
                       ),
@@ -231,99 +214,98 @@ class _PresenceListPageState extends State<PresenceListPage> {
             const SizedBox(height: 15),
             Visibility(
               visible: visibleList,
-              child: BlocBuilder<PresenceBloc, PresenceStates>(
+              child: BlocBuilder<HomeworkBloc, HomeworkStates>(
                 buildWhen: (previous, current) {
-                  return current is SuccessUpdatePresence ||
-                      current is SuccessSavePresence ||
-                      current is SuccessGetPresenceByClass;
+                  return current is SuccessUpdateHomework ||
+                      current is SuccessSaveHomework ||
+                      current is SuccessGetHomeworksByClass;
                 },
-                bloc: widget.presenceBloc,
+                bloc: widget.homeworkBloc,
                 builder: (context, state) {
-                  if (state is ErrorPresence) {
+                  if (state is ErrorSaveHomework) {
                     return Center(
                       child: Text(state.message),
                     );
                   }
 
-                  if (state is! SuccessGetPresenceByClass) {
+                  if (state is! SuccessGetHomeworksByClass) {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
 
-                  final presence = state.presences[0];
-                  final checks = presence.presenceCheck;
+                  final homework = state.homeworks[0];
+                  final homeworkNotes = homework.homeworkNote;
 
                   return Expanded(
                     child: Column(
                       children: [
                         MyInputWidget(
-                          focusNode: fObs,
-                          hintText: 'Enter the observation',
-                          label: 'Observation',
-                          value: presence.presenceObs.value,
-                          onChanged: presence.setPresenceObs,
+                          focusNode: fNumber,
+                          hintText: 'Enter the number',
+                          label: 'Number',
+                          value: homework.homeworkName.value,
+                          onChanged: homework.setHomeworkName,
                         ),
                         const SizedBox(height: 15),
                         Expanded(
                           child: ListView.separated(
+                            shrinkWrap: true,
                             itemBuilder: (context, index) {
-                              final check = checks[index];
+                              final note = homeworkNotes[index];
 
                               return Container(
                                 decoration: BoxDecoration(
-                                    color:
-                                        check.presencePresent.value == 'Absent'
-                                            ? Colors.red.shade400
-                                            : Colors.green.shade400,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Colors.black26,
-                                        blurRadius: 10,
-                                        offset: Offset(0, 8),
-                                      )
-                                    ]),
+                                  color: makeBackGroundColorListTile(
+                                    note.score.value,
+                                    context,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: note.score.value.isNotEmpty
+                                        ? makeBackGroundColorListTile(
+                                            homework.homeworkNote[index].score
+                                                .value,
+                                            context,
+                                          )
+                                        : context.myTheme.onPrimary,
+                                  ),
+                                ),
                                 child: ListTile(
-                                  title: Text(check.student.studentName.value),
-                                  onTap: () {
-                                    setPresence(check);
-                                  },
+                                  title: Text(note.student.studentName.value),
+                                  trailing: SizedBox(
+                                    width: 160,
+                                    child: MyDropDownButtonWidget(
+                                      border: false,
+                                      validator: (v) => homework
+                                          .homeworkNote[index].score
+                                          .validate()
+                                          .exceptionOrNull(),
+                                      value: note.score.value,
+                                      hint: 'Select the note',
+                                      onChanged: (dynamic e) {
+                                        note.setScore(e!);
+                                        setState(() {});
+                                      },
+                                      items: notes
+                                          .map(
+                                            (e) => DropdownMenuItem(
+                                              value: e['type'],
+                                              child: Text(e['name']!),
+                                            ),
+                                          )
+                                          .toList(),
+                                    ),
+                                  ),
                                 ),
                               );
                             },
                             separatorBuilder: (context, index) =>
                                 const SizedBox(height: 15),
-                            itemCount: checks.length,
+                            itemCount: notes.length,
                           ),
                         ),
                         const SizedBox(height: 20),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: BlocBuilder<PresenceBloc, PresenceStates>(
-                                bloc: widget.presenceBloc,
-                                builder: (context, state) {
-                                  return MyElevatedButtonWidget(
-                                    label: state is LoadingPresence
-                                        ? const SizedBox(
-                                            width: 20,
-                                            height: 20,
-                                            child: CircularProgressIndicator(),
-                                          )
-                                        : const Text('Save'),
-                                    icon: Icons.save_rounded,
-                                    onPressed: () {
-                                      widget.presenceBloc.add(
-                                        UpdatePresenceEvent(presence: presence),
-                                      );
-                                    },
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   );

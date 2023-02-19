@@ -47,4 +47,18 @@ class HomeworkRepository implements IHomeworkRepository {
       return HomeWorkException(message: e.toString()).toFailure();
     }
   }
+
+  @override
+  Future<Result<bool, IHomeWorkException>> updateHomework(
+      Homework homework) async {
+    try {
+      final result = await datasource.updateHomework(homework);
+
+      return result.toSuccess();
+    } on IHomeWorkException catch (e) {
+      return HomeWorkException(message: e.message).toFailure();
+    } catch (e) {
+      return HomeWorkException(message: e.toString()).toFailure();
+    }
+  }
 }

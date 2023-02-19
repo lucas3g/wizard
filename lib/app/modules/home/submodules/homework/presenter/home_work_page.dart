@@ -82,7 +82,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
           homework.homeworkNote.add(
             HomeworkNote(
               id: const IdVO(-1),
-              studentID: student.id.value,
+              student: student,
               score: '',
             ),
           );

@@ -69,4 +69,28 @@ class HomeworkDatasource implements IHomeworkDatasource {
 
     return resultHomework;
   }
+
+  @override
+  Future<bool> updateHomework(Homework homework) async {
+    final params = ClientDataBaseUpdateParams(
+      table: Tables.homeworks,
+      data: HomeworkAdapter.toMapUpdate(homework),
+    );
+
+    final result = await client.updateData(params: params);
+
+    final paramsNotes = ClientDataBaseUpdateParams(
+      table: Tables.homeworks_notes,
+      data: HomeworkAdapter.toMapNotesUpdate(homework),
+    );
+
+    final resultNotes = await client.updateData(params: paramsNotes);
+
+    if (result.isEmpty || resultNotes.isEmpty) {
+      throw const HomeWorkException(
+          message: 'Error when trying to update a homework');
+    }
+
+    return result.isNotEmpty && resultNotes.isEmpty;
+  }
 }

@@ -26,7 +26,6 @@ class PresenceModule extends Module {
       '/list',
       child: ((context, args) => PresenceListPage(
             classBloc: Modular.get<ClassBloc>(),
-            studentBloc: Modular.get<StudentBloc>(),
             presenceBloc: Modular.get<PresenceBloc>(),
           )),
     ),

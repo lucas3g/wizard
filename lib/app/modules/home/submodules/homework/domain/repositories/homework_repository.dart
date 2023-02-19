@@ -4,6 +4,7 @@ import 'package:wizard/app/modules/home/submodules/homework/domain/exceptions/ho
 
 abstract class IHomeworkRepository {
   Future<Result<bool, IHomeWorkException>> saveHomework(Homework homework);
+  Future<Result<bool, IHomeWorkException>> updateHomework(Homework homework);
   Future<Result<List<Homework>, IHomeWorkException>> getHomeworksByClass(
       int classID);
 }

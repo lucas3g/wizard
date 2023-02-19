@@ -9,6 +9,8 @@ class LoadingHomework extends HomeworkStates {}
 
 class SuccessSaveHomework extends HomeworkStates {}
 
+class SuccessUpdateHomework extends HomeworkStates {}
+
 class SuccessGetHomeworksByClass extends HomeworkStates {
   final List<Homework> homeworks;
 

@@ -11,6 +11,14 @@ class SaveHomeworkEvent extends HomeworkEvents {
   });
 }
 
+class UpdateHomeworkEvent extends HomeworkEvents {
+  final Homework homework;
+
+  UpdateHomeworkEvent({
+    required this.homework,
+  });
+}
+
 class GetHomeworksByClassEvent extends HomeworkEvents {
   final int classID;
 

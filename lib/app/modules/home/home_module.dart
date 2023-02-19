@@ -14,6 +14,7 @@ import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bl
 import 'package:wizard/app/modules/home/submodules/homework/domain/repositories/homework_repository.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/usecases/get_homeworks_by_class_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/usecases/save_homework_usecase.dart';
+import 'package:wizard/app/modules/home/submodules/homework/domain/usecases/update_homework_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/homework/external/datasources/homework_datasource.dart';
 import 'package:wizard/app/modules/home/submodules/homework/home_work_module.dart';
 import 'package:wizard/app/modules/home/submodules/homework/infra/datasources/homework_datasource.dart';
@@ -197,6 +198,10 @@ class HomeModule extends Module {
       (i) => SaveHomeworkUsecase(repository: i()),
       export: true,
     ),
+    Bind.factory<IUpdateHomeworkUsecase>(
+      (i) => UpdateHomeworkUsecase(repository: i()),
+      export: true,
+    ),
     Bind.factory<IGetHomeworksByClassUsecase>(
       (i) => GetHomeworksByClassUsecase(repository: i()),
       export: true,
@@ -207,6 +212,7 @@ class HomeModule extends Module {
       (i) => HomeworkBloc(
         saveHomeworkUsecase: i(),
         getHomeworksByClassUsecase: i(),
+        updateHomeworkUsecase: i(),
       ),
       export: true,
     ),
