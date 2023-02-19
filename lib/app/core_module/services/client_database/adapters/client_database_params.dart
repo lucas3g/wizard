@@ -59,15 +59,11 @@ class ClientDataBaseFilters {
 class ClientDataBaseGetDataWithForeignTablesParams {
   final Tables table;
   final Tables foreignTable;
-  final String foreignKey;
-  final String colummns;
   final String orderBy;
 
   ClientDataBaseGetDataWithForeignTablesParams({
     required this.table,
     required this.foreignTable,
-    required this.foreignKey,
-    required this.colummns,
     required this.orderBy,
   });
 }

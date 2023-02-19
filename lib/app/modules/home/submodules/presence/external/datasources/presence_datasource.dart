@@ -92,8 +92,6 @@ class PresenceDatasource implements IPresenceDatasource {
     final paramsCheck = ClientDataBaseGetDataWithForeignTablesParams(
       table: Tables.presences_check,
       foreignTable: Tables.students,
-      foreignKey: 'id_student',
-      colummns: 'id,id_presence,id_student,id_class,type,name',
       orderBy: 'id_class',
     );
 

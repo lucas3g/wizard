@@ -104,7 +104,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
         Modular.to.pop();
       }
 
-      if (state is ErrorSaveHomework) {
+      if (state is ErrorHomework) {
         MySnackBar(message: state.message, type: TypeSnackBar.error);
       }
     });

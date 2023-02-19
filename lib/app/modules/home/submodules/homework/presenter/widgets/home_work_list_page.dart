@@ -10,6 +10,7 @@ import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_tea
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/events/class_events.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/states/class_states.dart';
+import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/events/homework_events.dart';
 import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/homework_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/states/homework_states.dart';
 import 'package:wizard/app/shared/components/my_app_bar_widget.dart';
@@ -66,7 +67,7 @@ class _HomeworkListPageState extends State<HomeworkListPage> {
         Modular.to.pop();
       }
 
-      if (state is ErrorSaveHomework) {
+      if (state is ErrorHomework) {
         MySnackBar(
           message: state.message,
           type: TypeSnackBar.error,
@@ -202,7 +203,12 @@ class _HomeworkListPageState extends State<HomeworkListPage> {
                               visibleList = true;
                             });
 
-                            // widget.homeworkBloc.add();
+                            widget.homeworkBloc.add(
+                              GetHomeworksByClassAndDateEvent(
+                                classID: selectedValue,
+                                date: dateController.text,
+                              ),
+                            );
                           },
                         ),
                       ),
@@ -215,100 +221,132 @@ class _HomeworkListPageState extends State<HomeworkListPage> {
             Visibility(
               visible: visibleList,
               child: BlocBuilder<HomeworkBloc, HomeworkStates>(
-                buildWhen: (previous, current) {
-                  return current is SuccessUpdateHomework ||
-                      current is SuccessSaveHomework ||
-                      current is SuccessGetHomeworksByClass;
-                },
                 bloc: widget.homeworkBloc,
                 builder: (context, state) {
-                  if (state is ErrorSaveHomework) {
-                    return Center(
-                      child: Text(state.message),
+                  if (state is LoadingHomework) {
+                    return const Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
                     );
                   }
 
-                  if (state is! SuccessGetHomeworksByClass) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                  if (state is ErrorHomework) {
+                    return Expanded(
+                      child: Center(
+                        child: Text(state.message),
+                      ),
                     );
                   }
 
-                  final homework = state.homeworks[0];
-                  final homeworkNotes = homework.homeworkNote;
+                  if (state is SuccessGetHomeworksByClassAndDate) {
+                    final homework = state.homeworks[0];
+                    final homeworkNotes = homework.homeworkNote;
 
-                  return Expanded(
-                    child: Column(
-                      children: [
-                        MyInputWidget(
-                          focusNode: fNumber,
-                          hintText: 'Enter the number',
-                          label: 'Number',
-                          value: homework.homeworkName.value,
-                          onChanged: homework.setHomeworkName,
-                        ),
-                        const SizedBox(height: 15),
-                        Expanded(
-                          child: ListView.separated(
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              final note = homeworkNotes[index];
+                    return Expanded(
+                      child: Column(
+                        children: [
+                          MyInputWidget(
+                            focusNode: fNumber,
+                            hintText: 'Enter the number',
+                            label: 'Number',
+                            value: homework.homeworkName.value,
+                            onChanged: homework.setHomeworkName,
+                          ),
+                          const SizedBox(height: 15),
+                          Expanded(
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                final note = homeworkNotes[index];
 
-                              return Container(
-                                decoration: BoxDecoration(
-                                  color: makeBackGroundColorListTile(
-                                    note.score.value,
-                                    context,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: note.score.value.isNotEmpty
-                                        ? makeBackGroundColorListTile(
-                                            homework.homeworkNote[index].score
-                                                .value,
-                                            context,
-                                          )
-                                        : context.myTheme.onPrimary,
-                                  ),
-                                ),
-                                child: ListTile(
-                                  title: Text(note.student.studentName.value),
-                                  trailing: SizedBox(
-                                    width: 160,
-                                    child: MyDropDownButtonWidget(
-                                      border: false,
-                                      validator: (v) => homework
-                                          .homeworkNote[index].score
-                                          .validate()
-                                          .exceptionOrNull(),
-                                      value: note.score.value,
-                                      hint: 'Select the note',
-                                      onChanged: (dynamic e) {
-                                        note.setScore(e!);
-                                        setState(() {});
-                                      },
-                                      items: notes
-                                          .map(
-                                            (e) => DropdownMenuItem(
-                                              value: e['type'],
-                                              child: Text(e['name']!),
-                                            ),
-                                          )
-                                          .toList(),
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    color: makeBackGroundColorListTile(
+                                      note.score.value,
+                                      context,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: note.score.value.isNotEmpty
+                                          ? makeBackGroundColorListTile(
+                                              homework.homeworkNote[index].score
+                                                  .value,
+                                              context,
+                                            )
+                                          : context.myTheme.onPrimary,
                                     ),
                                   ),
-                                ),
-                              );
-                            },
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 15),
-                            itemCount: notes.length,
+                                  child: ListTile(
+                                    title: Text(note.student.studentName.value),
+                                    trailing: SizedBox(
+                                      width: 160,
+                                      child: MyDropDownButtonWidget(
+                                        border: false,
+                                        validator: (v) => homework
+                                            .homeworkNote[index].score
+                                            .validate()
+                                            .exceptionOrNull(),
+                                        value: note.score.value,
+                                        hint: 'Select the note',
+                                        onChanged: (dynamic e) {
+                                          note.setScore(e!);
+                                          setState(() {});
+                                        },
+                                        items: notes
+                                            .map(
+                                              (e) => DropdownMenuItem(
+                                                value: e['type'],
+                                                child: Text(e['name']!),
+                                              ),
+                                            )
+                                            .toList(),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 15),
+                              itemCount: homeworkNotes.length,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                      ],
-                    ),
-                  );
+                          const SizedBox(height: 20),
+                          Row(
+                            children: [
+                              Expanded(
+                                child:
+                                    BlocBuilder<HomeworkBloc, HomeworkStates>(
+                                  bloc: widget.homeworkBloc,
+                                  builder: (context, state) {
+                                    return MyElevatedButtonWidget(
+                                      label: state is LoadingHomework
+                                          ? const SizedBox(
+                                              width: 20,
+                                              height: 20,
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            )
+                                          : const Text('Save'),
+                                      icon: Icons.save_rounded,
+                                      onPressed: () {
+                                        widget.homeworkBloc.add(
+                                          UpdateHomeworkEvent(
+                                              homework: homework),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+
+                  return const SizedBox();
                 },
               ),
             )

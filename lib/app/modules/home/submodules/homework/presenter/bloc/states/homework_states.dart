@@ -19,10 +19,18 @@ class SuccessGetHomeworksByClass extends HomeworkStates {
   });
 }
 
-class ErrorSaveHomework extends HomeworkStates {
+class SuccessGetHomeworksByClassAndDate extends HomeworkStates {
+  final List<Homework> homeworks;
+
+  SuccessGetHomeworksByClassAndDate({
+    required this.homeworks,
+  });
+}
+
+class ErrorHomework extends HomeworkStates {
   final String message;
 
-  ErrorSaveHomework({
+  ErrorHomework({
     required this.message,
   });
 }

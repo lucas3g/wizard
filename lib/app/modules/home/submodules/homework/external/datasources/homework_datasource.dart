@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:wizard/app/core_module/services/client_database/adapters/client_database_params.dart';
 import 'package:wizard/app/core_module/services/client_database/client_database_interface.dart';
 import 'package:wizard/app/core_module/services/client_database/helpers/tables.dart';
@@ -5,6 +6,7 @@ import 'package:wizard/app/modules/home/submodules/homework/domain/entities/home
 import 'package:wizard/app/modules/home/submodules/homework/domain/exceptions/homework_exception.dart';
 import 'package:wizard/app/modules/home/submodules/homework/infra/adapters/homework_adapter.dart';
 import 'package:wizard/app/modules/home/submodules/homework/infra/datasources/homework_datasource.dart';
+import 'package:wizard/app/utils/formatters.dart';
 
 class HomeworkDatasource implements IHomeworkDatasource {
   final IClientDataBase client;
@@ -92,5 +94,47 @@ class HomeworkDatasource implements IHomeworkDatasource {
     }
 
     return result.isNotEmpty && resultNotes.isEmpty;
+  }
+
+  @override
+  Future<List> getHomeworksByClassAndDate(int classID, String date) async {
+    final classFilter =
+        ClientDataBaseFilters(field: 'id_class', value: classID);
+    final dateFilter = ClientDataBaseFilters(
+      field: 'date',
+      value: DateFormat('dd/MM/yyyy').parse(date).AnoMesDiaSupaBase(),
+    );
+
+    final params = ClientDataBaseGetDataByFiltersParams(
+      table: Tables.homeworks,
+      filters: {classFilter, dateFilter},
+      orderBy: 'id_class',
+    );
+
+    final result = await client.getDataByFilters(params: params);
+
+    if (result.isEmpty) {
+      throw const HomeWorkException(message: 'Homework List is empty');
+    }
+
+    final paramsNotes = ClientDataBaseGetDataWithForeignTablesParams(
+      table: Tables.homeworks_notes,
+      foreignTable: Tables.students,
+      orderBy: 'id_class',
+    );
+
+    final resultNotes =
+        await client.getDataWithForeignTables(params: paramsNotes);
+
+    for (var homework in result) {
+      homework['notes'] =
+          resultNotes.where((e) => e['id_homework'] == homework['id']).toList();
+    }
+
+    if (result.isEmpty) {
+      throw const HomeWorkException(message: 'Homework Notes is empty!');
+    }
+
+    return result;
   }
 }

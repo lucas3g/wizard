@@ -26,3 +26,13 @@ class GetHomeworksByClassEvent extends HomeworkEvents {
     required this.classID,
   });
 }
+
+class GetHomeworksByClassAndDateEvent extends HomeworkEvents {
+  final int classID;
+  final String date;
+
+  GetHomeworksByClassAndDateEvent({
+    required this.classID,
+    required this.date,
+  });
+}

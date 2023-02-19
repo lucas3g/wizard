@@ -12,6 +12,7 @@ import 'package:wizard/app/modules/home/submodules/class/infra/datasources/class
 import 'package:wizard/app/modules/home/submodules/class/infra/repositories/class_repository.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/repositories/homework_repository.dart';
+import 'package:wizard/app/modules/home/submodules/homework/domain/usecases/get_homework_by_class_and_date.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/usecases/get_homeworks_by_class_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/usecases/save_homework_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/usecases/update_homework_usecase.dart';
@@ -206,6 +207,10 @@ class HomeModule extends Module {
       (i) => GetHomeworksByClassUsecase(repository: i()),
       export: true,
     ),
+    Bind.factory<IGetHomeworkByClassAndDateUseCase>(
+      (i) => GetHomeworkByClassAndDateUseCase(repository: i()),
+      export: true,
+    ),
 
     //BLOCS
     BlocBind.factory<HomeworkBloc>(
@@ -213,6 +218,7 @@ class HomeModule extends Module {
         saveHomeworkUsecase: i(),
         getHomeworksByClassUsecase: i(),
         updateHomeworkUsecase: i(),
+        getHomeworkByClassAndDateUseCase: i(),
       ),
       export: true,
     ),

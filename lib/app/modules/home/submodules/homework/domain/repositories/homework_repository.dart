@@ -7,4 +7,6 @@ abstract class IHomeworkRepository {
   Future<Result<bool, IHomeWorkException>> updateHomework(Homework homework);
   Future<Result<List<Homework>, IHomeWorkException>> getHomeworksByClass(
       int classID);
+  Future<Result<List<Homework>, IHomeWorkException>> getHomeworksByClassAndDate(
+      int classID, String date);
 }

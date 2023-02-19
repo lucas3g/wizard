@@ -61,4 +61,24 @@ class HomeworkRepository implements IHomeworkRepository {
       return HomeWorkException(message: e.toString()).toFailure();
     }
   }
+
+  @override
+  Future<Result<List<Homework>, IHomeWorkException>> getHomeworksByClassAndDate(
+      int classID, String date) async {
+    try {
+      final result = await datasource.getHomeworksByClassAndDate(classID, date);
+
+      final List<Homework> list = [];
+
+      for (var homework in result) {
+        list.add(HomeworkAdapter.fromMapSearch(homework));
+      }
+
+      return list.toSuccess();
+    } on IHomeWorkException catch (e) {
+      return HomeWorkException(message: e.message).toFailure();
+    } catch (e) {
+      return HomeWorkException(message: e.toString()).toFailure();
+    }
+  }
 }

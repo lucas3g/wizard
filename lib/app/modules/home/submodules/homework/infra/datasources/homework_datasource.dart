@@ -4,4 +4,5 @@ abstract class IHomeworkDatasource {
   Future<bool> saveHomework(Homework homework);
   Future<bool> updateHomework(Homework homework);
   Future<List> getHomeworksByClass(int classID);
+  Future<List> getHomeworksByClassAndDate(int classID, String date);
 }

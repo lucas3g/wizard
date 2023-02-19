@@ -232,22 +232,21 @@ class _PresenceListPageState extends State<PresenceListPage> {
             Visibility(
               visible: visibleList,
               child: BlocBuilder<PresenceBloc, PresenceStates>(
-                buildWhen: (previous, current) {
-                  return current is SuccessUpdatePresence ||
-                      current is SuccessSavePresence ||
-                      current is SuccessGetPresenceByClass;
-                },
                 bloc: widget.presenceBloc,
                 builder: (context, state) {
                   if (state is ErrorPresence) {
-                    return Center(
-                      child: Text(state.message),
+                    return Expanded(
+                      child: Center(
+                        child: Text(state.message),
+                      ),
                     );
                   }
 
                   if (state is! SuccessGetPresenceByClass) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                    return const Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
                     );
                   }
 
