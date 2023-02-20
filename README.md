@@ -12,28 +12,26 @@ Este é o repositório oficial do aplicativo WizUp, uma plataforma desenvolvida 
 Veja abaixo alguns prints do aplicativo:
 
 ### **Tela de login**
-
-<div style="display: flex;">
-  <figure>
-    <figcaption>Dark</figcaption>
+<div style="display: flex; flex-wrap: wrap;">
+  <figure style="flex: 1; margin-right: 20px;">
     <img src="https://i.imgur.com/VdySqYA.jpeg" alt="descrição da imagem" width="200" />
+    <figcaption>Dark</figcaption>
   </figure>
-  <figure>
-    <figcaption>Light</figcaption>
+  <figure style="flex: 1; margin-right: 20px;">
     <img src="https://i.imgur.com/zlmWwHC.jpeg" alt="descrição da imagem" width="200" />
+    <figcaption>Light</figcaption>
   </figure>
 </div>
 
 ### **Tela principal**
-
 <div style="display: flex;">
   <figure>
-    <figcaption>Dark</figcaption>
     <img src="https://i.imgur.com/edfOAeV.jpeg" alt="descrição da imagem" width="200" />
+    <figcaption>Dark</figcaption>
   </figure>
   <figure>
-    <figcaption>Light</figcaption>
     <img src="https://i.imgur.com/PDpwv3o.jpeg" alt="descrição da imagem" width="200" />
+    <figcaption>Light</figcaption>
   </figure>
 </div>
 
@@ -58,25 +56,26 @@ See below some screenshots of the application:
 
 <div style="display: flex;">
   <figure>
-    <figcaption>Dark</figcaption>
     <img src="https://i.imgur.com/VdySqYA.jpeg" alt="descrição da imagem" width="200" />
+    <figcaption>Dark</figcaption>
   </figure>
   <figure>
-    <figcaption>Light</figcaption>
     <img src="https://i.imgur.com/zlmWwHC.jpeg" alt="descrição da imagem" width="200" />
+    <figcaption>Light</figcaption>
   </figure>
 </div>
 
 ### **Main screen**
 
-<div style="display: flex;">
-  <figure>
-    <figcaption>Dark</figcaption>
+<div style="display: flex; flex-wrap: wrap;">
+  <figure style="flex: 1; margin-right: 20px;">
+  <figcaption>Dark</figcaption>
     <img src="https://i.imgur.com/edfOAeV.jpeg" alt="descrição da imagem" width="200" />
+    
   </figure>
-  <figure>
-    <figcaption>Light</figcaption>
+  <figure style="flex: 1; margin-right: 20px;">
     <img src="https://i.imgur.com/PDpwv3o.jpeg" alt="descrição da imagem" width="200" />
+    <figcaption>Light</figcaption>
   </figure>
 </div>
 
