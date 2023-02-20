@@ -17,10 +17,18 @@ class SuccessGetReviewsByClass extends ReviewStates {
   });
 }
 
-class ErrorSaveReview extends ReviewStates {
+class SuccessGetReviewsByClassAndDate extends ReviewStates {
+  final List<Review> reviews;
+
+  SuccessGetReviewsByClassAndDate({
+    required this.reviews,
+  });
+}
+
+class ErrorReview extends ReviewStates {
   final String message;
 
-  ErrorSaveReview({
+  ErrorReview({
     required this.message,
   });
 }

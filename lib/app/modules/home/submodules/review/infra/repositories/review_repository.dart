@@ -36,7 +36,27 @@ class ReviewRepository implements IReviewRepository {
       final List<Review> list = [];
 
       for (var review in result) {
-        list.add((ReviewAdapter.fromMap(review)));
+        list.add(ReviewAdapter.fromMap(review));
+      }
+
+      return list.toSuccess();
+    } on IReviewException catch (e) {
+      return ReviewException(message: e.message).toFailure();
+    } catch (e) {
+      return ReviewException(message: e.toString()).toFailure();
+    }
+  }
+
+  @override
+  Future<Result<List<Review>, IReviewException>> getReviewsByClassAndDate(
+      int classID, String date) async {
+    try {
+      final result = await datasource.getReviewsByClassAndDate(classID, date);
+
+      final List<Review> list = [];
+
+      for (var review in result) {
+        list.add(ReviewAdapter.fromMapSearch(review));
       }
 
       return list.toSuccess();

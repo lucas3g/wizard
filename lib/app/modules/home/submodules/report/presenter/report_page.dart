@@ -157,7 +157,7 @@ class _ReportPageState extends State<ReportPage> {
         }
       }
 
-      if (state is ErrorSaveReview) {
+      if (state is ErrorReview) {
         MySnackBar(message: state.message, type: TypeSnackBar.error);
       }
     });

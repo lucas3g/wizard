@@ -82,7 +82,7 @@ class _ReviewPageState extends State<ReviewPage> {
           review.reviewNote.add(
             ReviewNote(
               id: const IdVO(-1),
-              studentID: student.id.value,
+              student: student,
               score: '',
             ),
           );
@@ -100,7 +100,7 @@ class _ReviewPageState extends State<ReviewPage> {
         Modular.to.pop();
       }
 
-      if (state is ErrorSaveReview) {
+      if (state is ErrorReview) {
         MySnackBar(message: state.message, type: TypeSnackBar.error);
       }
     });

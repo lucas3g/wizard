@@ -33,6 +33,7 @@ import 'package:wizard/app/modules/home/submodules/presence/presence_module.dart
 import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/presence_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/report/report_module.dart';
 import 'package:wizard/app/modules/home/submodules/review/domain/repositories/review_repository.dart';
+import 'package:wizard/app/modules/home/submodules/review/domain/usecases/get_review_by_class_and_date.dart';
 import 'package:wizard/app/modules/home/submodules/review/domain/usecases/get_review_by_class_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/review/domain/usecases/save_review_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/review/external/datasources/review_datasource.dart';
@@ -244,12 +245,17 @@ class HomeModule extends Module {
       (i) => GetReviewsByClassUsecase(repository: i()),
       export: true,
     ),
+    Bind.factory<IGetReviewByClassAndDateUseCase>(
+      (i) => GetReviewByClassAndDateUseCase(repository: i()),
+      export: true,
+    ),
 
     //BLOCS
     BlocBind.factory<ReviewBloc>(
       (i) => ReviewBloc(
         saveReviewUsecase: i(),
         getReviewsByClassUsecase: i(),
+        getReviewByClassAndDateUseCase: i(),
       ),
       export: true,
     ),

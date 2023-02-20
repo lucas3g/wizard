@@ -18,3 +18,13 @@ class GetReviewsByClassEvent extends ReviewEvents {
     required this.classID,
   });
 }
+
+class GetReviewsByClassAndDateEvent extends ReviewEvents {
+  final int classID;
+  final String date;
+
+  GetReviewsByClassAndDateEvent({
+    required this.classID,
+    required this.date,
+  });
+}
