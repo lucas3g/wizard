@@ -42,17 +42,15 @@ See below some screenshots of the application:
 
 ### **Login screen**
 ##### **Dark**
-![Login screen](https://i.imgur.com/VdySqYA.jpeg)
+<img src="https://i.imgur.com/VdySqYA.jpeg" alt="descrição da imagem" width="200" />
 ##### **Light**
-![Login screen](https://i.imgur.com/zlmWwHC.jpeg)
+<img src="https://i.imgur.com/zlmWwHC.jpeg" alt="descrição da imagem" width="200" />
 
 ### **Main screen**
 ##### **Dark**
-![Main screen](https://i.imgur.com/edfOAeV.jpeg)
+<img src="https://i.imgur.com/edfOAeV.jpeg" alt="descrição da imagem" width="200" />
 ##### **Light**
-![Main screen](https://i.imgur.com/PDpwv3o.jpeg)
+<img src="https://i.imgur.com/PDpwv3o.jpeg" alt="descrição da imagem" width="200" />
 
 # **License**
 This application is distributed under the MIT license. See the LICENSE file for more information.
-
-<img src="https://i.imgur.com/edfOAeV.jpeg" alt="descrição da imagem" width="100" />
