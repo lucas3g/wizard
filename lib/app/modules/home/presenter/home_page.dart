@@ -10,6 +10,7 @@ import 'package:wizard/app/modules/auth/presenter/bloc/auth_bloc.dart';
 import 'package:wizard/app/modules/auth/presenter/bloc/states/auth_states.dart';
 import 'package:wizard/app/modules/home/presenter/widgets/list_card_meu_widget.dart';
 import 'package:wizard/app/modules/home/presenter/widgets/my_drawer_widget.dart';
+import 'package:wizard/app/shared/stores/app_store.dart';
 import 'package:wizard/app/utils/constants.dart';
 
 class HomePage extends StatefulWidget {
@@ -44,6 +45,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appStore = context.watch<AppStore>(
+      (store) => store.themeMode,
+    );
+
     return Scaffold(
       appBar: AppBar(
         shape: const RoundedRectangleBorder(
@@ -56,6 +61,9 @@ class _HomePageState extends State<HomePage> {
           'WizUp',
           style: context.textTheme.titleLarge!.copyWith(
             fontWeight: FontWeight.bold,
+            color: appStore.themeMode.value == ThemeMode.dark
+                ? context.myTheme.onBackground
+                : context.myTheme.background,
           ),
         ),
         leading: Builder(builder: (context) {

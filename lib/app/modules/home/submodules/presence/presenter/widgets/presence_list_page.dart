@@ -18,7 +18,6 @@ import 'package:wizard/app/shared/components/my_app_bar_widget.dart';
 import 'package:wizard/app/shared/components/my_drop_down_button_widget.dart';
 import 'package:wizard/app/shared/components/my_elevated_button_widget.dart';
 import 'package:wizard/app/shared/components/my_input_widget.dart';
-import 'package:wizard/app/theme/app_theme.dart';
 import 'package:wizard/app/utils/constants.dart';
 import 'package:wizard/app/utils/formatters.dart';
 import 'package:wizard/app/utils/my_snackbar.dart';
@@ -126,7 +125,6 @@ class _PresenceListPageState extends State<PresenceListPage> {
                         return Container(
                           height: 50,
                           decoration: BoxDecoration(
-                            border: Border.all(color: AppTheme.colors.primary),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Center(

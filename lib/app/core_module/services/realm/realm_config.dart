@@ -3,5 +3,5 @@ import 'package:wizard/app/core_module/services/realm/model/theme_mode_model.dar
 
 LocalConfiguration config =
     Configuration.local([ThemeModeModel.schema], initialDataCallback: (realm) {
-  realm.add(ThemeModeModel('system'));
+  realm.add(ThemeModeModel('dark'));
 });

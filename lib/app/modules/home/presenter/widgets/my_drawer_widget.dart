@@ -39,7 +39,11 @@ class _MyDrawerWidgetState extends State<MyDrawerWidget> {
           SizedBox(
             height: context.screenHeight * .30,
             child: DrawerHeader(
-              decoration: BoxDecoration(color: context.myTheme.onPrimary),
+              decoration: BoxDecoration(
+                color: appStore.themeMode.value == ThemeMode.dark
+                    ? context.myTheme.onPrimary
+                    : context.myTheme.onPrimaryContainer,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

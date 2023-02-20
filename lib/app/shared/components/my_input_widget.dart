@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wizard/app/shared/stores/app_store.dart';
 import 'package:wizard/app/utils/constants.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class MyInputWidget extends StatelessWidget {
   final FocusNode? focusNode;
@@ -54,6 +56,16 @@ class MyInputWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appStore = context.watch<AppStore>(
+      (store) => store.themeMode,
+    );
+
+    Color returnBorderColor() {
+      return appStore.themeMode.value == ThemeMode.dark
+          ? context.myTheme.onPrimary
+          : context.myTheme.onPrimaryContainer;
+    }
+
     return TextFormField(
       controller: controller,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -86,19 +98,19 @@ class MyInputWidget extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: context.myTheme.onPrimary,
+            color: returnBorderColor(),
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: context.myTheme.onPrimary,
+            color: returnBorderColor(),
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: context.myTheme.onPrimary,
+            color: returnBorderColor(),
           ),
         ),
       ),
