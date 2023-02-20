@@ -1,6 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
+import 'package:wizard/app/shared/stores/app_store.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:wizard/app/utils/constants.dart';
 
 class MyDropDownButtonWidget<T> extends StatefulWidget {
@@ -42,6 +42,10 @@ class _MyDropDownButtonWidgetState<T> extends State<MyDropDownButtonWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final appStore = context.watch<AppStore>(
+      (store) => store.themeMode,
+    );
+
     return Container(
       alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -49,7 +53,9 @@ class _MyDropDownButtonWidgetState<T> extends State<MyDropDownButtonWidget> {
         borderRadius: BorderRadius.circular(10),
         border: widget.border!
             ? Border.all(
-                color: context.myTheme.onPrimary,
+                color: appStore.themeMode.value == ThemeMode.dark
+                    ? context.myTheme.onPrimary
+                    : context.myTheme.onPrimaryContainer,
               )
             : null,
       ),
@@ -59,7 +65,9 @@ class _MyDropDownButtonWidgetState<T> extends State<MyDropDownButtonWidget> {
         decoration: const InputDecoration(
           border: InputBorder.none,
         ),
-        iconEnabledColor: context.myTheme.onPrimary,
+        iconEnabledColor: appStore.themeMode.value == ThemeMode.dark
+            ? context.myTheme.onPrimary
+            : context.myTheme.onPrimaryContainer,
         borderRadius: BorderRadius.circular(10),
         isDense: true,
         validator: widget.validator,

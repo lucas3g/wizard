@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 part 'color_schemes.g.dart';
 
 final lightTheme = ThemeData(
   useMaterial3: true,
+  fontFamily: GoogleFonts.roboto().fontFamily,
   colorScheme: _lightColorScheme,
   appBarTheme: AppBarTheme(
     backgroundColor: _lightColorScheme.onPrimaryContainer,
@@ -27,6 +29,7 @@ final lightTheme = ThemeData(
 
 final darkTheme = ThemeData(
   useMaterial3: true,
+  fontFamily: GoogleFonts.roboto().fontFamily,
   colorScheme: _darkColorScheme,
   appBarTheme: AppBarTheme(
     backgroundColor: _darkColorScheme.onPrimary,

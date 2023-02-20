@@ -60,7 +60,11 @@ class _MyDrawerWidgetState extends State<MyDrawerWidget> {
                   const SizedBox(height: 10),
                   Text(
                     'Teacher: ${widget.user.name.value}',
-                    style: context.textTheme.titleSmall,
+                    style: context.textTheme.titleSmall!.copyWith(
+                      color: appStore.themeMode.value == ThemeMode.dark
+                          ? context.myTheme.onBackground
+                          : context.myTheme.background,
+                    ),
                   )
                 ],
               ),
@@ -103,7 +107,7 @@ class _MyDrawerWidgetState extends State<MyDrawerWidget> {
                               Icons.exit_to_app_rounded,
                               color: context.myTheme.onBackground,
                             ),
-                            title: state is LoadignAuth
+                            title: state.data is LoadignAuth
                                 ? Row(
                                     children: [
                                       SizedBox(

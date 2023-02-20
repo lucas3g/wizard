@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:wizard/app/shared/stores/app_store.dart';
 import 'package:wizard/app/utils/constants.dart';
 
 class MyAppBarWidget extends StatefulWidget {
@@ -18,6 +19,10 @@ class _MyAppBarWidgetState extends State<MyAppBarWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final appStore = context.watch<AppStore>(
+      (store) => store.themeMode,
+    );
+
     return AppBar(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -29,6 +34,9 @@ class _MyAppBarWidgetState extends State<MyAppBarWidget> {
         widget.titleAppbar,
         style: context.textTheme.titleLarge!.copyWith(
           fontWeight: FontWeight.bold,
+          color: appStore.themeMode.value == ThemeMode.dark
+              ? context.myTheme.onBackground
+              : context.myTheme.background,
         ),
       ),
       leading: IconButton(

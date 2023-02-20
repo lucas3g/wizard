@@ -191,6 +191,7 @@ class _ReportPageState extends State<ReportPage> {
                   return Container(
                     height: 50,
                     decoration: BoxDecoration(
+                      border: Border.all(),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: const Center(
