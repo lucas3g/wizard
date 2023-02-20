@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_teacher.dart';
 
@@ -57,14 +58,14 @@ class _ReviewListPageState extends State<ReviewListPage> {
     _fetchClasses();
 
     sub = widget.reviewBloc.stream.listen((state) {
-      // if (state is Suc) {
-      //   MySnackBar(
-      //     message: 'Presence list updated successfully',
-      //     type: TypeSnackBar.success,
-      //   );
+      if (state is SuccessUpdateReview) {
+        MySnackBar(
+          message: 'Review updated successfully',
+          type: TypeSnackBar.success,
+        );
 
-      //   Modular.to.pop();
-      // }
+        Modular.to.pop();
+      }
 
       if (state is ErrorReview) {
         MySnackBar(
@@ -328,10 +329,9 @@ class _ReviewListPageState extends State<ReviewListPage> {
                                           : const Text('Save'),
                                       icon: Icons.save_rounded,
                                       onPressed: () {
-                                        // widget.reviewBloc.add(
-                                        //   UpdateHomeworkEvent(
-                                        //       homework: homework),
-                                        // );
+                                        widget.reviewBloc.add(
+                                          UpdateReviewEvent(review: review),
+                                        );
                                       },
                                     );
                                   },

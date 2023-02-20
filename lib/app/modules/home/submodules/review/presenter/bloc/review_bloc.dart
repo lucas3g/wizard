@@ -4,20 +4,24 @@ import 'package:wizard/app/modules/home/submodules/review/domain/usecases/get_re
 
 import 'package:wizard/app/modules/home/submodules/review/domain/usecases/get_review_by_class_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/review/domain/usecases/save_review_usecase.dart';
+import 'package:wizard/app/modules/home/submodules/review/domain/usecases/update_review_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/review/presenter/bloc/events/review_events.dart';
 import 'package:wizard/app/modules/home/submodules/review/presenter/bloc/states/review_states.dart';
 
 class ReviewBloc extends Bloc<ReviewEvents, ReviewStates> {
   final ISaveReviewUsecase saveReviewUsecase;
+  final IUpdateReviewUsecase updateReviewUsecase;
   final IGetReviewsByClassUsecase getReviewsByClassUsecase;
   final IGetReviewByClassAndDateUseCase getReviewByClassAndDateUseCase;
 
   ReviewBloc({
     required this.saveReviewUsecase,
+    required this.updateReviewUsecase,
     required this.getReviewsByClassUsecase,
     required this.getReviewByClassAndDateUseCase,
   }) : super(InitialReview()) {
     on<SaveReviewEvent>(_saveReview);
+    on<UpdateReviewEvent>(_updateReview);
     on<GetReviewsByClassEvent>(_getReviewsByClass);
     on<GetReviewsByClassAndDateEvent>(_getReviewsByClassAndDate);
   }
@@ -29,6 +33,17 @@ class ReviewBloc extends Bloc<ReviewEvents, ReviewStates> {
 
     result.fold(
       (success) => emit(SuccessSaveReview()),
+      (failure) => emit(ErrorReview(message: failure.message)),
+    );
+  }
+
+  Future _updateReview(UpdateReviewEvent event, emit) async {
+    emit(LoadingReview());
+
+    final result = await updateReviewUsecase(event.review);
+
+    result.fold(
+      (success) => emit(SuccessUpdateReview()),
       (failure) => emit(ErrorReview(message: failure.message)),
     );
   }

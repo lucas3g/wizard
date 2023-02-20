@@ -60,7 +60,7 @@ class _HomeworkListPageState extends State<HomeworkListPage> {
     sub = widget.homeworkBloc.stream.listen((state) {
       if (state is SuccessUpdateHomework) {
         MySnackBar(
-          message: 'Presence list updated successfully',
+          message: 'Homework updated successfully',
           type: TypeSnackBar.success,
         );
 

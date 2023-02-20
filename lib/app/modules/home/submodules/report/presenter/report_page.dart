@@ -265,7 +265,10 @@ class _ReportPageState extends State<ReportPage> {
                 );
               },
             ),
-            Visibility(visible: visibleButton, child: const Divider()),
+            Visibility(
+              visible: visibleButton,
+              child: const SizedBox(height: 10),
+            ),
             Visibility(
               visible: visibleButton,
               child: MyInputWidget(

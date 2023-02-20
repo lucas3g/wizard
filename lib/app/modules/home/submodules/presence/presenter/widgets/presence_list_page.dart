@@ -61,7 +61,7 @@ class _PresenceListPageState extends State<PresenceListPage> {
     sub = widget.presenceBloc.stream.listen((state) {
       if (state is SuccessUpdatePresence) {
         MySnackBar(
-          message: 'Presence list updated successfully',
+          message: 'Presence updated successfully',
           type: TypeSnackBar.success,
         );
 

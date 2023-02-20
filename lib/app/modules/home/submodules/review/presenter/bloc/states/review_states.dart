@@ -9,6 +9,8 @@ class LoadingReview extends ReviewStates {}
 
 class SuccessSaveReview extends ReviewStates {}
 
+class SuccessUpdateReview extends ReviewStates {}
+
 class SuccessGetReviewsByClass extends ReviewStates {
   final List<Review> reviews;
 

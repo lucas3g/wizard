@@ -66,4 +66,17 @@ class ReviewRepository implements IReviewRepository {
       return ReviewException(message: e.toString()).toFailure();
     }
   }
+
+  @override
+  Future<Result<bool, IReviewException>> updateReview(Review review) async {
+    try {
+      final result = await datasource.updateReview(review);
+
+      return result.toSuccess();
+    } on IReviewException catch (e) {
+      return ReviewException(message: e.message).toFailure();
+    } catch (e) {
+      return ReviewException(message: e.toString()).toFailure();
+    }
+  }
 }

@@ -4,6 +4,7 @@ import 'package:wizard/app/modules/home/submodules/review/domain/exceptions/revi
 
 abstract class IReviewRepository {
   Future<Result<bool, IReviewException>> saveReview(Review review);
+  Future<Result<bool, IReviewException>> updateReview(Review review);
   Future<Result<List<Review>, IReviewException>> getReviewsByClass(int classID);
   Future<Result<List<Review>, IReviewException>> getReviewsByClassAndDate(
       int classID, String date);

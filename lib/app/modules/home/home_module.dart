@@ -36,6 +36,7 @@ import 'package:wizard/app/modules/home/submodules/review/domain/repositories/re
 import 'package:wizard/app/modules/home/submodules/review/domain/usecases/get_review_by_class_and_date.dart';
 import 'package:wizard/app/modules/home/submodules/review/domain/usecases/get_review_by_class_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/review/domain/usecases/save_review_usecase.dart';
+import 'package:wizard/app/modules/home/submodules/review/domain/usecases/update_review_usecase.dart';
 import 'package:wizard/app/modules/home/submodules/review/external/datasources/review_datasource.dart';
 import 'package:wizard/app/modules/home/submodules/review/infra/datasources/review_datasource.dart';
 import 'package:wizard/app/modules/home/submodules/review/infra/repositories/review_repository.dart';
@@ -241,6 +242,10 @@ class HomeModule extends Module {
       (i) => SaveReviewUsecase(repository: i()),
       export: true,
     ),
+    Bind.factory<IUpdateReviewUsecase>(
+      (i) => UpdateReviewUsecase(repository: i()),
+      export: true,
+    ),
     Bind.factory<IGetReviewsByClassUsecase>(
       (i) => GetReviewsByClassUsecase(repository: i()),
       export: true,
@@ -254,6 +259,7 @@ class HomeModule extends Module {
     BlocBind.factory<ReviewBloc>(
       (i) => ReviewBloc(
         saveReviewUsecase: i(),
+        updateReviewUsecase: i(),
         getReviewsByClassUsecase: i(),
         getReviewByClassAndDateUseCase: i(),
       ),

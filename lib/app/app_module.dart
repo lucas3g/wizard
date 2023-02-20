@@ -1,7 +1,10 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:modular_bloc_bind/modular_bloc_bind.dart';
+import 'package:realm/realm.dart';
 import 'package:wizard/app/core_module/core_module.dart';
+import 'package:wizard/app/core_module/services/realm/realm_config.dart';
+import 'package:wizard/app/core_module/services/themeMode/theme_mode_service.dart';
 import 'package:wizard/app/modules/auth/auth_module.dart';
 import 'package:wizard/app/modules/auth/domain/repositories/auth_repository.dart';
 import 'package:wizard/app/modules/auth/domain/usecases/login_signin_google_usecase.dart';
@@ -12,6 +15,7 @@ import 'package:wizard/app/modules/auth/infra/repositories/auth_repository.dart'
 import 'package:wizard/app/modules/auth/presenter/bloc/auth_bloc.dart';
 import 'package:wizard/app/modules/home/home_module.dart';
 import 'package:wizard/app/modules/splash/splash_module.dart';
+import 'package:wizard/app/shared/stores/app_store.dart';
 
 Bind<GoogleSignIn> _googleSign() {
   final GoogleSignIn googleSignIn = GoogleSignIn(
@@ -58,12 +62,22 @@ class AppModule extends Module {
       (i) => LogoutGoogleUseCase(repository: i()),
     ),
 
+    //BLOCS
     BlocBind.factory<AuthBloc>(
       (i) => AuthBloc(
         loginSignInGoogleUseCase: i(),
         logoutGoogleUseCase: i(),
       ),
-    )
+    ),
+
+    Bind.instance<Realm>(Realm(config)),
+
+    //STORES
+    Bind.singleton<AppStore>((i) => AppStore(i())),
+
+    Bind.factory<IThemeMode>(
+      (i) => ThemeModeService(realm: i()),
+    ),
   ];
 
   @override

@@ -11,6 +11,14 @@ class SaveReviewEvent extends ReviewEvents {
   });
 }
 
+class UpdateReviewEvent extends ReviewEvents {
+  final Review review;
+
+  UpdateReviewEvent({
+    required this.review,
+  });
+}
+
 class GetReviewsByClassEvent extends ReviewEvents {
   final int classID;
 

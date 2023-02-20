@@ -113,4 +113,28 @@ class ReviewDatasource implements IReviewDatasource {
 
     return result;
   }
+
+  @override
+  Future<bool> updateReview(Review review) async {
+    final params = ClientDataBaseUpdateParams(
+      table: Tables.reviews,
+      data: ReviewAdapter.toMapUpdate(review),
+    );
+
+    final result = await client.updateData(params: params);
+
+    final paramsNotes = ClientDataBaseUpdateParams(
+      table: Tables.reviews_notes,
+      data: ReviewAdapter.toMapNotesUpdate(review),
+    );
+
+    final resultNotes = await client.updateData(params: paramsNotes);
+
+    if (result.isEmpty || resultNotes.isEmpty) {
+      throw const ReviewException(
+          message: 'Error when trying to update a review');
+    }
+
+    return result.isNotEmpty && resultNotes.isEmpty;
+  }
 }
