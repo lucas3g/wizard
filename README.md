@@ -12,16 +12,28 @@ Este é o repositório oficial do aplicativo WizUp, uma plataforma desenvolvida 
 Veja abaixo alguns prints do aplicativo:
 
 ### **Tela de login**
-##### **Dark**
-![Tela de Login](https://i.imgur.com/VdySqYA.jpeg)
-##### **Light**
-![Tela de Login](https://i.imgur.com/zlmWwHC.jpeg)
+<div style="display: flex;">
+  <figure>
+    <img src="https://i.imgur.com/VdySqYA.jpeg" alt="descrição da imagem" width="width: 50%;" />
+    <figcaption>Dark</figcaption>
+  </figure>
+  <figure>
+    <img src="https://i.imgur.com/zlmWwHC.jpeg" alt="descrição da imagem" width="width: 50%;" />
+    <figcaption>Light</figcaption>
+  </figure>
+</div>
 
 ### **Tela principal**
-##### **Dark**
-![Tela de principal](https://i.imgur.com/edfOAeV.jpeg)
-##### **Light**
-![Tela de principal](https://i.imgur.com/PDpwv3o.jpeg)
+<div style="display: flex;">
+  <figure>
+    <img src="https://i.imgur.com/edfOAeV.jpeg" alt="descrição da imagem" width="width: 50%;" />
+    <figcaption>Dark</figcaption>
+  </figure>
+  <figure>
+    <img src="https://i.imgur.com/PDpwv3o.jpeg" alt="descrição da imagem" width="width: 50%;" />
+    <figcaption>Light</figcaption>
+  </figure>
+</div>
 
 # **Licença**
 Este aplicativo é distribuído sob a licença MIT. Consulte o arquivo LICENSE para mais informações.
@@ -41,18 +53,30 @@ This is the official repository of the WizUp application, a platform developed t
 See below some screenshots of the application:
 
 ### **Login screen**
-##### **Dark**
-<img src="https://i.imgur.com/VdySqYA.jpeg" alt="descrição da imagem" width="200" />
 
-##### **Light**
-<img src="https://i.imgur.com/zlmWwHC.jpeg" alt="descrição da imagem" width="200" />
+<div style="display: flex;">
+  <figure>
+    <img src="https://i.imgur.com/VdySqYA.jpeg" alt="descrição da imagem" width="width: 50%;" />
+    <figcaption>Dark</figcaption>
+  </figure>
+  <figure>
+    <img src="https://i.imgur.com/zlmWwHC.jpeg" alt="descrição da imagem" width="width: 50%;" />
+    <figcaption>Light</figcaption>
+  </figure>
+</div>
 
 ### **Main screen**
-##### **Dark**
-<img src="https://i.imgur.com/edfOAeV.jpeg" alt="descrição da imagem" width="200" />
 
-##### **Light**
-<img src="https://i.imgur.com/PDpwv3o.jpeg" alt="descrição da imagem" width="200" />
+<div style="display: flex;">
+  <figure>
+    <img src="https://i.imgur.com/edfOAeV.jpeg" alt="descrição da imagem" width="width: 50%;" />
+    <figcaption>Dark</figcaption>
+  </figure>
+  <figure>
+    <img src="https://i.imgur.com/PDpwv3o.jpeg" alt="descrição da imagem" width="width: 50%;" />
+    <figcaption>Light</figcaption>
+  </figure>
+</div>
 
 # **License**
 This application is distributed under the MIT license. See the LICENSE file for more information.
