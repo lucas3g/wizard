@@ -54,3 +54,5 @@ See below some screenshots of the application:
 
 # **License**
 This application is distributed under the MIT license. See the LICENSE file for more information.
+
+<img src="https://i.imgur.com/edfOAeV.jpeg" alt="descrição da imagem" width="100" />
