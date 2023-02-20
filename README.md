@@ -14,11 +14,11 @@ Veja abaixo alguns prints do aplicativo:
 ### **Tela de login**
 <div style="display: flex;">
   <figure>
-    <img src="https://i.imgur.com/VdySqYA.jpeg" alt="descrição da imagem" width="width: 50%;" />
+    <img src="https://i.imgur.com/VdySqYA.jpeg" alt="descrição da imagem" width="width: 200" />
     <figcaption>Dark</figcaption>
   </figure>
   <figure>
-    <img src="https://i.imgur.com/zlmWwHC.jpeg" alt="descrição da imagem" width="width: 50%;" />
+    <img src="https://i.imgur.com/zlmWwHC.jpeg" alt="descrição da imagem" width="width: 200" />
     <figcaption>Light</figcaption>
   </figure>
 </div>
@@ -26,11 +26,11 @@ Veja abaixo alguns prints do aplicativo:
 ### **Tela principal**
 <div style="display: flex;">
   <figure>
-    <img src="https://i.imgur.com/edfOAeV.jpeg" alt="descrição da imagem" width="width: 50%;" />
+    <img src="https://i.imgur.com/edfOAeV.jpeg" alt="descrição da imagem" width="width: 200" />
     <figcaption>Dark</figcaption>
   </figure>
   <figure>
-    <img src="https://i.imgur.com/PDpwv3o.jpeg" alt="descrição da imagem" width="width: 50%;" />
+    <img src="https://i.imgur.com/PDpwv3o.jpeg" alt="descrição da imagem" width="width: 200" />
     <figcaption>Light</figcaption>
   </figure>
 </div>
@@ -56,11 +56,11 @@ See below some screenshots of the application:
 
 <div style="display: flex;">
   <figure>
-    <img src="https://i.imgur.com/VdySqYA.jpeg" alt="descrição da imagem" width="width: 50%;" />
+    <img src="https://i.imgur.com/VdySqYA.jpeg" alt="descrição da imagem" width="width: 200" />
     <figcaption>Dark</figcaption>
   </figure>
   <figure>
-    <img src="https://i.imgur.com/zlmWwHC.jpeg" alt="descrição da imagem" width="width: 50%;" />
+    <img src="https://i.imgur.com/zlmWwHC.jpeg" alt="descrição da imagem" width="width: 200" />
     <figcaption>Light</figcaption>
   </figure>
 </div>
@@ -69,11 +69,11 @@ See below some screenshots of the application:
 
 <div style="display: flex;">
   <figure>
-    <img src="https://i.imgur.com/edfOAeV.jpeg" alt="descrição da imagem" width="width: 50%;" />
+    <img src="https://i.imgur.com/edfOAeV.jpeg" alt="descrição da imagem" width="width: 200" />
     <figcaption>Dark</figcaption>
   </figure>
   <figure>
-    <img src="https://i.imgur.com/PDpwv3o.jpeg" alt="descrição da imagem" width="width: 50%;" />
+    <img src="https://i.imgur.com/PDpwv3o.jpeg" alt="descrição da imagem" width="width: 200" />
     <figcaption>Light</figcaption>
   </figure>
 </div>
