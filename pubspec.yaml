@@ -45,7 +45,6 @@ dependencies:
   string_validator: ^0.3.0
   result_dart: ^1.0.3
   google_sign_in: ^5.4.2
-  uuid: ^3.0.7
   easy_mask: ^2.0.1
   cached_network_image: ^3.2.3
   flutter_swipe_action_cell: ^3.0.7
