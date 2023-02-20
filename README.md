@@ -43,12 +43,14 @@ See below some screenshots of the application:
 ### **Login screen**
 ##### **Dark**
 <img src="https://i.imgur.com/VdySqYA.jpeg" alt="descrição da imagem" width="200" />
+
 ##### **Light**
 <img src="https://i.imgur.com/zlmWwHC.jpeg" alt="descrição da imagem" width="200" />
 
 ### **Main screen**
 ##### **Dark**
 <img src="https://i.imgur.com/edfOAeV.jpeg" alt="descrição da imagem" width="200" />
+
 ##### **Light**
 <img src="https://i.imgur.com/PDpwv3o.jpeg" alt="descrição da imagem" width="200" />
 
