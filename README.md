@@ -28,7 +28,7 @@ Este aplicativo é distribuído sob a licença MIT. Consulte o arquivo LICENSE p
 
 
 ### **(EN-US)**
-# **WizUp - Class and student control **
+# **WizUp - Class and student control**
 This is the official repository of the WizUp application, a platform developed to help the teacher to control classes, students and grades on homework and reviews. In addition, the app allows teachers to mark student attendance and switch between dark and light mode, and generate final reports.
 
 # Functionalities
