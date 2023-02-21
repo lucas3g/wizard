@@ -2,7 +2,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'package:wizard/app/shared/components/my_app_bar_widget.dart';
@@ -24,6 +23,7 @@ import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/state
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/events/student_events.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/states/student_states.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/student_bloc.dart';
+import 'package:wizard/app/shared/stores/app_store.dart';
 import 'package:wizard/app/utils/constants.dart';
 import 'package:wizard/app/utils/formatters.dart';
 import 'package:wizard/app/utils/my_snackbar.dart';
@@ -120,6 +120,10 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
 
   @override
   Widget build(BuildContext context) {
+    final appStore = context.watch<AppStore>(
+      (store) => store.themeMode,
+    );
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(double.infinity, AppBar().preferredSize.height),
@@ -132,10 +136,10 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
           child: ListView(
             shrinkWrap: true,
             children: [
-              BlocBuilder<ClassBloc, ClassStates>(
-                bloc: widget.classBloc,
+              StreamBuilder<ClassStates>(
+                stream: widget.classBloc.stream,
                 builder: (context, state) {
-                  if (state is! SuccessGetListClass) {
+                  if (state.data is! SuccessGetListClass) {
                     return Container(
                       height: 50,
                       decoration: BoxDecoration(
@@ -152,7 +156,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                     );
                   }
 
-                  final classes = state.classes;
+                  final classes = (state.data as SuccessGetListClass).classes;
 
                   return MyDropDownButtonWidget(
                     focusNode: fClass,
@@ -188,10 +192,10 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
               const Divider(),
               Visibility(
                 visible: visibleList,
-                child: BlocBuilder<StudentBloc, StudentStates>(
-                  bloc: widget.studentBloc,
+                child: StreamBuilder<StudentStates>(
+                  stream: widget.studentBloc.stream,
                   builder: (context, state) {
-                    if (state is! SuccessGetStudentByClass) {
+                    if (state.data is! SuccessGetStudentByClass) {
                       return const Center(
                         child: SizedBox(
                           height: 30,
@@ -201,7 +205,8 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                       );
                     }
 
-                    final students = state.students;
+                    final students =
+                        (state.data as SuccessGetStudentByClass).students;
 
                     if (students.isEmpty) {
                       return const Center(
@@ -271,7 +276,10 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                                               .homeworkNote[index].score.value,
                                           context,
                                         )
-                                      : context.myTheme.onPrimary,
+                                      : appStore.themeMode.value ==
+                                              ThemeMode.dark
+                                          ? context.myTheme.onPrimary
+                                          : context.myTheme.onPrimaryContainer,
                                 ),
                               ),
                               child: ListTile(
@@ -312,11 +320,11 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                         Row(
                           children: [
                             Expanded(
-                              child: BlocBuilder<HomeworkBloc, HomeworkStates>(
-                                bloc: widget.homeworkBloc,
+                              child: StreamBuilder<HomeworkStates>(
+                                stream: widget.homeworkBloc.stream,
                                 builder: (context, state) {
                                   return MyElevatedButtonWidget(
-                                    label: state is LoadingHomework
+                                    label: state.data is LoadingHomework
                                         ? const SizedBox(
                                             width: 20,
                                             height: 20,

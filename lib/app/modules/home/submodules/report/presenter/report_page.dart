@@ -35,6 +35,7 @@ import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/events
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/states/student_states.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/student_bloc.dart';
 import 'package:wizard/app/utils/constants.dart';
+import 'package:wizard/app/utils/formatters.dart';
 import 'package:wizard/app/utils/my_snackbar.dart';
 
 class ReportPage extends StatefulWidget {
@@ -60,6 +61,9 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
+  final dateStartController = TextEditingController();
+  final dateEndController = TextEditingController();
+
   final fClass = FocusNode();
   late Report report;
 
@@ -275,6 +279,60 @@ class _ReportPageState extends State<ReportPage> {
                 hintText: 'Type a observation',
                 value: report.obs.value,
                 onChanged: (e) => report.setObs(e),
+              ),
+            ),
+            Visibility(
+                visible: visibleButton, child: const SizedBox(height: 10)),
+            Visibility(
+              visible: visibleButton,
+              child: MyInputWidget(
+                controller: dateStartController,
+                onTap: () async {
+                  final selectedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime.now().add(
+                      const Duration(days: 365),
+                    ),
+                  );
+
+                  if (selectedDate != null) {
+                    report.setDateStart(selectedDate.DiaMesAnoTextField());
+
+                    dateStartController.text = report.dateStart.value;
+                  }
+                },
+                label: 'Date Start',
+                hintText: 'Type a date Start',
+                onChanged: report.setDateStart,
+              ),
+            ),
+            Visibility(
+                visible: visibleButton, child: const SizedBox(height: 10)),
+            Visibility(
+              visible: visibleButton,
+              child: MyInputWidget(
+                controller: dateEndController,
+                onTap: () async {
+                  final selectedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime.now().add(
+                      const Duration(days: 365),
+                    ),
+                  );
+
+                  if (selectedDate != null) {
+                    report.setDateEnd(selectedDate.DiaMesAnoTextField());
+
+                    dateEndController.text = report.dateEnd.value;
+                  }
+                },
+                label: 'Date End',
+                hintText: 'Type a date End',
+                onChanged: report.setDateEnd,
               ),
             ),
             Visibility(visible: visibleButton, child: const Divider()),

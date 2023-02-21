@@ -12,6 +12,8 @@ class ReportAdapter {
       presences: [],
       homeworks: [],
       reviews: [],
+      reportDateStart: '',
+      reportDateEnd: '',
     );
   }
 }
