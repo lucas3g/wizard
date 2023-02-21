@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
+import 'package:wizard/app/core_module/types/dates_entity.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_teacher.dart';
 
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
@@ -216,7 +217,9 @@ class _PresenceListPageState extends State<PresenceListPage> {
                             widget.presenceBloc.add(
                               GetPresenceByClassAndDateEvent(
                                 pClass: selectedValue,
-                                date: dateController.text,
+                                dates: DatesEntity(
+                                  dateStart: dateController.text,
+                                ),
                               ),
                             );
                           },

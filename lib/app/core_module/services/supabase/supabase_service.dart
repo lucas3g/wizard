@@ -57,6 +57,19 @@ class SupaBaseService implements IClientDataBase {
   @override
   Future<List> getDataByFilters(
       {required ClientDataBaseGetDataByFiltersParams params}) async {
+    if (params.filters.length == 3) {
+      final result = await supa
+          .from(params.table.name)
+          .select()
+          .eq(params.filters.first.field, params.filters.first.value)
+          .gt(params.filters.elementAt(1).field,
+              params.filters.elementAt(1).value)
+          .lt(params.filters.elementAt(2).field,
+              params.filters.elementAt(2).value);
+
+      return result;
+    }
+
     final Map<String, dynamic> match = {};
 
     for (var filter in params.filters) {

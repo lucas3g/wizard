@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wizard/app/core_module/types/dates_entity.dart';
 
 import 'package:wizard/app/shared/components/my_app_bar_widget.dart';
 import 'package:wizard/app/shared/components/my_drop_down_button_widget.dart';
@@ -61,10 +62,15 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
+  final gkForm = GlobalKey<FormState>();
+
   final dateStartController = TextEditingController();
   final dateEndController = TextEditingController();
 
   final fClass = FocusNode();
+  final fDateStart = FocusNode();
+  final fDateEnd = FocusNode();
+
   late Report report;
 
   late bool visibleButton = false;
@@ -186,185 +192,199 @@ class _ReportPageState extends State<ReportPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(kPadding),
-        child: Column(
-          children: [
-            BlocBuilder<ClassBloc, ClassStates>(
-              bloc: widget.classBloc,
-              builder: (context, state) {
-                if (state is! SuccessGetListClass) {
-                  return Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Center(
-                      child: SizedBox(
-                        height: 30,
-                        width: 30,
-                        child: CircularProgressIndicator(),
+        child: Form(
+          key: gkForm,
+          child: Column(
+            children: [
+              BlocBuilder<ClassBloc, ClassStates>(
+                bloc: widget.classBloc,
+                builder: (context, state) {
+                  if (state is! SuccessGetListClass) {
+                    return Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                    ),
-                  );
-                }
-
-                final classes = state.classes;
-
-                return MyDropDownButtonWidget(
-                  focusNode: fClass,
-                  hint: 'Select a class',
-                  validator: (v) =>
-                      report.reportClass.validate().exceptionOrNull(),
-                  onChanged: (dynamic e) {
-                    final pClass = classes.firstWhere((v) => v.id.value == e);
-
-                    report.reportClass = Class(
-                      id: IdVO(e),
-                      name: pClass.name.value,
-                      dayWeek: pClass.dayWeek.value,
-                      schedule: pClass.schedule.value,
-                      idTeacher: pClass.idTeacher.value,
-                    );
-
-                    setState(() {
-                      visibleButton = true;
-                      dropDownValue = e;
-                    });
-
-                    widget.studentBloc.add(
-                      GetStudentByClassEvent(
-                        classID: e,
-                      ),
-                    );
-
-                    widget.presenceBloc.add(
-                      GetPresenceByClassEvent(
-                        pClass: e,
-                      ),
-                    );
-
-                    widget.homeworkBloc.add(
-                      GetHomeworksByClassEvent(
-                        classID: e,
-                      ),
-                    );
-
-                    widget.reviewBloc.add(
-                      GetReviewsByClassEvent(
-                        classID: e,
-                      ),
-                    );
-                  },
-                  value: dropDownValue,
-                  items: classes
-                      .map(
-                        (e) => DropdownMenuItem(
-                          value: e.id.value,
-                          child: Text(
-                              '${e.name.value} / ${e.dayWeek.value} / ${e.schedule.value}'),
+                      child: const Center(
+                        child: SizedBox(
+                          height: 30,
+                          width: 30,
+                          child: CircularProgressIndicator(),
                         ),
-                      )
-                      .toList(),
-                );
-              },
-            ),
-            Visibility(
-              visible: visibleButton,
-              child: const SizedBox(height: 10),
-            ),
-            Visibility(
-              visible: visibleButton,
-              child: MyInputWidget(
-                label: 'Observation',
-                hintText: 'Type a observation',
-                value: report.obs.value,
-                onChanged: (e) => report.setObs(e),
-              ),
-            ),
-            Visibility(
-                visible: visibleButton, child: const SizedBox(height: 10)),
-            Visibility(
-              visible: visibleButton,
-              child: MyInputWidget(
-                controller: dateStartController,
-                onTap: () async {
-                  final selectedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime.now().add(
-                      const Duration(days: 365),
-                    ),
-                  );
-
-                  if (selectedDate != null) {
-                    report.setDateStart(selectedDate.DiaMesAnoTextField());
-
-                    dateStartController.text = report.dateStart.value;
+                      ),
+                    );
                   }
-                },
-                label: 'Date Start',
-                hintText: 'Type a date Start',
-                onChanged: report.setDateStart,
-              ),
-            ),
-            Visibility(
-                visible: visibleButton, child: const SizedBox(height: 10)),
-            Visibility(
-              visible: visibleButton,
-              child: MyInputWidget(
-                controller: dateEndController,
-                onTap: () async {
-                  final selectedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime.now().add(
-                      const Duration(days: 365),
-                    ),
+
+                  final classes = state.classes;
+
+                  return MyDropDownButtonWidget(
+                    focusNode: fClass,
+                    hint: 'Select a class',
+                    validator: (v) =>
+                        report.reportClass.validate().exceptionOrNull(),
+                    onChanged: (dynamic e) {
+                      final pClass = classes.firstWhere((v) => v.id.value == e);
+
+                      report.reportClass = Class(
+                        id: IdVO(e),
+                        name: pClass.name.value,
+                        dayWeek: pClass.dayWeek.value,
+                        schedule: pClass.schedule.value,
+                        idTeacher: pClass.idTeacher.value,
+                      );
+
+                      setState(() {
+                        visibleButton = true;
+                        dropDownValue = e;
+                      });
+                    },
+                    value: dropDownValue,
+                    items: classes
+                        .map(
+                          (e) => DropdownMenuItem(
+                            value: e.id.value,
+                            child: Text(
+                                '${e.name.value} / ${e.dayWeek.value} / ${e.schedule.value}'),
+                          ),
+                        )
+                        .toList(),
                   );
-
-                  if (selectedDate != null) {
-                    report.setDateEnd(selectedDate.DiaMesAnoTextField());
-
-                    dateEndController.text = report.dateEnd.value;
-                  }
                 },
-                label: 'Date End',
-                hintText: 'Type a date End',
-                onChanged: report.setDateEnd,
               ),
-            ),
-            Visibility(visible: visibleButton, child: const Divider()),
-            Visibility(
-              visible: visibleButton,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: BlocBuilder<ReportBloc, ReportStates>(
-                        bloc: widget.reportBloc,
-                        builder: (context, state) {
-                          return MyElevatedButtonWidget(
-                            label: state is LoadingReport
-                                ? const SizedBox(
-                                    width: 20,
-                                    height: 20,
-                                    child: CircularProgressIndicator(),
-                                  )
-                                : const Text('Generate Report'),
-                            icon: Icons.newspaper_rounded,
-                            onPressed: () async {
-                              widget.reportBloc.add(
-                                GenerateReportPDFEvent(report: report),
-                              );
-                            },
-                          );
-                        }),
-                  )
-                ],
+              Visibility(
+                visible: visibleButton,
+                child: const SizedBox(height: 10),
               ),
-            )
-          ],
+              Visibility(
+                visible: visibleButton,
+                child: MyInputWidget(
+                  label: 'Observation',
+                  hintText: 'Type a observation',
+                  value: report.obs.value,
+                  onChanged: (e) => report.setObs(e),
+                ),
+              ),
+              Visibility(
+                  visible: visibleButton, child: const SizedBox(height: 10)),
+              Visibility(
+                visible: visibleButton,
+                child: MyInputWidget(
+                  controller: dateStartController,
+                  onTap: () async {
+                    final selectedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime.now().add(
+                        const Duration(days: 365),
+                      ),
+                    );
+
+                    if (selectedDate != null) {
+                      report.setDateStart(selectedDate.DiaMesAnoTextField());
+
+                      dateStartController.text = report.dateStart.value;
+                    }
+                  },
+                  label: 'Date Start',
+                  hintText: 'Type a date Start',
+                  onChanged: report.setDateStart,
+                  validator: (v) =>
+                      report.dateStart.validate().exceptionOrNull(),
+                ),
+              ),
+              Visibility(
+                  visible: visibleButton, child: const SizedBox(height: 10)),
+              Visibility(
+                visible: visibleButton,
+                child: MyInputWidget(
+                  controller: dateEndController,
+                  onTap: () async {
+                    final selectedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime.now().add(
+                        const Duration(days: 365),
+                      ),
+                    );
+
+                    if (selectedDate != null) {
+                      report.setDateEnd(selectedDate.DiaMesAnoTextField());
+
+                      dateEndController.text = report.dateEnd.value;
+                    }
+                  },
+                  label: 'Date End',
+                  hintText: 'Type a date End',
+                  onChanged: report.setDateEnd,
+                  validator: (v) => report.dateEnd.validate().exceptionOrNull(),
+                ),
+              ),
+              Visibility(visible: visibleButton, child: const Divider()),
+              Visibility(
+                visible: visibleButton,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: BlocBuilder<ReportBloc, ReportStates>(
+                          bloc: widget.reportBloc,
+                          builder: (context, state) {
+                            return MyElevatedButtonWidget(
+                              label: state is LoadingReport
+                                  ? const SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(),
+                                    )
+                                  : const Text('Generate Report'),
+                              icon: Icons.newspaper_rounded,
+                              onPressed: () async {
+                                if (!gkForm.currentState!.validate()) {
+                                  return;
+                                }
+
+                                widget.studentBloc.add(
+                                  GetStudentByClassEvent(
+                                    classID: report.reportClass.id.value,
+                                  ),
+                                );
+
+                                widget.presenceBloc.add(
+                                  GetPresenceByClassAndDateEvent(
+                                    pClass: report.reportClass.id.value,
+                                    dates: DatesEntity(
+                                      dateStart: dateStartController.text,
+                                      dateEnd: dateEndController.text,
+                                    ),
+                                  ),
+                                );
+
+                                widget.homeworkBloc.add(
+                                  GetHomeworksByClassEvent(
+                                    classID: report.reportClass.id.value,
+                                  ),
+                                );
+
+                                widget.reviewBloc.add(
+                                  GetReviewsByClassEvent(
+                                    classID: report.reportClass.id.value,
+                                  ),
+                                );
+
+                                widget.reportBloc.add(
+                                  GenerateReportPDFEvent(report: report),
+                                );
+                              },
+                            );
+                          }),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
