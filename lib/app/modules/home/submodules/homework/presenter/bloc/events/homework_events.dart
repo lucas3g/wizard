@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:wizard/app/core_module/types/dates_entity.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/entities/homework.dart';
 
 abstract class HomeworkEvents {}
@@ -29,10 +30,10 @@ class GetHomeworksByClassEvent extends HomeworkEvents {
 
 class GetHomeworksByClassAndDateEvent extends HomeworkEvents {
   final int classID;
-  final String date;
+  final DatesEntity dates;
 
   GetHomeworksByClassAndDateEvent({
     required this.classID,
-    required this.date,
+    required this.dates,
   });
 }

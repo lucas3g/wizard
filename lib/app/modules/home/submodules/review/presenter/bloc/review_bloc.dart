@@ -64,7 +64,7 @@ class ReviewBloc extends Bloc<ReviewEvents, ReviewStates> {
     emit(LoadingReview());
 
     final result =
-        await getReviewByClassAndDateUseCase(event.classID, event.date);
+        await getReviewByClassAndDateUseCase(event.classID, event.dates);
 
     result.fold(
       (success) => emit(SuccessGetReviewsByClassAndDate(reviews: success)),

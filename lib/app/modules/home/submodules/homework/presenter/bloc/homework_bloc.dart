@@ -64,7 +64,7 @@ class HomeworkBloc extends Bloc<HomeworkEvents, HomeworkStates> {
     emit(LoadingHomework());
 
     final result =
-        await getHomeworkByClassAndDateUseCase(event.classID, event.date);
+        await getHomeworkByClassAndDateUseCase(event.classID, event.dates);
 
     result.fold(
       (success) => emit(SuccessGetHomeworksByClassAndDate(homeworks: success)),

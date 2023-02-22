@@ -61,10 +61,11 @@ class SupaBaseService implements IClientDataBase {
       final result = await supa
           .from(params.table.name)
           .select()
-          .eq(params.filters.first.field, params.filters.first.value)
-          .gt(params.filters.elementAt(1).field,
+          .eq(params.filters.elementAt(0).field,
+              params.filters.elementAt(0).value)
+          .gte(params.filters.elementAt(1).field,
               params.filters.elementAt(1).value)
-          .lt(params.filters.elementAt(2).field,
+          .lte(params.filters.elementAt(2).field,
               params.filters.elementAt(2).value);
 
       return result;

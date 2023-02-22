@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:result_dart/result_dart.dart';
+import 'package:wizard/app/core_module/types/dates_entity.dart';
 
 import 'package:wizard/app/modules/home/submodules/homework/domain/entities/homework.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/exceptions/homework_exception.dart';
@@ -64,9 +65,10 @@ class HomeworkRepository implements IHomeworkRepository {
 
   @override
   Future<Result<List<Homework>, IHomeWorkException>> getHomeworksByClassAndDate(
-      int classID, String date) async {
+      int classID, DatesEntity dates) async {
     try {
-      final result = await datasource.getHomeworksByClassAndDate(classID, date);
+      final result =
+          await datasource.getHomeworksByClassAndDate(classID, dates);
 
       final List<Homework> list = [];
 

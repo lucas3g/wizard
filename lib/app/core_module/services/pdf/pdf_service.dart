@@ -8,7 +8,6 @@ import 'package:wizard/app/core_module/services/pdf/styles/pdf_styles.dart';
 import 'package:wizard/app/modules/home/submodules/report/domain/entities/report.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:wizard/app/utils/my_snackbar.dart';
 import 'package:printing/printing.dart';
 
 class PDFService implements IPDF {
@@ -511,7 +510,6 @@ class PDFService implements IPDF {
 
       return true;
     } catch (e) {
-      MySnackBar(message: e.toString(), type: TypeSnackBar.error);
       return false;
     }
   }

@@ -244,7 +244,7 @@ class _PresenceListPageState extends State<PresenceListPage> {
                     );
                   }
 
-                  if (state is! SuccessGetPresenceByClass) {
+                  if (state is! SuccessGetPresenceByClassAndDate) {
                     return const Expanded(
                       child: Center(
                         child: CircularProgressIndicator(),

@@ -68,7 +68,7 @@ class PresenceBloc extends Bloc<PresenceEvents, PresenceStates> {
         await getPresencesByClassAndDateUseCase(event.pClass, event.dates);
 
     result.fold(
-      (success) => emit(SuccessGetPresenceByClass(presences: success)),
+      (success) => emit(SuccessGetPresenceByClassAndDate(presences: success)),
       (failure) => emit(ErrorPresence(message: failure.message)),
     );
   }

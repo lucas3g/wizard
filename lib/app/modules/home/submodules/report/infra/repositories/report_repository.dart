@@ -18,7 +18,15 @@ class ReportRepository implements IReportRepository {
     try {
       final result = await datasource.generatePDF(report);
 
+      if (!result) {
+        throw const ReportException(
+            message:
+                'Error when trying to generate the PDF. Please check the filters.');
+      }
+
       return result.toSuccess();
+    } on ReportException catch (e) {
+      return ReportException(message: e.message).toFailure();
     } catch (e) {
       return ReportException(message: e.toString()).toFailure();
     }

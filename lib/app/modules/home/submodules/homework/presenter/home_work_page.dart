@@ -2,7 +2,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:wizard/app/core_module/services/themeMode/theme_mode_controller.dart';
 
 import 'package:wizard/app/shared/components/my_app_bar_widget.dart';
 import 'package:wizard/app/shared/components/my_drop_down_button_widget.dart';
@@ -23,7 +25,6 @@ import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/state
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/events/student_events.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/states/student_states.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/student_bloc.dart';
-import 'package:wizard/app/shared/stores/app_store.dart';
 import 'package:wizard/app/utils/constants.dart';
 import 'package:wizard/app/utils/formatters.dart';
 import 'package:wizard/app/utils/my_snackbar.dart';
@@ -120,10 +121,6 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
 
   @override
   Widget build(BuildContext context) {
-    final appStore = context.watch<AppStore>(
-      (store) => store.themeMode,
-    );
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(double.infinity, AppBar().preferredSize.height),
@@ -192,10 +189,10 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
               const Divider(),
               Visibility(
                 visible: visibleList,
-                child: StreamBuilder<StudentStates>(
-                  stream: widget.studentBloc.stream,
+                child: BlocBuilder<StudentBloc, StudentStates>(
+                  bloc: widget.studentBloc,
                   builder: (context, state) {
-                    if (state.data is! SuccessGetStudentByClass) {
+                    if (state is! SuccessGetStudentByClass) {
                       return const Center(
                         child: SizedBox(
                           height: 30,
@@ -205,8 +202,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                       );
                     }
 
-                    final students =
-                        (state.data as SuccessGetStudentByClass).students;
+                    final students = state.students;
 
                     if (students.isEmpty) {
                       return const Center(
@@ -276,7 +272,7 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                                               .homeworkNote[index].score.value,
                                           context,
                                         )
-                                      : appStore.themeMode.value ==
+                                      : ThemeModeController.themeMode ==
                                               ThemeMode.dark
                                           ? context.myTheme.onPrimary
                                           : context.myTheme.onPrimaryContainer,
@@ -320,11 +316,11 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                         Row(
                           children: [
                             Expanded(
-                              child: StreamBuilder<HomeworkStates>(
-                                stream: widget.homeworkBloc.stream,
+                              child: BlocBuilder<HomeworkBloc, HomeworkStates>(
+                                bloc: widget.homeworkBloc,
                                 builder: (context, state) {
                                   return MyElevatedButtonWidget(
-                                    label: state.data is LoadingHomework
+                                    label: state is LoadingHomework
                                         ? const SizedBox(
                                             width: 20,
                                             height: 20,

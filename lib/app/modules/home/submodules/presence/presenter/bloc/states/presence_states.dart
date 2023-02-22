@@ -19,6 +19,14 @@ class SuccessGetPresenceByClass extends PresenceStates {
   });
 }
 
+class SuccessGetPresenceByClassAndDate extends PresenceStates {
+  final List<Presence> presences;
+
+  SuccessGetPresenceByClassAndDate({
+    required this.presences,
+  });
+}
+
 class ErrorPresence extends PresenceStates {
   final String message;
 

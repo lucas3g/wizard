@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
+import 'package:wizard/app/core_module/services/themeMode/theme_mode_controller.dart';
+import 'package:wizard/app/core_module/types/dates_entity.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_teacher.dart';
 
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
@@ -205,7 +207,9 @@ class _HomeworkListPageState extends State<HomeworkListPage> {
                             widget.homeworkBloc.add(
                               GetHomeworksByClassAndDateEvent(
                                 classID: selectedValue,
-                                date: dateController.text,
+                                dates: DatesEntity(
+                                  dateStart: dateController.text,
+                                ),
                               ),
                             );
                           },
@@ -219,10 +223,10 @@ class _HomeworkListPageState extends State<HomeworkListPage> {
             const SizedBox(height: 15),
             Visibility(
               visible: visibleList,
-              child: BlocBuilder<HomeworkBloc, HomeworkStates>(
-                bloc: widget.homeworkBloc,
+              child: StreamBuilder<HomeworkStates>(
+                stream: widget.homeworkBloc.stream,
                 builder: (context, state) {
-                  if (state is LoadingHomework) {
+                  if (state.data is LoadingHomework) {
                     return const Expanded(
                       child: Center(
                         child: CircularProgressIndicator(),
@@ -230,16 +234,18 @@ class _HomeworkListPageState extends State<HomeworkListPage> {
                     );
                   }
 
-                  if (state is ErrorHomework) {
+                  if (state.data is ErrorHomework) {
                     return Expanded(
                       child: Center(
-                        child: Text(state.message),
+                        child: Text((state.data as ErrorHomework).message),
                       ),
                     );
                   }
 
                   if (state is SuccessGetHomeworksByClassAndDate) {
-                    final homework = state.homeworks[0];
+                    final homework =
+                        (state.data as SuccessGetHomeworksByClassAndDate)
+                            .homeworks[0];
                     final homeworkNotes = homework.homeworkNote;
 
                     return Expanded(
@@ -277,7 +283,21 @@ class _HomeworkListPageState extends State<HomeworkListPage> {
                                     ),
                                   ),
                                   child: ListTile(
-                                    title: Text(note.student.studentName.value),
+                                    title: Text(
+                                      note.student.studentName.value,
+                                      style: context.textTheme.bodyLarge!
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              shadows: [
+                                            ThemeModeController.themeMode ==
+                                                    ThemeMode.dark
+                                                ? const Shadow(
+                                                    blurRadius: 10,
+                                                    offset: Offset(0, 1),
+                                                  )
+                                                : const Shadow(),
+                                          ]),
+                                    ),
                                     trailing: SizedBox(
                                       width: 160,
                                       child: MyDropDownButtonWidget(
@@ -296,7 +316,25 @@ class _HomeworkListPageState extends State<HomeworkListPage> {
                                             .map(
                                               (e) => DropdownMenuItem(
                                                 value: e['type'],
-                                                child: Text(e['name']!),
+                                                child: Text(
+                                                  e['name']!,
+                                                  style: context
+                                                      .textTheme.bodyLarge!
+                                                      .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          shadows: [
+                                                        ThemeModeController
+                                                                    .themeMode ==
+                                                                ThemeMode.dark
+                                                            ? const Shadow(
+                                                                blurRadius: 10,
+                                                                offset: Offset(
+                                                                    0, 1),
+                                                              )
+                                                            : const Shadow(),
+                                                      ]),
+                                                ),
                                               ),
                                             )
                                             .toList(),

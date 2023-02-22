@@ -5,7 +5,7 @@ import 'package:wizard/app/utils/constants.dart';
 class MyElevatedButtonWidget extends StatefulWidget {
   final Widget label;
   final IconData icon;
-  final Function() onPressed;
+  final Function()? onPressed;
   final double? height;
   const MyElevatedButtonWidget({
     Key? key,

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
+import 'package:wizard/app/core_module/services/themeMode/theme_mode_controller.dart';
+import 'package:wizard/app/core_module/types/dates_entity.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_teacher.dart';
 
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
@@ -205,7 +207,8 @@ class _ReviewListPageState extends State<ReviewListPage> {
                             widget.reviewBloc.add(
                               GetReviewsByClassAndDateEvent(
                                 classID: selectedValue,
-                                date: dateController.text,
+                                dates:
+                                    DatesEntity(dateStart: dateController.text),
                               ),
                             );
                           },
@@ -267,17 +270,28 @@ class _ReviewListPageState extends State<ReviewListPage> {
                                     ),
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
-                                      color: note.score.value.isNotEmpty
-                                          ? makeBackGroundColorListTile(
-                                              review.reviewNote[index].score
-                                                  .value,
-                                              context,
-                                            )
-                                          : context.myTheme.onPrimary,
+                                      color: makeBackGroundColorListTile(
+                                        review.reviewNote[index].score.value,
+                                        context,
+                                      ),
                                     ),
                                   ),
                                   child: ListTile(
-                                    title: Text(note.student.studentName.value),
+                                    title: Text(
+                                      note.student.studentName.value,
+                                      style: context.textTheme.bodyLarge!
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              shadows: [
+                                            ThemeModeController.themeMode ==
+                                                    ThemeMode.dark
+                                                ? const Shadow(
+                                                    blurRadius: 10,
+                                                    offset: Offset(0, 1),
+                                                  )
+                                                : const Shadow(),
+                                          ]),
+                                    ),
                                     trailing: SizedBox(
                                       width: 160,
                                       child: MyDropDownButtonWidget(
@@ -296,7 +310,25 @@ class _ReviewListPageState extends State<ReviewListPage> {
                                             .map(
                                               (e) => DropdownMenuItem(
                                                 value: e['type'],
-                                                child: Text(e['name']!),
+                                                child: Text(
+                                                  e['name']!,
+                                                  style: context
+                                                      .textTheme.bodyLarge!
+                                                      .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          shadows: [
+                                                        ThemeModeController
+                                                                    .themeMode ==
+                                                                ThemeMode.dark
+                                                            ? const Shadow(
+                                                                blurRadius: 10,
+                                                                offset: Offset(
+                                                                    0, 1),
+                                                              )
+                                                            : const Shadow(),
+                                                      ]),
+                                                ),
                                               ),
                                             )
                                             .toList(),

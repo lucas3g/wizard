@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:wizard/app/core_module/services/client_database/adapters/client_database_params.dart';
 import 'package:wizard/app/core_module/services/client_database/client_database_interface.dart';
 import 'package:wizard/app/core_module/services/client_database/helpers/tables.dart';
+import 'package:wizard/app/core_module/types/dates_entity.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/entities/homework.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/exceptions/homework_exception.dart';
 import 'package:wizard/app/modules/home/submodules/homework/infra/adapters/homework_adapter.dart';
@@ -97,19 +98,37 @@ class HomeworkDatasource implements IHomeworkDatasource {
   }
 
   @override
-  Future<List> getHomeworksByClassAndDate(int classID, String date) async {
+  Future<List> getHomeworksByClassAndDate(
+      int classID, DatesEntity dates) async {
     final classFilter =
         ClientDataBaseFilters(field: 'id_class', value: classID);
-    final dateFilter = ClientDataBaseFilters(
+    final dateStartFilter = ClientDataBaseFilters(
       field: 'date',
-      value: DateFormat('dd/MM/yyyy').parse(date).AnoMesDiaSupaBase(),
+      value:
+          DateFormat('dd/MM/yyyy').parse(dates.dateStart).AnoMesDiaSupaBase(),
     );
 
-    final params = ClientDataBaseGetDataByFiltersParams(
-      table: Tables.homeworks,
-      filters: {classFilter, dateFilter},
-      orderBy: 'id_class',
-    );
+    late ClientDataBaseGetDataByFiltersParams params;
+
+    if (dates.dateEnd.isNotEmpty) {
+      final dateEndFilter = ClientDataBaseFilters(
+        field: 'date',
+        value:
+            DateFormat('dd/MM/yyyy').parse(dates.dateEnd).AnoMesDiaSupaBase(),
+      );
+
+      params = ClientDataBaseGetDataByFiltersParams(
+        table: Tables.homeworks,
+        filters: {classFilter, dateStartFilter, dateEndFilter},
+        orderBy: 'id_class',
+      );
+    } else {
+      params = ClientDataBaseGetDataByFiltersParams(
+        table: Tables.homeworks,
+        filters: {classFilter, dateStartFilter},
+        orderBy: 'id_class',
+      );
+    }
 
     final result = await client.getDataByFilters(params: params);
 

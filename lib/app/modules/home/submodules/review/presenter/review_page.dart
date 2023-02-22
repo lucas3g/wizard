@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:wizard/app/core_module/services/themeMode/theme_mode_controller.dart';
 
 import 'package:wizard/app/shared/components/my_app_bar_widget.dart';
 import 'package:wizard/app/shared/components/my_drop_down_button_widget.dart';
@@ -270,12 +271,28 @@ class _ReviewPageState extends State<ReviewPage> {
                                           review.reviewNote[index].score.value,
                                           context,
                                         )
-                                      : context.myTheme.onPrimary,
+                                      : ThemeModeController.themeMode ==
+                                              ThemeMode.dark
+                                          ? context.myTheme.onPrimary
+                                          : context.myTheme.onPrimaryContainer,
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: ListTile(
-                                title: Text(student.studentName.value),
+                                title: Text(
+                                  student.studentName.value,
+                                  style: context.textTheme.bodyLarge!.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      shadows: [
+                                        ThemeModeController.themeMode ==
+                                                ThemeMode.dark
+                                            ? const Shadow(
+                                                blurRadius: 10,
+                                                offset: Offset(0, 1),
+                                              )
+                                            : const Shadow(),
+                                      ]),
+                                ),
                                 trailing: SizedBox(
                                   width: 160,
                                   child: MyDropDownButtonWidget(
@@ -294,7 +311,25 @@ class _ReviewPageState extends State<ReviewPage> {
                                         .map(
                                           (e) => DropdownMenuItem(
                                             value: e['type'],
-                                            child: Text(e['name']!),
+                                            child: Text(
+                                              e['name']!,
+                                              style: context
+                                                  .textTheme.bodyLarge!
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      shadows: [
+                                                    ThemeModeController
+                                                                .themeMode ==
+                                                            ThemeMode.dark
+                                                        ? const Shadow(
+                                                            blurRadius: 10,
+                                                            offset:
+                                                                Offset(0, 1),
+                                                          )
+                                                        : const Shadow(),
+                                                  ]),
+                                            ),
                                           ),
                                         )
                                         .toList(),

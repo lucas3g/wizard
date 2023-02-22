@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wizard/app/core_module/types/dates_entity.dart';
+import 'package:wizard/app/modules/home/submodules/report/presenter/bloc/events/report_events.dart';
 
 import 'package:wizard/app/shared/components/my_app_bar_widget.dart';
 import 'package:wizard/app/shared/components/my_drop_down_button_widget.dart';
@@ -26,7 +27,6 @@ import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/state
 import 'package:wizard/app/modules/home/submodules/report/domain/entities/report.dart';
 import 'package:wizard/app/modules/home/submodules/report/domain/vos/report_student.dart';
 import 'package:wizard/app/modules/home/submodules/report/infra/adapters/report_adapter.dart';
-import 'package:wizard/app/modules/home/submodules/report/presenter/bloc/events/report_events.dart';
 import 'package:wizard/app/modules/home/submodules/report/presenter/bloc/report_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/report/presenter/bloc/states/report_states.dart';
 import 'package:wizard/app/modules/home/submodules/review/presenter/bloc/events/review_events.dart';
@@ -117,7 +117,7 @@ class _ReportPageState extends State<ReportPage> {
     });
 
     subPresence = widget.presenceBloc.stream.listen((state) {
-      if (state is SuccessGetPresenceByClass) {
+      if (state is SuccessGetPresenceByClassAndDate) {
         report.presences.clear();
 
         for (var presence in state.presences) {
@@ -125,13 +125,13 @@ class _ReportPageState extends State<ReportPage> {
         }
       }
 
-      if (state is ErrorPresence) {
-        MySnackBar(message: state.message, type: TypeSnackBar.error);
-      }
+      // if (state is ErrorPresence) {
+      //   MySnackBar(message: state.message, type: TypeSnackBar.error);
+      // }
     });
 
     subHomework = widget.homeworkBloc.stream.listen((state) {
-      if (state is SuccessGetHomeworksByClass) {
+      if (state is SuccessGetHomeworksByClassAndDate) {
         report.homeworks.clear();
 
         for (var homework in state.homeworks) {
@@ -139,9 +139,9 @@ class _ReportPageState extends State<ReportPage> {
         }
       }
 
-      if (state is ErrorHomework) {
-        MySnackBar(message: state.message, type: TypeSnackBar.error);
-      }
+      // if (state is ErrorHomework) {
+      //   MySnackBar(message: state.message, type: TypeSnackBar.error);
+      // }
     });
 
     subReport = widget.reportBloc.stream.listen((state) {
@@ -158,7 +158,7 @@ class _ReportPageState extends State<ReportPage> {
     });
 
     subReview = widget.reviewBloc.stream.listen((state) {
-      if (state is SuccessGetReviewsByClass) {
+      if (state is SuccessGetReviewsByClassAndDate) {
         report.reviews.clear();
 
         for (var review in state.reviews) {
@@ -166,9 +166,9 @@ class _ReportPageState extends State<ReportPage> {
         }
       }
 
-      if (state is ErrorReview) {
-        MySnackBar(message: state.message, type: TypeSnackBar.error);
-      }
+      // if (state is ErrorReview) {
+      //   MySnackBar(message: state.message, type: TypeSnackBar.error);
+      // }
     });
   }
 
@@ -181,6 +181,45 @@ class _ReportPageState extends State<ReportPage> {
     subReview.cancel();
 
     super.dispose();
+  }
+
+  void searchData() {
+    if (dateStartController.text.isNotEmpty &&
+        dateEndController.text.isNotEmpty) {
+      report.presences.clear();
+      report.homeworks.clear();
+      report.reviews.clear();
+
+      widget.presenceBloc.add(
+        GetPresenceByClassAndDateEvent(
+          pClass: report.reportClass.id.value,
+          dates: DatesEntity(
+            dateStart: dateStartController.text,
+            dateEnd: dateEndController.text,
+          ),
+        ),
+      );
+
+      widget.homeworkBloc.add(
+        GetHomeworksByClassAndDateEvent(
+          classID: report.reportClass.id.value,
+          dates: DatesEntity(
+            dateStart: dateStartController.text,
+            dateEnd: dateEndController.text,
+          ),
+        ),
+      );
+
+      widget.reviewBloc.add(
+        GetReviewsByClassAndDateEvent(
+          classID: report.reportClass.id.value,
+          dates: DatesEntity(
+            dateStart: dateStartController.text,
+            dateEnd: dateEndController.text,
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -238,6 +277,12 @@ class _ReportPageState extends State<ReportPage> {
                         visibleButton = true;
                         dropDownValue = e;
                       });
+
+                      widget.studentBloc.add(
+                        GetStudentByClassEvent(
+                          classID: report.reportClass.id.value,
+                        ),
+                      );
                     },
                     value: dropDownValue,
                     items: classes
@@ -251,19 +296,6 @@ class _ReportPageState extends State<ReportPage> {
                         .toList(),
                   );
                 },
-              ),
-              Visibility(
-                visible: visibleButton,
-                child: const SizedBox(height: 10),
-              ),
-              Visibility(
-                visible: visibleButton,
-                child: MyInputWidget(
-                  label: 'Observation',
-                  hintText: 'Type a observation',
-                  value: report.obs.value,
-                  onChanged: (e) => report.setObs(e),
-                ),
               ),
               Visibility(
                   visible: visibleButton, child: const SizedBox(height: 10)),
@@ -285,6 +317,8 @@ class _ReportPageState extends State<ReportPage> {
                       report.setDateStart(selectedDate.DiaMesAnoTextField());
 
                       dateStartController.text = report.dateStart.value;
+
+                      searchData();
                     }
                   },
                   label: 'Date Start',
@@ -314,6 +348,8 @@ class _ReportPageState extends State<ReportPage> {
                       report.setDateEnd(selectedDate.DiaMesAnoTextField());
 
                       dateEndController.text = report.dateEnd.value;
+
+                      searchData();
                     }
                   },
                   label: 'Date End',
@@ -322,66 +358,53 @@ class _ReportPageState extends State<ReportPage> {
                   validator: (v) => report.dateEnd.validate().exceptionOrNull(),
                 ),
               ),
+              Visibility(
+                visible: visibleButton,
+                child: const SizedBox(height: 10),
+              ),
+              Visibility(
+                visible: visibleButton,
+                child: MyInputWidget(
+                  label: 'Observation',
+                  hintText: 'Type a observation',
+                  value: report.obs.value,
+                  onChanged: (e) => report.setObs(e),
+                ),
+              ),
               Visibility(visible: visibleButton, child: const Divider()),
               Visibility(
                 visible: visibleButton,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: BlocBuilder<ReportBloc, ReportStates>(
-                          bloc: widget.reportBloc,
-                          builder: (context, state) {
-                            return MyElevatedButtonWidget(
+                child: BlocBuilder<ReportBloc, ReportStates>(
+                    bloc: widget.reportBloc,
+                    builder: (context, state) {
+                      return Row(
+                        children: [
+                          Expanded(
+                            child: MyElevatedButtonWidget(
                               label: state is LoadingReport
                                   ? const SizedBox(
                                       width: 20,
                                       height: 20,
-                                      child: CircularProgressIndicator(),
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
                                     )
                                   : const Text('Generate Report'),
                               icon: Icons.newspaper_rounded,
-                              onPressed: () async {
+                              onPressed: () {
                                 if (!gkForm.currentState!.validate()) {
                                   return;
                                 }
-
-                                widget.studentBloc.add(
-                                  GetStudentByClassEvent(
-                                    classID: report.reportClass.id.value,
-                                  ),
-                                );
-
-                                widget.presenceBloc.add(
-                                  GetPresenceByClassAndDateEvent(
-                                    pClass: report.reportClass.id.value,
-                                    dates: DatesEntity(
-                                      dateStart: dateStartController.text,
-                                      dateEnd: dateEndController.text,
-                                    ),
-                                  ),
-                                );
-
-                                widget.homeworkBloc.add(
-                                  GetHomeworksByClassEvent(
-                                    classID: report.reportClass.id.value,
-                                  ),
-                                );
-
-                                widget.reviewBloc.add(
-                                  GetReviewsByClassEvent(
-                                    classID: report.reportClass.id.value,
-                                  ),
-                                );
 
                                 widget.reportBloc.add(
                                   GenerateReportPDFEvent(report: report),
                                 );
                               },
-                            );
-                          }),
-                    )
-                  ],
-                ),
+                            ),
+                          )
+                        ],
+                      );
+                    }),
               )
             ],
           ),
