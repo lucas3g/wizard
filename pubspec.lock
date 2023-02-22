@@ -868,26 +868,26 @@ packages:
     dependency: "direct main"
     description:
       name: realm
-      sha256: f33413ec87dc62d626544548e275aefe38a7a117da2ee70977c1a2b5516e5734
+      sha256: ba8e23b1577450c20c9b11fd1fd7a4f94eb35ca1bbd6c154f731bf43bc3f5dbc
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   realm_common:
     dependency: transitive
     description:
       name: realm_common
-      sha256: "7b0d85ceddf95f3e7e41822b460744152ee8e64da8e873aef4a45b36cb6740fb"
+      sha256: "5e6bc3771fe16151f175ab7ae5134715488056a6ab81638074f856d6bb28cc02"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   realm_generator:
     dependency: transitive
     description:
       name: realm_generator
-      sha256: "46e3f96a0bc1399f82542c0221b1ac8785c0376519c34701ad7bf2db221314a1"
+      sha256: "9e11fc2736a8af9c4da9f7e2ff1409e7772d1a928d1e3d4aa3ab8e0df15ed75e"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   realtime_client:
     dependency: transitive
     description:
