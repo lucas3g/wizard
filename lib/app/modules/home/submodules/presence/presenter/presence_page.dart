@@ -216,9 +216,6 @@ class _PresencePageState extends State<PresencePage> {
                     presence.presenceHomeWork.validate().exceptionOrNull(),
                 value: presence.presenceHomeWork.value,
                 onChanged: (e) => presence.setPresenceHomeWork(e),
-                inputFormaters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
               ),
             ),
             Visibility(visible: visibleList, child: const SizedBox(height: 10)),
