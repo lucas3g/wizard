@@ -212,8 +212,6 @@ class _PresencePageState extends State<PresencePage> {
                 keyboardType: TextInputType.number,
                 focusNode: fHomework,
                 label: 'Homework Number',
-                validator: (v) =>
-                    presence.presenceHomeWork.validate().exceptionOrNull(),
                 value: presence.presenceHomeWork.value,
                 onChanged: (e) => presence.setPresenceHomeWork(e),
                 inputFormaters: [
