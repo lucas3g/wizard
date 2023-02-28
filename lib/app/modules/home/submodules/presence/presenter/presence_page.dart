@@ -214,9 +214,6 @@ class _PresencePageState extends State<PresencePage> {
                 label: 'Homework Number',
                 value: presence.presenceHomeWork.value,
                 onChanged: (e) => presence.setPresenceHomeWork(e),
-                inputFormaters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
               ),
             ),
             Visibility(visible: visibleList, child: const SizedBox(height: 10)),
