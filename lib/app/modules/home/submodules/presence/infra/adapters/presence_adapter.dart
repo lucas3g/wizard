@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:wizard/app/core_module/vos/id_vo.dart';
-import 'package:wizard/app/modules/home/submodules/presence/domain/entites/presence.dart';
+import 'package:wizard/app/modules/home/submodules/presence/domain/entities/presence.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/vos/presence_check.dart';
 import 'package:wizard/app/modules/home/submodules/student/domain/entity/student.dart';
 import 'package:wizard/app/modules/home/submodules/student/infra/adapters/student_adapter.dart';

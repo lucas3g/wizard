@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:wizard/app/core_module/types/dates_entity.dart';
-import 'package:wizard/app/modules/home/submodules/presence/domain/entites/presence.dart';
+import 'package:wizard/app/modules/home/submodules/presence/domain/entities/presence.dart';
 
 abstract class PresenceEvents {}
 

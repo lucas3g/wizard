@@ -2,7 +2,7 @@ import 'package:result_dart/result_dart.dart';
 import 'package:wizard/app/core_module/types/entity.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/entities/class.dart';
 import 'package:wizard/app/modules/home/submodules/homework/domain/entities/homework.dart';
-import 'package:wizard/app/modules/home/submodules/presence/domain/entites/presence.dart';
+import 'package:wizard/app/modules/home/submodules/presence/domain/entities/presence.dart';
 import 'package:wizard/app/modules/home/submodules/report/domain/vos/report_date_end.dart';
 import 'package:wizard/app/modules/home/submodules/report/domain/vos/report_date_start.dart';
 import 'package:wizard/app/modules/home/submodules/report/domain/vos/report_obs.dart';

@@ -1,6 +1,6 @@
 import 'package:result_dart/result_dart.dart';
 import 'package:wizard/app/core_module/types/dates_entity.dart';
-import 'package:wizard/app/modules/home/submodules/presence/domain/entites/presence.dart';
+import 'package:wizard/app/modules/home/submodules/presence/domain/entities/presence.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/exceptions/presence_exception.dart';
 
 abstract class IPresenceRepository {

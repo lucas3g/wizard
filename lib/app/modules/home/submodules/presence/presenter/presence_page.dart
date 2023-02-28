@@ -16,7 +16,7 @@ import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_tea
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/events/class_events.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/states/class_states.dart';
-import 'package:wizard/app/modules/home/submodules/presence/domain/entites/presence.dart';
+import 'package:wizard/app/modules/home/submodules/presence/domain/entities/presence.dart';
 import 'package:wizard/app/modules/home/submodules/presence/domain/vos/presence_check.dart';
 import 'package:wizard/app/modules/home/submodules/presence/infra/adapters/presence_adapter.dart';
 import 'package:wizard/app/modules/home/submodules/presence/presenter/bloc/events/presence_events.dart';
