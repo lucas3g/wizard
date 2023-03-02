@@ -208,7 +208,6 @@ class _PresencePageState extends State<PresencePage> {
             Visibility(
               visible: visibleList,
               child: MyInputWidget(
-                keyboardType: TextInputType.number,
                 focusNode: fHomework,
                 label: 'Homework Number',
                 value: presence.presenceHomeWork.value,
