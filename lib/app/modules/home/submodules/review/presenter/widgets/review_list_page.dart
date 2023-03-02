@@ -252,8 +252,9 @@ class _ReviewListPageState extends State<ReviewListPage> {
                             focusNode: fNumber,
                             hintText: 'Enter the number',
                             label: 'Number',
-                            value: review.reviewName.value,
-                            onChanged: review.setReviewName,
+                            value: review.reviewName.value.toString(),
+                            onChanged: (e) =>
+                                review.setReviewName(int.parse(e)),
                           ),
                           const SizedBox(height: 15),
                           Expanded(

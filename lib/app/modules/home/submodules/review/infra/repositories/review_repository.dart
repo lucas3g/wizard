@@ -40,6 +40,8 @@ class ReviewRepository implements IReviewRepository {
         list.add(ReviewAdapter.fromMap(review));
       }
 
+      list.sort((a, b) => a.reviewName.value.compareTo(b.reviewName.value));
+
       return list.toSuccess();
     } on IReviewException catch (e) {
       return ReviewException(message: e.message).toFailure();
@@ -59,6 +61,8 @@ class ReviewRepository implements IReviewRepository {
       for (var review in result) {
         list.add(ReviewAdapter.fromMapSearch(review));
       }
+
+      list.sort((a, b) => a.reviewName.value.compareTo(b.reviewName.value));
 
       return list.toSuccess();
     } on IReviewException catch (e) {

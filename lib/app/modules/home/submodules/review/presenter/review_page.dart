@@ -212,10 +212,11 @@ class _ReviewPageState extends State<ReviewPage> {
                             focusNode: fName,
                             hintText: 'Enter the number of the review',
                             label: 'Number',
-                            onChanged: review.setReviewName,
+                            onChanged: (e) =>
+                                review.setReviewName(int.parse(e)),
                             validator: (v) =>
                                 review.reviewName.validate().exceptionOrNull(),
-                            value: review.reviewName.value,
+                            value: review.reviewName.value.toString(),
                             keyboardType: TextInputType.number,
                           ),
                         ),

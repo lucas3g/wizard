@@ -64,8 +64,9 @@ class ReportPage extends StatefulWidget {
 class _ReportPageState extends State<ReportPage> {
   final gkForm = GlobalKey<FormState>();
 
-  final dateStartController = TextEditingController();
-  final dateEndController = TextEditingController();
+  final dateStartController = TextEditingController(text: '01/01/2021');
+  final dateEndController =
+      TextEditingController(text: DateTime.now().DiaMesAnoTextField());
 
   final fClass = FocusNode();
   final fDateStart = FocusNode();

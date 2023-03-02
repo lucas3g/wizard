@@ -15,7 +15,7 @@ class Review extends Entity {
   void setReviewClass(int value) => _reviewClass = ReviewClass(value);
 
   ReviewName get reviewName => _reviewName;
-  void setReviewName(String value) => _reviewName = ReviewName(value);
+  void setReviewName(int value) => _reviewName = ReviewName(value);
 
   ReviewDate get reviewDate => _reviewDate;
   void setReviewDate(String value) => _reviewDate = ReviewDate(value);
