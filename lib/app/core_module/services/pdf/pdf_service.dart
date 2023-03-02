@@ -350,7 +350,8 @@ class PDFService implements IPDF {
                                   decoration:
                                       pw.BoxDecoration(border: pw.Border.all()),
                                   child: pw.Text(
-                                    report.reviews[index].reviewName.value,
+                                    report.reviews[index].reviewName.value
+                                        .toString(),
                                     textAlign: pw.TextAlign.center,
                                   ),
                                 ),
