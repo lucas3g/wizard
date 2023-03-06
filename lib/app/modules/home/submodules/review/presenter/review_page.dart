@@ -216,7 +216,9 @@ class _ReviewPageState extends State<ReviewPage> {
                                 review.setReviewName(int.parse(e)),
                             validator: (v) =>
                                 review.reviewName.validate().exceptionOrNull(),
-                            value: review.reviewName.value.toString(),
+                            value: review.reviewName.value == -1
+                                ? ''
+                                : review.reviewName.value.toString(),
                             keyboardType: TextInputType.number,
                           ),
                         ),

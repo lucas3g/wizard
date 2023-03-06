@@ -11,7 +11,7 @@ class ReviewAdapter {
     return Review(
       id: const IdVO(1),
       reviewClass: -1,
-      reviewName: '',
+      reviewName: -1,
       reviewDate: '',
       reviewNote: [],
     );
