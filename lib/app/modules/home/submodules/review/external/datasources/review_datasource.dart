@@ -125,7 +125,7 @@ class ReviewDatasource implements IReviewDatasource {
           resultNotes.where((e) => e['id_review'] == review['id']).toList();
     }
 
-    if (result.isEmpty) {
+    if (resultNotes.isEmpty) {
       throw const ReviewException(message: 'Review Notes is empty!');
     }
 
