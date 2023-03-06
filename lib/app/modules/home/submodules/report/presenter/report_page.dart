@@ -97,6 +97,9 @@ class _ReportPageState extends State<ReportPage> {
 
     report = ReportAdapter.empty();
 
+    report.setDateStart(dateStartController.text);
+    report.setDateEnd(dateEndController.text);
+
     sub = widget.studentBloc.stream.listen((state) {
       if (state is SuccessGetStudentByClass) {
         report.students.clear();
@@ -110,6 +113,8 @@ class _ReportPageState extends State<ReportPage> {
             ),
           );
         }
+
+        searchData();
       }
 
       if (state is ErrorStudent) {
