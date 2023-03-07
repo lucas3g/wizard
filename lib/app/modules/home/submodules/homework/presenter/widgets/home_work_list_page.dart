@@ -242,7 +242,7 @@ class _HomeworkListPageState extends State<HomeworkListPage> {
                     );
                   }
 
-                  if (state is SuccessGetHomeworksByClassAndDate) {
+                  if (state.data is SuccessGetHomeworksByClassAndDate) {
                     final homework =
                         (state.data as SuccessGetHomeworksByClassAndDate)
                             .homeworks[0];

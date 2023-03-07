@@ -42,6 +42,7 @@ class _PresenceListPageState extends State<PresenceListPage> {
 
   final fClass = FocusNode();
   final fDate = FocusNode();
+  final fHomework = FocusNode();
   final fObs = FocusNode();
 
   late bool visibleList = false;
@@ -258,6 +259,14 @@ class _PresenceListPageState extends State<PresenceListPage> {
                   return Expanded(
                     child: Column(
                       children: [
+                        MyInputWidget(
+                          focusNode: fHomework,
+                          hintText: 'Enter the homework',
+                          label: 'Homework',
+                          value: presence.presenceHomeWork.value,
+                          onChanged: presence.setPresenceHomeWork,
+                        ),
+                        const SizedBox(height: 10),
                         MyInputWidget(
                           focusNode: fObs,
                           hintText: 'Enter the observation',
