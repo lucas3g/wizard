@@ -4,13 +4,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:wizard/app/core_module/services/themeMode/theme_mode_controller.dart';
-
-import 'package:wizard/app/shared/components/my_app_bar_widget.dart';
-import 'package:wizard/app/shared/components/my_drop_down_button_widget.dart';
-import 'package:wizard/app/shared/components/my_elevated_button_widget.dart';
-import 'package:wizard/app/shared/components/my_input_widget.dart';
 import 'package:wizard/app/core_module/constants/constants.dart';
+import 'package:wizard/app/core_module/services/themeMode/theme_mode_controller.dart';
 import 'package:wizard/app/core_module/vos/id_vo.dart';
 import 'package:wizard/app/modules/home/submodules/class/domain/vos/class_id_teacher.dart';
 import 'package:wizard/app/modules/home/submodules/class/presenter/bloc/class_bloc.dart';
@@ -25,6 +20,10 @@ import 'package:wizard/app/modules/home/submodules/homework/presenter/bloc/state
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/events/student_events.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/states/student_states.dart';
 import 'package:wizard/app/modules/home/submodules/student/presenter/bloc/student_bloc.dart';
+import 'package:wizard/app/shared/components/my_app_bar_widget.dart';
+import 'package:wizard/app/shared/components/my_drop_down_button_widget.dart';
+import 'package:wizard/app/shared/components/my_elevated_button_widget.dart';
+import 'package:wizard/app/shared/components/my_input_widget.dart';
 import 'package:wizard/app/utils/constants.dart';
 import 'package:wizard/app/utils/formatters.dart';
 import 'package:wizard/app/utils/my_snackbar.dart';
@@ -279,7 +278,20 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                                 ),
                               ),
                               child: ListTile(
-                                title: Text(student.studentName.value),
+                                title: Text(
+                                  student.studentName.value,
+                                  style: context.textTheme.bodyLarge!.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      shadows: [
+                                        ThemeModeController.themeMode ==
+                                                ThemeMode.dark
+                                            ? const Shadow(
+                                                blurRadius: 10,
+                                                offset: Offset(0, 1),
+                                              )
+                                            : const Shadow(),
+                                      ]),
+                                ),
                                 trailing: SizedBox(
                                   width: 160,
                                   child: MyDropDownButtonWidget(
@@ -299,7 +311,25 @@ class _HomeWorkPageState extends State<HomeWorkPage> {
                                         .map(
                                           (e) => DropdownMenuItem(
                                             value: e['type'],
-                                            child: Text(e['name']!),
+                                            child: Text(
+                                              e['name']!,
+                                              style: context
+                                                  .textTheme.bodyLarge!
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      shadows: [
+                                                    ThemeModeController
+                                                                .themeMode ==
+                                                            ThemeMode.dark
+                                                        ? const Shadow(
+                                                            blurRadius: 10,
+                                                            offset:
+                                                                Offset(0, 1),
+                                                          )
+                                                        : const Shadow(),
+                                                  ]),
+                                            ),
                                           ),
                                         )
                                         .toList(),

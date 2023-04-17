@@ -53,7 +53,7 @@ dependencies:
   share_plus: ^6.3.0
   printing: ^5.9.3
   supabase_flutter: ^1.4.0
-  realm: ^1.0.2
+  realm: ^1.0.3
 
 dev_dependencies:
   flutter_test:
